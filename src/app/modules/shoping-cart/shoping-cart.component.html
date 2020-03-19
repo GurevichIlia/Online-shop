@@ -1,0 +1,41 @@
+<div class="row">
+      <div class="col-xs-12 col-xl-12 mb-2 mt-3"
+            *ngIf="selectedProductsTableDataSource$ | async as selectedProducts; else loader">
+            <!-- <mat-card> -->
+                  <!-- <app-table *ngIf="selectedProducts.data.length !== 0;else empty" [dataSource]="selectedProducts"
+                        [listDisplayedColumns]="selectedProductsDisplayedColumns$ | async"
+                        [columns]="selectedProductsListColumns$ | async">
+                  </app-table> -->
+                  <mat-grid-list cols="3" *ngIf="selectedProducts.data.length !== 0;else empty" rowHeight="100px" >
+                        <mat-grid-tile *ngFor="let product of selectedProducts.data" colspan="3" rowspan="1">
+                              <mat-card>
+                                    PRODUCT
+                              </mat-card>
+
+                        </mat-grid-tile>
+                  </mat-grid-list>
+
+
+            <!-- </mat-card> -->
+      </div>
+
+      <ng-template #loader>
+            <mat-spinner class="m-auto"></mat-spinner>
+      </ng-template>
+
+      <ng-template #empty>
+            <mat-card>
+                  <h3>Cart is Empty </h3>
+
+            </mat-card>
+      </ng-template>
+      <div class="col-xs-12 col-xl-12">
+
+            <mat-card>
+                  <h2>Total: {{totalAmount$ | async}}</h2>
+                  <button mat-flat-button color="primary" (click)="goPayment()">Checkout</button>
+            </mat-card>
+
+
+      </div>
+</div>

@@ -1,0 +1,30 @@
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+ul {
+  padding: inherit;
+}
+
+span.group-name{
+  margin-inline-start: 15px;
+}
+
+mat-tree-node:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+
+}
+
+.mat-tree-node:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+
+}

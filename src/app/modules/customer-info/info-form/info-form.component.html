@@ -1,0 +1,81 @@
+<div class="row">
+      <form [formGroup]="form">
+
+            <mat-form-field class="col-12 col-xl-4 mb-3 mt-2">
+                  <input formControlName="firstName" matInput required placeholder="{{'First Name'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 col-xl-4 mb-3">
+                  <input formControlName="lastName" matInput required placeholder="{{'Last Name'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 col-xl-4 mb-3">
+                  <input formControlName="buildingNumber" matInput required placeholder="{{'Building No'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 col-xl-6 mb-3">
+                  <input formControlName="street" matInput required placeholder="{{'Street'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 col-xl-6 mb-3">
+                  <input formControlName="country" matInput required placeholder="{{'Country'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 col-xl-6 mb-3">
+                  <input formControlName="city" matInput required placeholder="{{'City'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 col-xl-6 mb-3">
+                  <input formControlName="zipCode" matInput required placeholder="{{'Zip Code'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <div class="col-12 col-xl-6 mb-3">
+                  <h4>Enter Your Contact Infomation </h4>
+
+            </div>
+
+            <mat-form-field class="col-12 col-xl-6 mb-3">
+                  <input formControlName="email" matInput required placeholder="{{'Email'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 col-xl-6 mb-3">
+                  <input formControlName="phone" matInput required placeholder="{{'Phone'}}" />
+                  <mat-error class="mb-1">
+                        {{'This field should not be empty.' }}
+                  </mat-error>
+            </mat-form-field>
+
+            <div class="col-12 col-xl-12 mb-3">
+                  <button type="submit" color="accent" mat-raised-button (click)="onContinuePayment()">Continue to
+                        Payment</button>
+
+            </div>
+      </form>
+
+
+
+</div>

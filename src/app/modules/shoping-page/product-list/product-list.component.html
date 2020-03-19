@@ -1,0 +1,7 @@
+<mat-grid-list cols="4" rowHeight="250px" gutterSize="10px">
+      <mat-grid-tile *ngFor="let product of products" colspan="1" rowspan="2" >
+            <app-product [product]="product" (addToCart)="onAddToCart(product)"
+                  (removeFromCart)="onRemoveFromCart(product)" (moreInfo)="onMoreInfo(product)">
+            </app-product>
+      </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,44 @@
+<mat-card class="product-card">
+      <mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <mat-card-title>
+                  <h1>{{product.ProdName}}</h1>
+            </mat-card-title>
+            <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+      </mat-card-header>
+      <img (click)="onMoreInfo()" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+            alt="">
+      <mat-card-content>
+            <p>
+
+                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from
+                  Japan.
+                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
+                  originally
+                  bred for hunting.
+            </p>
+            <div class="price ">{{product.Price | currency:   'NIS ' }}</div>
+
+      </mat-card-content>
+      <mat-card-actions>
+
+
+
+
+
+            <!-- <button mat-flat-button color="accent" (click)="onMoreInfo()">More info</button> -->
+            <button *ngIf="!product.addedToCart" color="primary" mat-flat-button (click)="onAddToCart()">Add to Cart <i
+                        class="material-icons">
+                        add_shopping_cart
+                  </i></button>
+            <button #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
+                  (mouseenter)="addedButtonOnFocus = true" class="btn-added-color" mat-flat-button>Added <i
+                        class="material-icons">
+                        done
+                  </i></button>
+            <button *ngIf="addedButtonOnFocus && product.addedToCart" (mouseleave)="addedButtonOnFocus = false"
+                  (click)="onRemoveFromCard()" color="warn" mat-flat-button>Remove <i class="material-icons">
+                        delete_outline
+                  </i></button>
+      </mat-card-actions>
+</mat-card>

@@ -1,0 +1,23 @@
+<div class="table-box" id="style-1">
+  <table mat-table [dataSource]="dataSource">
+
+
+
+    <ng-container [matColumnDef]="col?.columnDef" *ngFor="let col of columns">
+      <th class="notBtn tableHeader" mat-header-cell *matHeaderCellDef>{{col.header}} </th>
+      <td (click)="dispatchAction('SELECT', row)" mat-cell *matCellDef="let row">
+        <span *ngIf="col.header !== 'images'">{{col.cell(row) }}</span>
+
+        <img *ngIf="col.header === 'images'" [src]="col.cell(row)[0].url" alt="">
+        {{col.cell(row)[0].url}}
+      </td>
+    
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="listDisplayedColumns"></tr>
+    <tr class="body element-row" mat-row *matRowDef="let row; columns: listDisplayedColumns;"></tr>
+
+  </table>
+</div>
+<!-- <mat-paginator [pageSizeOptions]="[10, 25, 50, 100 ]"></mat-paginator> -->

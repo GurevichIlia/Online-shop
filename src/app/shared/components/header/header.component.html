@@ -1,0 +1,15 @@
+<mat-toolbar class="sticky" color="primary">
+
+      <div class="container">
+            <div class="row">
+                  <div class="col-8 col-xl-10">Header</div>
+                  <div class="col-2 col-xl-2">
+                        <button mat-flat-button color="accent" (click)="onShopingCart()"
+                              [matBadge]="addedProductsQuantity" matBadgeColor="warn"> Cart
+                              <i class="material-icons">
+                                    shopping_cart
+                              </i></button>
+                  </div>
+            </div>
+      </div>
+</mat-toolbar>

@@ -1,0 +1,37 @@
+<div class="sidebarContainer row">
+      <div class="col-12">
+            <h1>Discription </h1>
+
+            <p>
+                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from
+                  Japan.
+                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
+                  originally
+                  bred for hunting.
+            </p>
+
+            <h1>{{product.Price | currency:   'NIS ' }}</h1>
+      </div>
+
+
+      <mat-toolbar class="justify-content-around">
+            <button color="default" mat-stroked-button (click)="onBuyNow()">Buy now<i class="material-icons">
+                        shopping_basket
+                  </i></button>
+
+            <button *ngIf="!product.addedToCart" color="primary" mat-flat-button (click)="onAddToCart()">Add to Cart <i
+                        class="material-icons">
+                        add_shopping_cart
+                  </i></button>
+            <button #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
+                  (mouseenter)="addedButtonOnFocus = true" class="btn-added-color" mat-flat-button>Added <i
+                        class="material-icons">
+                        done
+                  </i></button>
+            <button *ngIf="addedButtonOnFocus && product.addedToCart" (mouseleave)="addedButtonOnFocus = false"
+                  (click)="onRemoveFromCard()" color="warn" mat-flat-button>Remove <i class="material-icons">
+                        delete_outline
+                  </i></button>
+
+      </mat-toolbar>
+</div>

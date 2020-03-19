@@ -1,0 +1,20 @@
+<app-header [addedProductsQuantity]="(addedProductsToCart$ |async)?.length" (openShopingCart)="openShopingCart()">
+</app-header>
+<!-- <div class="main-content"> -->
+<div class="background">
+      <div class="container-fluent " dir='rtl'>
+            <div class="row main-content">
+                  <div class="col-10">
+                        <router-outlet></router-outlet>
+
+                  </div>
+            </div>
+
+      </div>
+</div>
+
+
+<!-- </div> -->
+<div class="footer">
+      <app-footer></app-footer>
+</div>
