@@ -1,1 +1,49 @@
-<p>product-card works!</p>
+<div class="row align-items-center">
+      <div class="col-11 col-xl-2 text-center ">
+            <img [src]="product.image.url" (click)="onShowProductInfo()">
+      </div>
+      <div class="col-12 col-xl-3 text-center p-4">
+            <h4>{{product.ProdName}}</h4>
+            <p>{{product.ShortDescription_500}}</p>
+
+
+      </div>
+      <div class="col-6 col-xl-2 ">
+            <div class="row align-items-center">
+                  <div class="col-8">
+                        <mat-form-field class="big-size quantity">
+                              <mat-label>Quantity</mat-label>
+                              <input [formControl]="quantity" type="text" matInput>
+                        </mat-form-field>
+
+                  </div>
+                  <div class="col-4">
+                        <span class="timeBlock">
+                              <span (click)="onIncrease()" class="ngx-timepicker-control__arrow" role="button"> ▲
+                              </span>
+                              <span (click)="onDecrease()" class="ngx-timepicker-control__arrow" role="button"> ▼
+                              </span>
+                        </span>
+                  </div>
+
+            </div>
+
+
+      </div>
+
+      <div class="col-6 col-xl-2 ">
+            <mat-label>מחיר </mat-label>
+
+            <h4 class="big-size">{{product.Price | currency: 'NIS '}}</h4>
+      </div>
+      <div class="col-12 col-xl-2 ">
+            <mat-label>סה"כ</mat-label>
+
+            <h4 class="big-size">{{product.totalPrice | currency: 'NIS '}}</h4>
+      </div>
+      <div class="col-1 col-xl-1 text-center order-first order-xl-last order-md-last order-lg-last">
+            <i class="material-icons" (click)="onRemoveFromCart()">
+                  close
+            </i>
+      </div>
+</div>

@@ -1,81 +1,129 @@
-<div class="row">
-      <form [formGroup]="form">
+<form [formGroup]="form" [style.font-size]="'18px'">
+      <div class="row justify-content-center">
+            <div class="col-12 col-xl-11 mb-4">
+                  <div class="row">
+                        <div class="col-12 mb-3 ">
+                              <h4>פרטיך האישיים</h4>
+                        </div>
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>שם פרטי</mat-label>
+                              <input formControlName="firstName" matInput required placeholder="{{'שם פרטי'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
 
-            <mat-form-field class="col-12 col-xl-4 mb-3 mt-2">
-                  <input formControlName="firstName" matInput required placeholder="{{'First Name'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>שם םשפחה</mat-label>
+                              <input formControlName="lastName" matInput required placeholder="{{'שם םשפחה'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
 
-            <mat-form-field class="col-12 col-xl-4 mb-3">
-                  <input formControlName="lastName" matInput required placeholder="{{'Last Name'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>קבלה על שם</mat-label>
+                              <input formControlName="receiptName" matInput placeholder="{{'קבלה על שם'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
 
-            <mat-form-field class="col-12 col-xl-4 mb-3">
-                  <input formControlName="buildingNumber" matInput required placeholder="{{'Building No'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
+                        <div class="col-12  ">
+                              <h4>Enter Your Contact Infomation </h4>
 
-            <mat-form-field class="col-12 col-xl-6 mb-3">
-                  <input formControlName="street" matInput required placeholder="{{'Street'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
+                        </div>
 
-            <mat-form-field class="col-12 col-xl-6 mb-3">
-                  <input formControlName="country" matInput required placeholder="{{'Country'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>אימייל</mat-label>
+                              <input formControlName="email" matInput required placeholder="{{'אימייל'}}" />
+                              <mat-error>
+                                    <span *ngIf="form.get('email').hasError('required')" class="mb-1">
+                                          {{'This field should not be empty.' }}
+                                    </span>
+                                    <span *ngIf="form.get('email').hasError('email')" class="mb-1">
+                                          {{'Email is not valid.' }}
+                                    </span>
+                              </mat-error>
 
-            <mat-form-field class="col-12 col-xl-6 mb-3">
-                  <input formControlName="city" matInput required placeholder="{{'City'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
+                        </mat-form-field>
 
-            <mat-form-field class="col-12 col-xl-6 mb-3">
-                  <input formControlName="zipCode" matInput required placeholder="{{'Zip Code'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>טלפון</mat-label>
+                              <input formControlName="cellphone" matInput required placeholder="{{'טלפון'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
+                  </div>
+            </div>
+            <div class="col-12 col-xl-11">
+                  <div class="row">
+                        <div class="col-12 ">
+                              <h4>כתובת למשלוח המוצרים</h4>
+                        </div>
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>עיר/יישוב</mat-label>
+                              <input formControlName="city" matInput required placeholder="{{'עיר/יישוב'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
 
-            <div class="col-12 col-xl-6 mb-3">
-                  <h4>Enter Your Contact Infomation </h4>
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>רחוב</mat-label>
+                              <input formControlName="street" matInput required placeholder="{{'רחוב'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
 
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>מסי בית</mat-label>
+                              <input formControlName="buildingNumber" matInput required placeholder="{{'מסי בית'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>קומה</mat-label>
+                              <input formControlName="floor" matInput placeholder="{{'קומה '}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>מספר דירה</mat-label>
+                              <input formControlName="flat" matInput required placeholder="{{'מספר דירה'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
+                              <mat-label>מיקוד</mat-label>
+                              <input formControlName="zipCode" matInput required placeholder="{{'מיקוד'}}" />
+                              <mat-error class="mb-1">
+                                    {{'This field should not be empty.' }}
+                              </mat-error>
+                        </mat-form-field>
+
+
+                  </div>
             </div>
 
-            <mat-form-field class="col-12 col-xl-6 mb-3">
-                  <input formControlName="email" matInput required placeholder="{{'Email'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
 
-            <mat-form-field class="col-12 col-xl-6 mb-3">
-                  <input formControlName="phone" matInput required placeholder="{{'Phone'}}" />
-                  <mat-error class="mb-1">
-                        {{'This field should not be empty.' }}
-                  </mat-error>
-            </mat-form-field>
 
-            <div class="col-12 col-xl-12 mb-3">
-                  <button type="submit" color="accent" mat-raised-button (click)="onContinuePayment()">Continue to
-                        Payment</button>
+
+            <div class="col-12 col-xl-4 mb-4 mt-2 text-left">
+                  <button type="submit" color="accent" class="submit-button" mat-raised-button
+                        (click)="onContinuePayment()">בצע הזמנה <span class="material-icons">
+                              check
+                        </span></button>
 
             </div>
-      </form>
-
-
-
-</div>
+      </div>
+</form>

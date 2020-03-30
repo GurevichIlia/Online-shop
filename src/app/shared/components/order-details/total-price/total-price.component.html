@@ -1,0 +1,14 @@
+<div *ngIf="extraOptionSelected" class="col-xl-12 optionsInfo">
+      <label>סיכום</label>
+      <div class="mt-2">
+            <h4> <span class="label"> סה"כ מחיר מוצרים </span>:
+                  <span>{{totalProductsAmount| currency: 'NIS '}}</span>
+            </h4>
+            <h4> <span class="label"> שיטת משלוח </span>:
+                  <span>{{extraOptionSelected.name }}</span>
+            </h4>
+            <h4> <span class="label"> סה"כ מחיר משלוח </span>:
+                  <span>{{extraOptionSelected.price | currency: 'NIS '}}</span></h4>
+      </div>
+ 
+</div>

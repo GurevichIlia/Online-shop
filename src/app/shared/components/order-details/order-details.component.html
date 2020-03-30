@@ -1,0 +1,27 @@
+<div dir="rtl" class="row m-auto">
+      <div class="col-12 px-0 text-center">
+            <mat-toolbar color="accent">
+                  <i class="material-icons">
+                        shopping_cart
+                  </i>
+                  <span>You have {{orderedProducts?.length}} items in your cart</span>
+            </mat-toolbar>
+      </div>
+      <div class="col-12 product-card">
+            <app-product-detail *ngFor="let product of orderedProducts" [product]="product" (delete)="onDelete(product)"
+                  (edit)="onEdit()"></app-product-detail>
+
+      </div>
+      <div class="col-12">
+            <app-total-price [extraOptionSelected]="extraOption" [totalProductsAmount]="orderedProductsAmount">
+            </app-total-price>
+      </div>
+
+      <div class="col-12 text-right">
+            <hr>
+            <h3>מחיר סה"כ: {{orderedProductsAmount + extraOption.price | currency: 'NIS '}}</h3>
+      </div>
+
+
+
+</div>

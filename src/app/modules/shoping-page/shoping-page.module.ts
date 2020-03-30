@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductListComponent } from './product-list/product-list.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-import { ProductComponent } from './product/product.component';
 
 const shopingPageRoutes: Routes = [
   { path: '', component: ShopingPageComponent }
@@ -16,7 +15,7 @@ const shopingPageRoutes: Routes = [
     ShopingPageComponent,
     ProductListComponent,
     SideMenuComponent,
-    ProductComponent
+    
   ],
   imports: [
     CommonModule,

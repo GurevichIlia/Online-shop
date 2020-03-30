@@ -27,8 +27,7 @@ export class ProductInfoComponent implements OnInit {
 
     this.product$ = this.route.paramMap
       .pipe(switchMap((params: ParamMap) =>
-        this.shopStateService.getProduct$(+params.get('id'))),
-        tap(product => this.quantityPhotos = product.images.length - 1));
+        this.shopStateService.getProduct$(+params.get('id'))));
 
   }
 

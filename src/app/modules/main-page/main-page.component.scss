@@ -1,0 +1,48 @@
+img {
+  background: greenyellow;
+  min-height: 260px;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+
+
+.featured-products {
+  margin-bottom: 50px;
+}
+
+.new-arrivals {
+  height: 500px;
+
+}
+
+
+
+
+
+.text-title {
+  text-align: center;
+
+  h2 {
+    font-weight: 900;
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+}
+
+li {
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 5px;
+
+  a {
+    text-decoration: none;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    color: rgba(53, 53, 53, 0.81)
+  }
+}

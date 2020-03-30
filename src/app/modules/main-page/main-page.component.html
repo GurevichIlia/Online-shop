@@ -1,0 +1,33 @@
+<div class="container-fluid mt-5 mb-5">
+      <app-main-banner></app-main-banner>
+</div>
+
+
+<div class="container-fluid mt-5 mb-5 featured-products">
+      <div class="text-title mb-5">
+            <h2>Featured Products</h2>
+      </div>
+      <app-featured-products
+       [products]="featuredProducts$ | async" 
+       [productCategories]="productCategories$ | async"
+            [selectedCategory]="currentFeaturedProductsCategory$ | async"
+            (selectCategory)="selectFeaturedProductsCategory($event)">
+      </app-featured-products>
+</div>
+
+
+<div class="container-fluid mb-5">
+      <app-fast-shop></app-fast-shop>
+</div>
+
+
+<div class="container-fluid mb-5 mt-5">
+      <div class="text-title mb-5">
+            <h2>New Arrivals</h2>
+      </div>
+      <app-new-arrivals
+      [products]="newArrivalsProducts$ | async"
+      [productCategories]="productCategories$ | async"
+            [selectedCategory]="currentNewArrivalsCategory$ | async"
+            (selectCategory)="selectNewArrivalsCategory($event)"></app-new-arrivals>
+</div>

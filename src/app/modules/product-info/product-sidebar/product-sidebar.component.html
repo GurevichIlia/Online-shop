@@ -3,24 +3,20 @@
             <h1>Discription </h1>
 
             <p>
-                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from
-                  Japan.
-                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-                  originally
-                  bred for hunting.
+                  {{product.LongDescription_4000}}
             </p>
 
             <h1>{{product.Price | currency:   'NIS ' }}</h1>
       </div>
 
 
-      <mat-toolbar class="justify-content-around">
+      <mat-toolbar class="justify-content-around m-auto buttons">
             <button color="default" mat-stroked-button (click)="onBuyNow()">Buy now<i class="material-icons">
                         shopping_basket
                   </i></button>
 
-            <button *ngIf="!product.addedToCart" color="primary" mat-flat-button (click)="onAddToCart()">Add to Cart <i
-                        class="material-icons">
+            <button *ngIf="!product.addedToCart" color="primary" class="add-to-cart" mat-flat-button
+                  (click)="onAddToCart()">Add to Cart <i class="material-icons">
                         add_shopping_cart
                   </i></button>
             <button #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"

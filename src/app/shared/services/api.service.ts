@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
-import { ProductCategory, Product, BasicResponse } from '../interfaces';
+import { ProductCategory, Product, BasicResponse, CustomerOrderInfo } from '../interfaces';
 import { Observable } from 'rxjs';
 
 
@@ -49,6 +49,10 @@ export class ApiService {
       );
   }
 
+
+  saveCustomerInfo(orderInfo: CustomerOrderInfo, pageGuid = 'F56154EEDB0F4CE0BF5E206F05E2A6D5') {
+    return this.http.post(`https://jaffawebapi.amax.co.il/Api/LandingPage/SaveKevaInfo?urlAddr=${pageGuid}`, orderInfo);
+  }
   // getAllProductsAndCategoriesFromServer(): Observable<{ ProductCategories: ProductCategory[], Products: Product[] }> {
   //   // const httpOptions = {
   //   //   headers: new HttpHeaders({

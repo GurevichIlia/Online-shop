@@ -4,11 +4,13 @@ import { BehaviorSubject } from 'rxjs';
 export interface CustomerInfo {
   firstName: string;
   lastName: string;
-  phone: string;
+  receiptName?: string;
+  cellphone: string;
   email: string;
   buildingNumber: string;
   street: string;
-  country: string;
+  flat: string;
+  floor: string;
   city: string;
   zipCode: string;
 }
@@ -17,28 +19,34 @@ export interface CustomerInfo {
   providedIn: 'root'
 })
 export class CustomerInfoService {
-  initialFormValue = {
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    buildingNumber: '',
-    street: '',
-    country: '',
-    city: '',
-    zipCode: ''
+  initialFormValue: CustomerInfo = {
+    firstName: 'test',
+    lastName: 'test',
+    receiptName: 'test',
+    cellphone: 'test',
+    email: 'test@test.com',
+    buildingNumber: 'test',
+    street: 'test',
+    floor: 'test',
+    flat: 'test',
+    city: 'test',
+    zipCode: 'test'
 
 
   };
 
-  customerFormState$ = new BehaviorSubject<CustomerInfo>(this.initialFormValue);
+  customerFormState$ = new BehaviorSubject<CustomerInfo>({ ...this.initialFormValue });
   constructor() { }
 
   setCustomerFormState(formValue: CustomerInfo) {
-    this.customerFormState$.next(formValue)
+    this.customerFormState$.next(formValue);
   }
 
   getCustomerFormState() {
     return this.customerFormState$.asObservable();
+  }
+
+  refreshFormState() {
+    this.setCustomerFormState({ ...this.initialFormValue });
   }
 }

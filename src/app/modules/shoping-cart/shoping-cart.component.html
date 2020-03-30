@@ -1,41 +1,79 @@
-<div class="row">
-      <div class="col-xs-12 col-xl-12 mb-2 mt-3"
-            *ngIf="selectedProductsTableDataSource$ | async as selectedProducts; else loader">
-            <!-- <mat-card> -->
-                  <!-- <app-table *ngIf="selectedProducts.data.length !== 0;else empty" [dataSource]="selectedProducts"
-                        [listDisplayedColumns]="selectedProductsDisplayedColumns$ | async"
-                        [columns]="selectedProductsListColumns$ | async">
-                  </app-table> -->
-                  <mat-grid-list cols="3" *ngIf="selectedProducts.data.length !== 0;else empty" rowHeight="100px" >
-                        <mat-grid-tile *ngFor="let product of selectedProducts.data" colspan="3" rowspan="1">
-                              <mat-card>
-                                    PRODUCT
-                              </mat-card>
 
-                        </mat-grid-tile>
-                  </mat-grid-list>
+<app-carousel></app-carousel>
 
+<div class="row mx-auto justify-content-center mb-5 mt-5">
+      <div class="col-12 col-lg-11 col-xl-11">
+            <div class="row">
+                  <div class="col-xs-12 col-xl-12 mb-2 mt-3"
+                        *ngIf="selectedProducts$ | async as selectedProducts; else loader">
 
-            <!-- </mat-card> -->
-      </div>
-
-      <ng-template #loader>
-            <mat-spinner class="m-auto"></mat-spinner>
-      </ng-template>
-
-      <ng-template #empty>
-            <mat-card>
-                  <h3>Cart is Empty </h3>
-
-            </mat-card>
-      </ng-template>
-      <div class="col-xs-12 col-xl-12">
-
-            <mat-card>
-                  <h2>Total: {{totalAmount$ | async}}</h2>
-                  <button mat-flat-button color="primary" (click)="goPayment()">Checkout</button>
-            </mat-card>
+                        <ul class="list-unstyled p-0" *ngIf="selectedProducts.length !== 0;else empty">
+                              <li class=" mb-1" *ngFor="let product of selectedProducts">
+                                    <mat-card class="col-12">
+                                          <app-product-card [product]="product"
+                                                (removeFromCart)="onRemoveFromCart(product)"
+                                                (showInfo)="onShowProductInfo(product)"
+                                                (changeQuantity)="onChangeProductQuantity($event, product)">
+                                          </app-product-card>
+                                    </mat-card>
+                              </li>
+                        </ul>
 
 
+                  </div>
+
+                  <ng-template #loader>
+                        <mat-spinner class="m-auto"></mat-spinner>
+                  </ng-template>
+
+                  <ng-template #empty>
+                        <mat-card>
+                              <h3>Cart is Empty </h3>
+
+                        </mat-card>
+                  </ng-template>
+                  <div class="col-xs-12 col-xl-12">
+                        <mat-card>
+                              <div class="row mb-4">
+                                    <div class="col-xl-6 extra-options-block order-xl-first">
+                                          <h2>בחר שיטת משלוח</h2>
+                                          <app-extra-options (selectOption)="onSelectOption($event)"
+                                                [selectedOption]="selectedShipingOption$ | async"
+                                                [extraOptions]="extraOptions">
+                                          </app-extra-options>
+                                    </div>
+                                    <div class="col-12 col-xl-6 order-first">
+                                          <iframe #iframe width="100%" height="100%" class="owner-label"
+                                                src="data:image/png;base64,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"
+                                                frameborder="0"></iframe>
+                                    </div>
+
+                                    <div *ngIf="selectedShipingOption$ | async as selectedShipingOption"
+                                          class="col-xl-12 optionsInfo">
+                                          <app-total-price [extraOptionSelected]="selectedShipingOption"
+                                                [totalProductsAmount]="totalProductsAmount$ | async"></app-total-price>
+
+                                    </div>
+
+                              </div>
+                              <hr>
+                              <div class="mt-3 col-12 col-lg-5 col-xl-5 text-right">
+                                    <h2>סה"כ מחיר:
+                                          {{totoalAmountForAll$ | async | currency: 'NIS '}}</h2>
+
+                              </div>
+                              <div class="col-12 col-lg-3 col-xl-3">
+                                    <button class="checkoutButton" mat-flat-button color="accent"
+                                          (click)="goPayment()">המשך לקופה
+                                          <span class="material-icons">
+                                                check
+                                          </span></button>
+                              </div>
+
+                        </mat-card>
+
+
+                  </div>
+            </div>
       </div>
 </div>

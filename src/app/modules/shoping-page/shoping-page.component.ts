@@ -29,21 +29,22 @@ export class ShopingPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // this.selectedProductCategory = this.fb.control('');
     // this.selectedProductCategory$ = this.shopingPageService.selectedCategory$;
-    this.productCategories$ = this.shopStateService.getCategories$().pipe(tap(cat => console.log('CATEGORIES IN PAGE', cat)));
+    this.productCategories$ = this.shopStateService.getCategoriesForTree$().pipe(tap(cat => console.log('CATEGORIES IN PAGE', cat)));
 
 
     this.products$ = this.shopingPageService.getSelectedCategory$()
-      .pipe(switchMap(category => {
-        let products$: Observable<Product[]>;
-        if (category) {
-          products$ = this.shopStateService.getProducts$()
-            .pipe(map(products => products.filter(product => +product.ProductsWebGroups_GroupId === category)));
+      .pipe(
+        switchMap(category => {
+          let products$: Observable<Product[]>;
+          if (category) {
+            products$ = this.shopStateService.getProducts$()
+              .pipe(map(products => products.filter(product => +product.ProductsWebGroups_GroupId === category)));
 
-        } else {
-          products$ = this.shopStateService.getProducts$();
-        }
-        return products$;
-      }));
+          } else {
+            products$ = this.shopStateService.getProducts$();
+          }
+          return products$.pipe(map(products => [...products, ...products, ...products, ...products]));
+        }));
 
     // this.shopingPageService.getSelectedCategory$()
     //   .pipe(takeUntil(this.subscription$))

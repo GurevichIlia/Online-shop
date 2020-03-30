@@ -1,3 +1,5 @@
+import { CustomerInfo } from './services/customer-info.service';
+
 export interface ProductCategory {
       // ProdCatId: number;
       // CategoryName: string;
@@ -41,7 +43,14 @@ export interface Product {
       PartNumber: string;
       instituteId: string;
       addedToCart?: boolean;
-      images?: { url: string }[]; // FOR TESTING
+      ShortDescription_500: string;
+      LongDescription_4000: string;
+      image?: { url: string }; // FOR TESTING
+}
+
+export interface ProductInCart extends Product {
+      quantity: number;
+      totalPrice: number;
 }
 
 export interface BasicResponse {
@@ -49,3 +58,29 @@ export interface BasicResponse {
       IsError: boolean;
       ErrMsg: string;
 }
+
+export interface CustomerInfoBase {
+      tz?: number;
+      kevaAmount: number;
+      keva_ChargeDay?: number;
+      email: string;
+      firstName: string;
+      lastName: string;
+      city: string;
+      cellphone: string;
+      remark?: string;
+      TotalMonthtoCharge?: number;
+}
+
+export interface CustomerOrderInfo extends CustomerInfoBase, CustomerInfo  {
+
+} 
+
+export interface ParamsAfterPayment {
+      terminalnumber: string;
+      lowprofilecode: string;
+      ResponeCode: string;
+      Operation: string;
+      ResponseCode: string;
+      Status: string;
+    }

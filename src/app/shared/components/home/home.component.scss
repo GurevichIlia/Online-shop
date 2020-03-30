@@ -1,14 +1,16 @@
 .main-content {
   margin: auto;
   justify-content: center;
+  text-align: initial;
 }
 
-.background {
-  background-color: aliceblue;
-}
+
 
 .footer {
   position: relative;
 
   bottom: 0;
+}
+mat-sidenav{
+  width: 350px;
 }

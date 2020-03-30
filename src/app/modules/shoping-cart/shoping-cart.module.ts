@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShopingCartComponent } from './shoping-cart.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { ExtraOptionsComponent } from './extra-options/extra-options.component';
 
 const cartRoutes: Routes = [
   { path: '', component: ShopingCartComponent }
@@ -13,6 +14,7 @@ const cartRoutes: Routes = [
   declarations: [
     ShopingCartComponent,
     ProductCardComponent,
+    ExtraOptionsComponent,
   ],
   imports: [
     SharedModule,

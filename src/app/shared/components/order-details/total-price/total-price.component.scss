@@ -1,0 +1,17 @@
+.optionsInfo {
+  direction: rtl;
+  text-align: right;
+
+  h4 {
+    font-size: 18px;
+
+    .label {
+      font-weight: bold;
+    }
+  }
+
+  label {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+}

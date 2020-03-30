@@ -1,0 +1,13 @@
+<!-- <ul class="list-unstyled ">
+      <li *ngFor="let option of extraOptions">
+            <mat-checkbox (change)="onSelectOption(option)">{{option.price | currency: 'NIS '}} {{option.name}}
+            </mat-checkbox>
+      </li>
+</ul> -->
+
+<mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [value]="selectedOpt?.id">
+      <mat-radio-button (click)="onSelectOption($event, option.id)" class="example-radio-button"
+            *ngFor="let option of extraOptions" [value]="option.id">
+            {{option.price  | currency: 'NIS '}} {{option.name}}
+      </mat-radio-button>
+</mat-radio-group>

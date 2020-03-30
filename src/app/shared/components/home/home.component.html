@@ -1,20 +1,42 @@
-<app-header [addedProductsQuantity]="(addedProductsToCart$ |async)?.length" (openShopingCart)="openShopingCart()">
-</app-header>
-<!-- <div class="main-content"> -->
-<div class="background">
-      <div class="container-fluent " dir='rtl'>
-            <div class="row main-content">
-                  <div class="col-10">
-                        <router-outlet></router-outlet>
-
-                  </div>
+<mat-sidenav-container class="example-container" appChangeTheme [themeName]="currentTheme$ | async"
+      (backdropClick)="close('backdrop')">
+      <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose position="end">
+            <div *ngIf="totalDetails$ | async as totalDetails">
+                  <app-order-details [orderedProducts]="totalDetails[0]" [orderedProductsAmount]="totalDetails[1]"
+                        [extraOption]="totalDetails[2]" (delete)="removeFromCart($event)" (edit)="onEditShopingCart()">
+                  </app-order-details>
             </div>
+      </mat-sidenav>
 
-      </div>
-</div>
+      <mat-sidenav-content>
+   
+                              <app-header [addedProductsQuantity]="(addedProductsToCart$ |async)?.length"
+                                    (openShopingCart)="openShopingCart()" (selectTheme)="onSelectTheme($event)">
+                              </app-header>
+
+                              <!-- <div class="main-content"> -->
+
+                              <!-- <div class="container-fluid">
+                             <img src="https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="">
+                        </div> -->
+
+                              <div dir='rtl'>
+                                    <!-- <div class="row main-content">
+                                          <div class="col-12 col-sm-11 col-md-11 col-lg-11 col-xl-11"> -->
+                                    <router-outlet></router-outlet>
+                                    <!-- 
+                                          </div>
+                                    </div> -->
+
+                              </div>
 
 
-<!-- </div> -->
-<div class="footer">
-      <app-footer></app-footer>
-</div>
+                              <!-- </div> -->
+                              <div class="footer">
+                                    <app-footer></app-footer>
+                              </div>
+     
+
+
+      </mat-sidenav-content>
+</mat-sidenav-container>

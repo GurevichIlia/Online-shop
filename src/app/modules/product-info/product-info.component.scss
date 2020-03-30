@@ -1,8 +1,4 @@
-.image-slider {
-  height: 70%;
-  max-height: 600px;
-  min-height: 566px;
-}
+
 
 .title {
   width: 100%;
@@ -15,6 +11,10 @@
 }
 
 .productBox {
-  min-height: 680px;
+  // min-height: 680px;
   max-height: 680px;
+}
+
+.productName>h1 {
+  font-size: 35px;
 }

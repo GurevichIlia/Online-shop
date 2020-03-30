@@ -1,15 +1,33 @@
-<mat-toolbar color="primary" class="mt-5">
-      <span>Enter Your Information</span>
-</mat-toolbar>
-
-<mat-card>
-      <div class="row">
-
-            <div class="col-12">
-
-                  <app-info-form [form]="form"></app-info-form>
+<div class="row mx-auto justify-content-center">
+      <div class="col-12 col-xl-9">
+            <div class="row justify-content-right">
+                  <div class="col-12 showDetailBlock">
+                        <button (click)="openOrderDetails()" color="accent" mat-raised-button>Show order detail :
+                              {{totalPrice$ | async | currency: 'NIS '}} </button>
+                  </div>
             </div>
 
 
+            <mat-toolbar color="primary" class="mt-5">
+                  <span>Enter Your Information</span>
+            </mat-toolbar>
+
+            <div class="row ">
+                  <div class="col-xl-12">
+
+                  </div>
+            </div>
+
+            <mat-card>
+                  <div class="row">
+
+                        <div class="col-12">
+
+                              <app-info-form (continuePayment)="saveOrderInfo()" [form]="form"></app-info-form>
+                        </div>
+
+
+                  </div>
+            </mat-card>
       </div>
-</mat-card>
+</div>

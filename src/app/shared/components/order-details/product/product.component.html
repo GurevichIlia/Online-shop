@@ -1,0 +1,21 @@
+<div class="row product-box align-items-center text-center">
+      <div class="col-4">
+            <img width="100%" [src]="product.image.url">
+      </div>
+      <div class="col-6">
+            <p class="product-name">{{product.ProdName}}</p>
+            <p>{{product.quantity}}</p>
+            <p>{{product.totalPrice | currency: 'NIS '}}</p>
+
+      </div>
+      <div class="col-2">
+            <span (click)="onEdit()" class="material-icons">
+                  edit
+            </span>
+            <span (click)="onDelete()" class="material-icons">
+                  remove_shopping_cart
+            </span>
+
+      </div>
+</div>
+<hr>

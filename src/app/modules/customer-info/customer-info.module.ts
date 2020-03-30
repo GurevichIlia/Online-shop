@@ -5,11 +5,10 @@ import { CustomerInfoComponent } from './customer-info.component';
 import { InfoFormComponent } from './info-form/info-form.component';
 import { RouterModule, Routes } from '@angular/router';
 
-type NewType = Routes;
 
-const infoRoutes: NewType = [
+const infoRoutes: Routes = [
   { path: '', component: CustomerInfoComponent }
-]
+];
 
 @NgModule({
   declarations: [

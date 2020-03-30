@@ -13,7 +13,7 @@ ul {
   padding: inherit;
 }
 
-span.group-name{
+span.group-name {
   margin-inline-start: 15px;
 }
 
@@ -27,4 +27,8 @@ mat-tree-node:hover {
   cursor: pointer;
   background-color: whitesmoke;
 
+}
+
+.group-name {
+  font-size: 20px;
 }

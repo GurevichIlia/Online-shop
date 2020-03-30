@@ -1,6 +1,8 @@
-<mat-card class="mt-5">
-      <div class="row productBox" *ngIf="product$ | async as product; else loader">
-            <div class="col-12 title">
+
+
+
+<div  class="row mx-auto productBox justify-content-center mt-5" *ngIf="product$ | async as product; else loader">
+      <!-- <div class="col-12 title">
                   <div class="row ">
                         <div class="col-8 col-xl-8 text-right">
                               <h1>{{product.ProdName}}</h1>
@@ -10,21 +12,31 @@
                         </div>
                   </div>
 
-            </div>
-            <div class="col-12 col-xl-4 sidebar order-xl-second order-last">
-                  <app-product-sidebar [product]="product" (addToCart)="addToShopingCart(product)"
-                        (removeFromCart)="removeFromCart(product)" (buyNow)="onBuyNow(product)">
-                  </app-product-sidebar>
-            </div>
-            <div class="col-12 col-xl-8 image-slider order-xl-last  order-second">
-                  <app-product-image [images]="product.images" [index]="currentPhotoIndex"
-                        (prevImage)="onPreviousImage()" (nextImage)="onNextImage()"></app-product-image>
+            </div> -->
+
+            <div class="col-10">
+                  <mat-card  >
+                        <div class="row justify-content-center">
+                              <div class="col-12 col-xl-5 sidebar  order-xl-second order-last">
+                                    <div class="col-8 col-xl-8 text-right productName">
+                                          <h1>{{product.ProdName}}</h1>
+                                    </div>
+                                    <app-product-sidebar [product]="product" (addToCart)="addToShopingCart(product)"
+                                          (removeFromCart)="removeFromCart(product)" (buyNow)="onBuyNow(product)">
+                                    </app-product-sidebar>
+                              </div>
+                              <div class="col-12 col-xl-7 image-slider order-xl-last  order-second">
+                                    <app-product-image [image]="product.image" (prevImage)="onPreviousImage()"
+                                          (nextImage)="onNextImage()">
+                                    </app-product-image>
+                              </div>
+                        </div>
+                  </mat-card>
+
             </div>
 
-      </div>
 
-      <ng-template #loader>
-            <mat-spinner class="m-auto"></mat-spinner>
-      </ng-template>
-
-</mat-card>
+</div>
+<ng-template #loader>
+      <mat-spinner class="m-auto"></mat-spinner>
+</ng-template>

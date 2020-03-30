@@ -1,0 +1,43 @@
+img {
+  width: 110px;
+  cursor: pointer;
+}
+
+h4 {
+  font-size: 35px;
+}
+
+.big-size {
+  font-size: 24px;
+}
+
+i.material-icons {
+  color: #ff1f1fbf;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.ngx-timepicker-control__arrow {
+  font-size: 14px;
+  color: rgba(0, 0, 0, .4);
+  cursor: pointer;
+  transition: color .2s;
+  /* -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none; */
+  user-select: none;
+
+}
+
+.ngx-timepicker-control__arrow:hover {
+  color: black;
+}
+
+.timeBlock {
+  display: grid;
+  width: 5px;
+}
+
+.quantity {
+ width: 80%;
+}

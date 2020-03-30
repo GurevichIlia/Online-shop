@@ -1,0 +1,38 @@
+<div class="row justify-content-center mb-5">
+      <div class="col-12 col-xl-11 mb-4">
+            <ul class="list-unstyled text-center p-0">
+                  <li class="navItem" *ngFor="let category of productCategories; let i = index">
+                        <button (click)="selectFeaturedProductsCategory(category)"
+                              [ngClass]="{'mat-raised-button': category.GroupId === selectedCategory.GroupId}"
+                              mat-button>
+                              <a>{{category.GroupName}}</a>
+                        </button>
+
+                  </li>
+            </ul>
+      </div>
+      <div class="col-12 col-xl-11 mb-5">
+            <mdb-carousel [type]="'carousel-multi-item'" [animation]="'slide'">
+                  <mdb-carousel-item  *ngFor=" let product of products">
+                  <div class="row mb-5">
+                        <div class="col-3">
+
+                              <app-product [product]="product"></app-product>
+                        </div>
+                        <div class="col-3">
+                              <app-product [product]="product"></app-product>
+
+                        </div>
+                        <div class="col-3">
+                              <app-product [product]="product"></app-product>
+
+                        </div>
+                        <div class="col-3">
+                              <app-product [product]="product"></app-product>
+
+                        </div>
+                  </div>
+                  </mdb-carousel-item>
+            </mdb-carousel>
+      </div>
+</div>

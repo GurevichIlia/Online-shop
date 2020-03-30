@@ -8,6 +8,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() addedProductsQuantity = 0;
   @Output() openShopingCart = new EventEmitter();
+  @Output() selectTheme = new EventEmitter();
+
+  themes = [{ name: 'orange-theme' }, { name: 'blue-theme' }, { name: 'default-theme' }]
   constructor() { }
 
   ngOnInit(): void {
@@ -15,5 +18,9 @@ export class HeaderComponent implements OnInit {
 
   onShopingCart() {
     this.openShopingCart.emit();
+  }
+
+  onSelectTheme(theme: string) {
+    this.selectTheme.emit(theme);
   }
 }

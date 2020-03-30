@@ -1,10 +1,16 @@
-<div class="row mt-5">
-      <div class="col-12 col-xl-3 sidebar ">
-            <app-side-menu  [categories]="productCategories$ | async">
-            </app-side-menu>
-      </div>
-      <div class="col-12 col-xl-9 products">
-            <app-product-list [products]="products$ | async" (addToCart)="addToShopingCart($event)"
-                  (removeFromCart)="removeFromCart($event)" (moreInfo)="showProductFullInfo($event)"></app-product-list>
+<div class="row mx-auto justify-content-center mb-5">
+      <div class="col-11">
+            <div class="row mt-5">
+                  <div class="col-12 col-xl-3 sidebar ">
+                        <app-side-menu [categories]="productCategories$ | async">
+                        </app-side-menu>
+                  </div>
+                  <div class="col-12 col-xl-9 products">
+                        <h2>Products</h2>
+                        <app-product-list [products]="products$ | async" (addToCart)="addToShopingCart($event)"
+                              (removeFromCart)="removeFromCart($event)" (moreInfo)="showProductFullInfo($event)">
+                        </app-product-list>
+                  </div>
+            </div>
       </div>
 </div>
