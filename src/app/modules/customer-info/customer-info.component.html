@@ -1,15 +1,16 @@
-<div class="row mx-auto justify-content-center">
+<div class="row justify-content-center mb-5">
       <div class="col-12 col-xl-9">
             <div class="row justify-content-right">
                   <div class="col-12 showDetailBlock">
-                        <button (click)="openOrderDetails()" color="accent" mat-raised-button>Show order detail :
+                        <button (click)="openOrderDetails()" color="accent"
+                              mat-raised-button>{{'Show Order details' | translate}} :
                               {{totalPrice$ | async | currency: 'NIS '}} </button>
                   </div>
             </div>
 
 
             <mat-toolbar color="primary" class="mt-5">
-                  <span>Enter Your Information</span>
+                  <span>{{'Enter Your Information' | translate}}</span>
             </mat-toolbar>
 
             <div class="row ">

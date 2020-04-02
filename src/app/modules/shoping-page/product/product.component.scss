@@ -12,9 +12,9 @@ mat-card-title h1 {
   background-color: yellowgreen
 }
 
-button {
-  width: 100%;
-}
+// button {
+//   width: 100%;
+// }
 
 img {
   cursor: pointer;
@@ -34,4 +34,8 @@ img {
 
 .add-to-cart-button:hover {
   background-color: yellowgreen;
+}
+
+mat-card-actions {
+  margin-bottom: 0 !important;
 }

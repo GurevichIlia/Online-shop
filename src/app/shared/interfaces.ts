@@ -53,8 +53,8 @@ export interface ProductInCart extends Product {
       totalPrice: number;
 }
 
-export interface BasicResponse {
-      Data: any;
+export interface BasicResponse<T> {
+      Data: T;
       IsError: boolean;
       ErrMsg: string;
 }
@@ -72,9 +72,9 @@ export interface CustomerInfoBase {
       TotalMonthtoCharge?: number;
 }
 
-export interface CustomerOrderInfo extends CustomerInfoBase, CustomerInfo  {
+export interface CustomerOrderInfo extends CustomerInfoBase, CustomerInfo {
 
-} 
+}
 
 export interface ParamsAfterPayment {
       terminalnumber: string;
@@ -83,4 +83,71 @@ export interface ParamsAfterPayment {
       Operation: string;
       ResponseCode: string;
       Status: string;
-    }
+}
+
+export interface GetProductsWebImageGallery {
+      GetProductsWebImageGallery: ProductsWebImageGallery[];
+}
+
+
+export interface ProductsWebImageGallery {
+      ImageId: number;
+      ImageName1: string;
+      SortOrder1: number;
+      ImageLink1: string;
+      SortOrder2: number;
+      ImageName2: string;
+      ImageLink2: string;
+      SortOrder3: number;
+      ImageName3: string;
+      ImageLink3: string;
+      SortOrder4: number;
+      ImageName4: string;
+      ImageLink4: string;
+      SortOrder5: number;
+      ImageName5: string;
+      ImageLink5: string;
+      SortOrder6: number;
+      ImageName6: string;
+      ImageLink6: string;
+      SortOrder7: number;
+      ImageName7: string;
+      ImageLink7: string;
+      SortOrder8: number;
+      ImageName8: string;
+      ImageLink8: string;
+      SortOrder9: number;
+      ImageName9: string;
+      ImageLink9: string;
+      SortOrder10: number;
+      ImageName10: string;
+      ImageLink10: string;
+      OrgId: number;
+      LogoFileName1: string;
+      FooterImage1: string;
+      FooterImage2: string;
+      FooterImage3: string;
+      FooterImage1Link: string;
+      FooterImage2Link: string;
+      FooterImage3Link: string;
+      TopImage1: string;
+      TopImage1Link: string;
+      TopImage2: string;
+      TopImage2Link: string;
+      link: string;
+}
+
+export interface ImageForCarousel {
+      [key: string]: string;
+}
+
+
+export interface ImageForFastShop {
+      [key: string]: string;
+
+}
+
+export type ImageKey = 'ImageName' | 'FooterImage' | 'TopImage';
+
+
+// const updateValue: <T extends keyof State, K extends State[T]> = (name: T, value: K): void => this.setState({ [name]: value });

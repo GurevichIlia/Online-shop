@@ -1,39 +1,27 @@
-
-
-
-<div  class="row mx-auto productBox justify-content-center mt-5" *ngIf="product$ | async as product; else loader">
-      <!-- <div class="col-12 title">
-                  <div class="row ">
-                        <div class="col-8 col-xl-8 text-right">
-                              <h1>{{product.ProdName}}</h1>
+<div class="row productBox justify-content-center mt-5 mb-5" *ngIf="product$ | async as product; else loader">
+      <div class="col-xl-10 col-12 text-right">
+            <button mat-button><a routerLink="/shoping-page">{{'Back to Shop' | translate}}</a></button>
+      </div>
+      <div class="col-xl-10 col-12">
+            <mat-card>
+                  <div class="row justify-content-center">
+                        <div class="col-12 col-xl-5 sidebar  order-xl-second order-last">
+                              <div class="col-8 col-xl-8 text-right productName">
+                                    <h1>{{product.ProdName}}</h1>
+                              </div>
+                              <app-product-sidebar [product]="product" (addToCart)="addToShopingCart(product)"
+                                    (removeFromCart)="removeFromCart(product)" (buyNow)="onBuyNow(product)">
+                              </app-product-sidebar>
                         </div>
-                        <div class="col-4 col-xl-4">
-                              <h1>{{product.Price | currency: 'NIS ' }} </h1>
+                        <div class="col-12 col-xl-7 image-slider order-xl-last  order-second">
+                              <app-product-image [image]="product.image" (prevImage)="onPreviousImage()"
+                                    (nextImage)="onNextImage()">
+                              </app-product-image>
                         </div>
                   </div>
+            </mat-card>
 
-            </div> -->
-
-            <div class="col-10">
-                  <mat-card  >
-                        <div class="row justify-content-center">
-                              <div class="col-12 col-xl-5 sidebar  order-xl-second order-last">
-                                    <div class="col-8 col-xl-8 text-right productName">
-                                          <h1>{{product.ProdName}}</h1>
-                                    </div>
-                                    <app-product-sidebar [product]="product" (addToCart)="addToShopingCart(product)"
-                                          (removeFromCart)="removeFromCart(product)" (buyNow)="onBuyNow(product)">
-                                    </app-product-sidebar>
-                              </div>
-                              <div class="col-12 col-xl-7 image-slider order-xl-last  order-second">
-                                    <app-product-image [image]="product.image" (prevImage)="onPreviousImage()"
-                                          (nextImage)="onNextImage()">
-                                    </app-product-image>
-                              </div>
-                        </div>
-                  </mat-card>
-
-            </div>
+      </div>
 
 
 </div>

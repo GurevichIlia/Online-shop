@@ -1,33 +1,36 @@
-<div class="container-fluid mt-5 mb-5">
-      <app-main-banner></app-main-banner>
+<div class=" mt-5 mb-5">
+      <app-main-banner [imagesForCarousel]="imagesForCarousel$ | async"
+            [mainBannerImages]="this.mainPageImages$ | async"></app-main-banner>
 </div>
 
 
-<div class="container-fluid mt-5 mb-5 featured-products">
+<div class="mt-5 featured-products">
       <div class="text-title mb-5">
-            <h2>Featured Products</h2>
+            <h2>{{'Featured Products' | translate}}</h2>
       </div>
-      <app-featured-products
-       [products]="featuredProducts$ | async" 
-       [productCategories]="productCategories$ | async"
+      <app-products-carousel (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
+            (moreInfo)="showProductFullInfo($event)" [products]="featuredProducts$ | async"
+            [productCategories]="productCategories$ | async"
             [selectedCategory]="currentFeaturedProductsCategory$ | async"
             (selectCategory)="selectFeaturedProductsCategory($event)">
-      </app-featured-products>
+      </app-products-carousel>
+
 </div>
 
 
-<div class="container-fluid mb-5">
-      <app-fast-shop></app-fast-shop>
+<div class="mb-5">
+      <app-fast-shop [imagesForFastShop]="imagesForFastShop$ | async"></app-fast-shop>
 </div>
 
 
-<div class="container-fluid mb-5 mt-5">
+<div class="mb-5 mt-5">
       <div class="text-title mb-5">
-            <h2>New Arrivals</h2>
+            <h2>{{'New Arrivals' | translate}}</h2>
       </div>
-      <app-new-arrivals
-      [products]="newArrivalsProducts$ | async"
-      [productCategories]="productCategories$ | async"
-            [selectedCategory]="currentNewArrivalsCategory$ | async"
-            (selectCategory)="selectNewArrivalsCategory($event)"></app-new-arrivals>
+      <app-products-carousel (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
+            (moreInfo)="showProductFullInfo($event)" [products]="newArrivalsProducts$ | async"
+            [productCategories]="productCategories$ | async" [selectedCategory]="currentNewArrivalsCategory$ | async"
+            (selectCategory)="selectNewArrivalsCategory($event)">
+      </app-products-carousel>
+
 </div>

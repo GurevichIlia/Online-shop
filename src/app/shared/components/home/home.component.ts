@@ -1,3 +1,4 @@
+import { MainPageService } from './../../services/main-page.service';
 import { Option, ShopingCartService } from './../../services/shoping-cart.service';
 import { ProductInCart } from 'src/app/shared/interfaces';
 import { GeneralService } from './../../services/general.service';
@@ -11,6 +12,7 @@ import { Product } from '../../interfaces';
 import { Router } from '@angular/router';
 import { ShopingPageService } from '../../services/shoping-page.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 type TotalDetails = Observable<[ProductInCart[], number, Option]>;
 
@@ -34,13 +36,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   totalDetails$: TotalDetails;
 
   currentTheme$: Observable<string>;
+  isHandset$: Observable<boolean>;
+
+  logo$: Observable<string>
   constructor(
     private apiService: ApiService,
     private shopStateService: ShopStateService,
     private notifications: NotificationsService,
     private generalService: GeneralService,
     private router: Router,
-    private shopingCartService: ShopingCartService
+    private shopingCartService: ShopingCartService,
+    private mainpageService: MainPageService
   ) { }
 
   ngOnInit(): void {
@@ -71,6 +77,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.totalDetails$ = combineLatest([this.addedProductsToCart$, this.selectedProductsAmount$, this.selectedShipingOption$]);
 
     this.currentTheme$ = this.generalService.getTheme$();
+
+    this.isHandset$ = this.generalService.isMobileView$();
+
+    this.logo$ = this.mainpageService.getLogo();
   }
 
   close(reason: string) {

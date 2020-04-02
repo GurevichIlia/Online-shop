@@ -13,25 +13,33 @@
       </div>
       <div class="col-12 col-xl-11 mb-5">
             <mdb-carousel [type]="'carousel-multi-item'" [animation]="'slide'">
-                  <mdb-carousel-item  *ngFor=" let product of products">
-                  <div class="row mb-5">
-                        <div class="col-3">
+                  <mdb-carousel-item *ngFor=" let product of products">
+                        <div class="row mb-5">
+                              <div class="col-3">
 
-                              <app-product [product]="product"></app-product>
-                        </div>
-                        <div class="col-3">
-                              <app-product [product]="product"></app-product>
+                                    <app-product (addToCart)="onAddToCart(product)"
+                                          (removeFromCart)="onRemoveFromCart(product)" (moreInfo)="onMoreInfo(product)"
+                                          [product]="product"></app-product>
+                              </div>
+                              <div class="col-3">
+                                    <app-product (addToCart)="onAddToCart(product)"
+                                          (removeFromCart)="onRemoveFromCart(product)" (moreInfo)="onMoreInfo(product)"
+                                          [product]="product"></app-product>
 
-                        </div>
-                        <div class="col-3">
-                              <app-product [product]="product"></app-product>
+                              </div>
+                              <div class="col-3">
+                                    <app-product (addToCart)="onAddToCart(product)"
+                                          (removeFromCart)="onRemoveFromCart(product)" (moreInfo)="onMoreInfo(product)"
+                                          [product]="product"></app-product>
 
-                        </div>
-                        <div class="col-3">
-                              <app-product [product]="product"></app-product>
+                              </div>
+                              <div class="col-3">
+                                    <app-product (addToCart)="onAddToCart(product)"
+                                          (removeFromCart)="onRemoveFromCart(product)" (moreInfo)="onMoreInfo(product)"
+                                          [product]="product"></app-product>
 
+                              </div>
                         </div>
-                  </div>
                   </mdb-carousel-item>
             </mdb-carousel>
       </div>

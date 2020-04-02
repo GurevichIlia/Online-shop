@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Product, ProductInCart } from '../interfaces';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,15 @@ import { Subject, BehaviorSubject } from 'rxjs';
 export class GeneralService {
   currentTheme$ = new BehaviorSubject<string>('orange-theme');
   openOrderDetails$ = new Subject();
-  constructor() { }
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => {
+        if (result.matches) {
+          return result.matches;
+        };
+      }));
+  constructor(private breakpointObserver: BreakpointObserver
+  ) { }
 
   addKeyToObjectArray(products: Product[]) {
     if (products) {
@@ -39,4 +49,10 @@ export class GeneralService {
   getTheme$() {
     return this.currentTheme$.asObservable();
   }
+
+  isMobileView$() {
+    return this.isHandset$;
+  }
+
+  
 }

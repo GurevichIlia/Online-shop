@@ -4,7 +4,7 @@
                   <i class="material-icons">
                         shopping_cart
                   </i>
-                  <span>You have {{orderedProducts?.length}} items in your cart</span>
+                  <span>{{'You have' | translate}} {{orderedProducts?.length}} {{'items in your cart' | translate}}</span>
             </mat-toolbar>
       </div>
       <div class="col-12 product-card">
@@ -19,7 +19,7 @@
 
       <div class="col-12 text-right">
             <hr>
-            <h3>מחיר סה"כ: {{orderedProductsAmount + extraOption.price | currency: 'NIS '}}</h3>
+            <h3>{{'Total' | translate}}: {{orderedProductsAmount + extraOption.price | currency: 'NIS '}}</h3>
       </div>
 
 

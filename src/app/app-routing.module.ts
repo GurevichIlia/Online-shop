@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'product-info/:id', loadChildren: () => import('./modules/product-info/product-info.module').then(m => m.ProductInfoModule) },
   { path: 'customer-info', loadChildren: () => import('./modules/customer-info/customer-info.module').then(m => m.CustomerInfoModule) },
   { path: 'payment', loadChildren: () => import('./modules/payment-info/payment-info.module').then(m => m.PaymentInfoModule) },
+  { path: 'add-products', loadChildren: () => import('./modules/add-product/add-product.module').then(m => m.AddProductModule) },
+
 
   { path: '**', redirectTo: '/main-page' },
 

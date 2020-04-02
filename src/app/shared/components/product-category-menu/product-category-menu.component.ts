@@ -1,5 +1,5 @@
 import { ShopingPageService } from './../../services/shoping-page.service';
-import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ProductCategory } from '../../interfaces';
@@ -28,8 +28,13 @@ export class ProductCategoryMenuComponent implements OnChanges {
 
   ngOnChanges() {
     this.dataSource.data = this.categoriesTree;
-  }
+    if (this.dataSource.data.length !== 0) {
+      this.treeControl.dataNodes = this.dataSource.data;
+      this.treeControl.expandAll();
 
+    }
+
+  }
 
   setCategory(categoryId: number) {
     console.log('SELECTED CATEGORY', categoryId);

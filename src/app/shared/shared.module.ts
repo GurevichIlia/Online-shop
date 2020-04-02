@@ -9,19 +9,25 @@ import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
-import { ProductComponent as DetailProductComponent  } from './components/order-details/product/product.component';
+import { ProductComponent as DetailProductComponent } from './components/order-details/product/product.component';
 import { TotalPriceComponent } from './components/order-details/total-price/total-price.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { TableComponent } from './components/table/table.component';
+import { SuccessfulPaymentComponent } from './components/successful-payment/successful-payment.component';
+import { FailedPaymentComponent } from './components/failed-payment/failed-payment.component';
+import { ProductsCarouselComponent } from './components/products-carousel/products-carousel.component';
 
 import { DetectChangeDirective } from './directives/detect-change.directive';
 import { ChangeThemeDirective } from './directives/change-theme.directive';
-import { SuccessfulPaymentComponent } from './components/successful-payment/successful-payment.component';
-import { FailedPaymentComponent } from './components/failed-payment/failed-payment.component';
+
+
 
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'angular-bootstrap-md';
+import { TranslateModule } from '@ngx-translate/core';
+import { BannerListComponent } from './components/banner-list/banner-list.component';
+import { GetLinkPipe } from './pipes/get-link.pipe';
 
 
 
@@ -42,7 +48,10 @@ import { CarouselModule } from 'angular-bootstrap-md';
     CarouselComponent,
     SuccessfulPaymentComponent,
     FailedPaymentComponent,
-    ProductComponent
+    ProductComponent,
+    ProductsCarouselComponent,
+    BannerListComponent,
+    GetLinkPipe
   ],
   imports: [
     CommonModule,
@@ -50,7 +59,8 @@ import { CarouselModule } from 'angular-bootstrap-md';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    CarouselModule
+    CarouselModule,
+    TranslateModule.forChild()
 
   ],
   exports: [
@@ -58,7 +68,8 @@ import { CarouselModule } from 'angular-bootstrap-md';
     ReactiveFormsModule,
     MaterialModule,
     CarouselModule,
-
+    TranslateModule,
+    
     HomeComponent,
     HeaderComponent,
     FooterComponent,
@@ -70,10 +81,14 @@ import { CarouselModule } from 'angular-bootstrap-md';
     FailedPaymentComponent,
     ProductComponent,
     DetailProductComponent,
+    ProductsCarouselComponent,
+    BannerListComponent,
 
     ChangeThemeDirective,
     DetectChangeDirective,
-    
+
+    GetLinkPipe
+
   ]
 })
 export class SharedModule { }

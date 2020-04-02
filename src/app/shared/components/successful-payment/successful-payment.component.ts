@@ -32,8 +32,7 @@ export class SuccessfulPaymentComponent implements OnInit {
     }
     this.paymentService.setParams(params);
     this.params = this.paymentService.getParams();
-
-
+    console.log('PARAMS', this.params);
   }
 
 }

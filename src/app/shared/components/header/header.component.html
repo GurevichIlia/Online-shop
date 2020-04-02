@@ -1,8 +1,12 @@
 <div class="container-fluid p-0">
 
-      <mat-toolbar dir="rtl" color="primary" class="row align-items-center justify-content-center header">
-            <div class="col-8 col-xl-7 text-right">Header</div>
-            <div class="col-2 col-xl-2">
+      <mat-toolbar dir="rtl" color="primary" class="row align-items-center justify-content-around header">
+            <div class="col-9 col-xl-3 text-right">
+                  <div class="logo-box">
+                        <a routerLink="/main-page"><img width="100%" height="auto" [src]="logo" alt=""></a>
+                  </div>
+            </div>
+            <!-- <div class="col-2 col-xl-2">
                   <mat-form-field>
                         <mat-select [value]="themes[0].name">
                               <mat-option (click)="onSelectTheme(theme.name)" *ngFor="let theme of themes"
@@ -11,8 +15,8 @@
                               </mat-option>
                         </mat-select>
                   </mat-form-field>
-            </div>
-            <div class="col-2 col-xl-2">
+            </div> -->
+            <div class="col-3 col-xl-2">
                   <button mat-fab color="accent" (click)="onShopingCart()">
 
                         <i [matBadge]="addedProductsQuantity" matBadgeColor="warn" class="material-icons">
@@ -23,34 +27,65 @@
 
 
 </div>
-<mat-toolbar class="nav-bar">
+<mat-toolbar class="nav-bar align-items-center">
       <div class="container text-center">
-            <div class="row">
+            <div class="row " [ngClass]="{'text-right': isShowMenu}">
                   <div class="col-12">
-                        <ul class="list-unstyled ">
+
+                        <!-- MOBILE TOGGLE MENU -->
+
+                        <button *ngIf="isShowMenu" mat-icon-button [matMenuTriggerFor]="menu"
+                              aria-label="Example icon-button with a menu">
+                              <mat-icon class="menu-toggle">menu</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                              <button mat-menu-item>
+                                    <mat-icon>home</mat-icon>
+                                    <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+                              </button>
+                              <button mat-menu-item>
+                                    <mat-icon>shopping_basket </mat-icon>
+                                    <a routerLink="/shoping-page"
+                                          routerLinkActive="underline">{{'Shop' | translate}}</a>
+                              </button>
+                              <button mat-menu-item>
+                                    <mat-icon>category
+                                    </mat-icon>
+                                    <a routerLink="/categories"
+                                          routerLinkActive="underline">{{'Categories' | translate}}</a>
+                              </button>
+                              <button mat-menu-item>
+                                    <mat-icon>info</mat-icon>
+                                    <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+                              </button>
+                        </mat-menu>
+
+                        <!-- DESKTOP MENU -->
+                        <ul *ngIf="!isShowMenu" class="list-unstyled ">
                               <li class="navItem">
+                                    <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
 
-
-                                    <a routerLink="/main-page" routerLinkActive="underline">Home</a>
+                              </li>
+                              <li class="navItem">
+                                    <a routerLink="/shoping-page"
+                                          routerLinkActive="underline">{{'Shop' | translate}}</a>
 
                               </li>
                               <li class="navItem">
 
+                                    <a routerLink="/categories"
+                                          routerLinkActive="underline">{{'Categories' | translate}}</a>
+                              </li>
+                              <li class="navItem">
 
-                                    <a routerLink="/shoping-page" routerLinkActive="underline">Shop</a>
+                                    <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+
 
                               </li>
                               <li class="navItem">
 
-                                    <a routerLink="/categories" routerLinkActive="underline">Categories</a>
-
-
-                              </li>
-                              <li class="navItem">
-
-                                    <a routerLink="/about" routerLinkActive="underline">About</a>
-
-
+                                    <a routerLink="/add-products"
+                                          routerLinkActive="underline">{{'Add products' | translate}}</a>
                               </li>
 
                         </ul>

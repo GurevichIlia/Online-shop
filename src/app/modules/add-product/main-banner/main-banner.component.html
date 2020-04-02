@@ -1,0 +1,79 @@
+<div class="container-fluid">
+      <div class="row existing-banners">
+            <div class="col-12 col-xl-12">
+                  <h2> {{banners[selectedBanner.value - 1].name}} {{'Existing images' | translate}}</h2>
+                  <app-banner-list [banners]="existingBanners$ | async" (edit)="onEdit($event)" (delete)="onDelete($event)">
+                  </app-banner-list>
+            </div>
+      </div>
+      <hr>
+
+      <div class="row my-4">
+            <div class="col-12 col-xl-4 order-xl-first ">
+                  <form [formGroup]="form">
+                        <div class="row">
+                              <mat-form-field class="col-12 col-xl-10 mb-2">
+                                    <mat-label>Type of banner</mat-label>
+                                    <mat-select [formControl]="selectedBanner">
+                                          <mat-option *ngFor="let banner of banners" [value]="banner.id">
+                                                {{banner.name}}
+                                          </mat-option>
+                                    </mat-select>
+                              </mat-form-field>
+
+                              <div class="col-12 col-xl-10 mb-2 text-justify">
+                                    <input (change)="onChange(fileInput.files[0])" class="file-input" type="file"
+                                          multiple #fileInput />
+                              </div>
+
+                              <mat-form-field class="col-12 col-xl-10 mb-2">
+                                    <input formControlName="title" matInput placeholder="{{'Title' | translate}}" />
+
+                              </mat-form-field>
+
+                              <mat-form-field class="col-12 col-xl-10 mb-2">
+                                    <input formControlName="subtitle" matInput
+                                          placeholder="{{'Subtitle' | translate}}" />
+
+                              </mat-form-field>
+
+                              <mat-form-field class="col-12 col-xl-10 mb-2">
+                                    <input formControlName="content" matInput placeholder="{{'Content' | translate}}" />
+                              </mat-form-field>
+
+                              <div class="col-12 col-xl-10 mb-4">
+                                    <mat-label class="mx-3">{{'Text color' | translate}}</mat-label>
+
+                                    <input [(colorPicker)]="color" [style.background]="color" />
+
+                              </div>
+
+
+                              
+                              <div class="col-12 col-xl-5">
+                                    <button (click)="uploadFile()" class="w-100" color="accent" type="submit"
+                                          mat-raised-button>Submit</button>
+
+                              </div>
+                        </div>
+                  </form>
+
+            </div>
+            <div class="col-12 col-xl-8  order-first text-center mb-4">
+                  <div class="image-box box-1">
+                        <img class="responsive" [src]="selectedBanner.value === 1? sliderImage : smallBannerImage "
+                              alt=" First slide">
+                        <div class="back-color">
+                              <div class="m-auto">
+                                    <h2 [style.color]="form.get('textColor').value">{{form.get('title').value}}</h2>
+                                    <h5 [style.color]="form.get('textColor').value">{{form.get('content').value}}</h5>
+                                    <h3 [style.color]="form.get('textColor').value">{{form.get('subtitle').value}}</h3>
+
+                              </div>
+                        </div>
+                  </div>
+
+            </div>
+
+      </div>
+</div>

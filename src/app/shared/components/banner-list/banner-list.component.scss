@@ -1,0 +1,45 @@
+.banner-box {
+  width: 150px;
+  height: 100px;
+
+}
+
+.image-box {
+  position: relative;
+  width: inherit;
+  height: inherit;
+
+  span.material-icons {
+    display: none;
+  }
+}
+
+.image-box:hover {
+  cursor: pointer;
+  background-color: blanchedalmond;
+
+  span.material-icons.delete {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: white;
+  }
+
+  span.material-icons.edit {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    color: white;
+    padding: 2px;
+    font-size: 20px;
+  }
+
+  span.existing-images {
+    font-size: 25px;
+    ;
+  }
+}

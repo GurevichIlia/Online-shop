@@ -13,7 +13,22 @@ export class NewArrivalsComponent {
   @Input() selectedCategory: ProductCategory;
   @Output() selectCategory = new EventEmitter<ProductCategory>();
 
+  @Output() addToCart = new EventEmitter();
+  @Output() moreInfo = new EventEmitter();
+  @Output() removeFromCart = new EventEmitter();
 
+  onAddToCart(product: Product) {
+    this.addToCart.emit(product);
+  }
+
+  onMoreInfo(product: Product) {
+    this.moreInfo.emit(product);
+  }
+
+  onRemoveFromCart(product: Product) {
+    this.removeFromCart.emit(product);
+
+  }
   selectNewArrivalsCategory(category: ProductCategory) {
     this.selectCategory.emit(category);
   }

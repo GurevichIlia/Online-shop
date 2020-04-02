@@ -1,0 +1,22 @@
+<ul class="list-unstyled" *ngIf="_banners.length !== 0; else empty">
+      <li class="d-inline-block mx-3" *ngFor="let banner of _banners; let i = index">
+            <div class="banner-box">
+                  <div class="image-box">
+                        <img width="100%" height="100%" [src]="banner.image" alt="">
+                        <span class="material-icons delete" (click)="onDelete(i)">
+                              clear
+                        </span>
+                        <span (click)="onEdit(banner)" class="material-icons edit">
+                              edit
+                        </span>
+                  </div>
+                  <h3><strong>{{'Title' | translate}}</strong>: {{banner.title}}</h3>
+
+            </div>
+      </li>
+</ul>
+<ng-template #empty>
+      <div class="m-auto">
+            <span class="existing-images">{{'NO ONE IMAGES'}}</span>
+      </div>
+</ng-template>
