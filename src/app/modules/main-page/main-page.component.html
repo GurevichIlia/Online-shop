@@ -8,12 +8,15 @@
       <div class="text-title mb-5">
             <h2>{{'Featured Products' | translate}}</h2>
       </div>
-      <app-products-carousel (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
-            (moreInfo)="showProductFullInfo($event)" [products]="featuredProducts$ | async"
-            [productCategories]="productCategories$ | async"
-            [selectedCategory]="currentFeaturedProductsCategory$ | async"
-            (selectCategory)="selectFeaturedProductsCategory($event)">
-      </app-products-carousel>
+      <div class="container-fluid">
+            <app-products-carousel (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
+                  (moreInfo)="showProductFullInfo($event)" [products]="featuredProducts$ | async"
+                  [productCategories]="productCategories$ | async"
+                  [selectedCategory]="currentFeaturedProductsCategory$ | async"
+                  (selectCategory)="selectFeaturedProductsCategory($event)">
+            </app-products-carousel>
+      </div>
+
 
 </div>
 

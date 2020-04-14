@@ -5,12 +5,20 @@
       "About": "אודות",
       "Featured Products": "מוצרים מומלצים",
       "New Arrivals": "מוצרים חדשים",
-      "Quntity": "כמות",
+      "Quantity": "כמות",
       "Enter Your Information": "הזן את המידע שלך",
       "Enter Your Contact Infomation": "הזן את פרטי הקשר שלך",
       "Show Order details": "הצג את פירוט ההזמנה",
-      "You have ": "יש לך",
-      "items in your cart": "מוצרים בסל",
+      "You have": "יש לך",
+      "Items in your cart": "מוצרים בסל",
       "Products": "מוצרים",
-      "Total": "סה``כ מחיר"
+      "Total": "סה``כ מחיר",
+      "Back to Shop": "בחזרה לחנות",
+      "Description": "תיאור",
+      "Remove": "הסר",
+      "Buy now": "קנה עכשיו",
+      "Added": "נמצא בסל",
+      "Add to Cart": "Add to Cart"
+
 }
+      

@@ -3,8 +3,8 @@ import { ShopingCartService } from './../../shared/services/shoping-cart.service
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subject, Observable } from 'rxjs';
-import { takeUntil, debounceTime, map, switchMap, tap } from 'rxjs/operators';
+import { Subject, Observable, of, combineLatest, merge } from 'rxjs';
+import { takeUntil, debounceTime, map, switchMap, tap, combineAll, mergeAll } from 'rxjs/operators';
 
 import { ShopStateService } from './../../shared/services/shop-state.service';
 import { GeneralService } from './../../shared/services/general.service';
@@ -12,8 +12,7 @@ import { PaymentService } from './../../shared/services/payment.service';
 import { ApiService } from './../../shared/services/api.service';
 import { CustomerInfoService, CustomerInfo } from './../../shared/services/customer-info.service';
 
-import { CustomerOrderInfo } from './../../shared/interfaces';
-import { ProductInCart } from 'src/app/shared/interfaces';
+import { ProductInCart, OrderInfo } from 'src/app/shared/interfaces';
 
 
 
@@ -61,7 +60,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
       .pipe(switchMap((products: ProductInCart[]) => {
         const productsAmount = this.generalService.calculateProductAmount(products);
         return this.shopingCartService.getSelectedShipingOption()
-          .pipe(map(option => option.price + productsAmount),
+          .pipe(map(option => option.ShippingPrice + productsAmount),
             tap(totalPrice => this.totalPrice = totalPrice));
       }));
   }
@@ -107,40 +106,49 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
   }
 
   saveOrderInfo(customerInfo: CustomerInfo = this.form.value) {
-    if (this.form.valid) {
-      const orderInfo: CustomerOrderInfo = {
-        firstName: customerInfo.firstName,
-        lastName: customerInfo.lastName,
-        receiptName: customerInfo.receiptName,
-        cellphone: customerInfo.cellphone,
-        email: customerInfo.email,
-        buildingNumber: customerInfo.buildingNumber,
-        street: customerInfo.street,
-        floor: customerInfo.floor,
-        flat: customerInfo.flat,
-        city: customerInfo.city,
-        zipCode: customerInfo.zipCode,
-        kevaAmount: this.totalPrice,
-        TotalMonthtoCharge: 999,
+    const finalOrder$ = this.shopStateService.getAddedToCartProducts$();
+    const ShippingMethod$ = this.shopingCartService.getSelectedShipingOption();
 
+    combineLatest([finalOrder$, ShippingMethod$])
+      .pipe(switchMap((combinedValue) => {
+        if (this.form.valid) {
+          const orderInfo: OrderInfo = {
+            firstName: customerInfo.firstName,
+            lastName: customerInfo.lastName,
+            receiptName: customerInfo.receiptName,
+            cellphone: customerInfo.cellphone,
+            email: customerInfo.email,
+            buildingNumber: customerInfo.buildingNumber,
+            street: customerInfo.street,
+            floor: customerInfo.floor,
+            flat: customerInfo.flat,
+            city: customerInfo.city,
+            zipCode: customerInfo.zipCode,
+            kevaAmount: this.totalPrice,
+            TotalMonthtoCharge: 999,
+            ShippingMethod: combinedValue[1].Shippingid,
+            order: this.customerInfoService.removeFilesFromProductCard(combinedValue[0])
 
-      }
-
-      this.apiService.saveCustomerInfo(orderInfo)
-        .pipe(takeUntil(this.subscription$))
-        .subscribe(response => {
-          console.log('AFTER SAVE', response);
-          if (response && response['IsError'] !== true) {
-
-            const paymentUrl = response['Data'];
-            this.paymentService.setPaymentLink(paymentUrl);
-            this.router.navigate(['payment'])
           }
-        }, err => this.notifications.error('Something went wrong', err.message));
-    }
+          console.log('FINAL ORDER', orderInfo)
+          console.log('FINAL ORDER', JSON.stringify(orderInfo));
 
-
+          return this.apiService.saveCustomerInfo(orderInfo);
+        }
+      }),
+       takeUntil(this.subscription$))
+      .subscribe(response => {
+        console.log('AFTER SAVE', response);
+        if (response && response['IsError'] !== true) {
+          const paymentUrl = response['Data'];
+          this.paymentService.setPaymentLink(paymentUrl);
+          this.router.navigate(['payment']);
+        }
+      }, err => this.notifications.error('Something went wrong', err.message));
   }
+
+
+
 
   openOrderDetails() {
     this.generalService.openOrderSetails();

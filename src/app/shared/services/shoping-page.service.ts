@@ -1,7 +1,8 @@
+import { GeneralService } from './general.service';
+import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { ProductCategory } from '../interfaces';
-import { filter } from 'rxjs/operators';
+import { Subject, BehaviorSubject, EMPTY } from 'rxjs';
+import { filter, map, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,17 @@ import { filter } from 'rxjs/operators';
 export class ShopingPageService {
   selectedCategory = new BehaviorSubject<number>(0);
   selectedCategory$ = this.selectedCategory.asObservable();
-  constructor() { }
+  constructor(
+    private apiService: ApiService,
+    private generalService: GeneralService
+  ) { }
 
   setCategory(categoryId: number) {
     this.selectedCategory.next(categoryId);
   }
 
   getSelectedCategory$() {
-    return this.selectedCategory$.pipe(filter(categories => categories !== null))
+    return this.selectedCategory$.pipe(filter(categories => categories !== null));
   }
 
   getNestedChildren(arr, parent) {
@@ -39,5 +43,20 @@ export class ShopingPageService {
     // const data = this.buildFileTree(children, 0);
     // this.dataChange.next(children);
     return children;
+  }
+
+  getWebGroupsProducts(productId: number) {
+    return this.apiService.getWebGroupsProducts(productId)
+      .pipe(
+        map(({ Data }) => {
+          if (Data.WebGroupsProduct) {
+            const products = this.generalService.addKeyToObjectArray(Data.WebGroupsProduct);
+            return products;
+          } else {
+            return [];
+          }
+        }),
+        shareReplay(6)
+      );
   }
 }

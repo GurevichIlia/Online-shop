@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -25,10 +25,12 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent
 
   ],
+  
   imports: [
     CommonModule,
     BrowserAnimationsModule,
     BrowserModule,
+    HammerModule,
     AppRoutingModule,
     SharedModule,
     HttpClientModule,

@@ -3,12 +3,12 @@ import { GeneralService } from './../../shared/services/general.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap, shareReplay } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { ShopingCartService, Option } from './../../shared/services/shoping-cart.service';
+import { ShopingCartService } from './../../shared/services/shoping-cart.service';
 import { ShopStateService } from './../../shared/services/shop-state.service';
-import { Product, ProductInCart } from 'src/app/shared/interfaces';
+import { Product, ProductInCart, ShippingMethod } from 'src/app/shared/interfaces';
 
 
 
@@ -18,10 +18,9 @@ import { Product, ProductInCart } from 'src/app/shared/interfaces';
   styleUrls: ['./shoping-cart.component.scss']
 })
 export class ShopingCartComponent implements OnInit {
-  extraOptions: Option[];
+  shippingMethods$: Observable<ShippingMethod[]>;
   selectedProducts$: Observable<Product[]>;
-  // extraOptionsSelected: Option[] = [];
-  selectedShipingOption$: Observable<Option>;
+  selectedShipingOption$: Observable<ShippingMethod>;
 
   totalProductsAmount$: Observable<number> = of(0);
 
@@ -48,7 +47,7 @@ export class ShopingCartComponent implements OnInit {
 
     this.getSelectedShipingOption();
 
-    this.extraOptions = this.shopingCartService.getOptions();
+    this.shippingMethods$ = this.shopingCartService.getShippingMethods();
   }
 
   onShowProductInfo(product: Product) {
@@ -74,15 +73,9 @@ export class ShopingCartComponent implements OnInit {
 
   }
 
-  onSelectOption(optionId: number) {
+  onSelectOption(method: ShippingMethod) {
 
-    // this.extraOptionsSelected = this.shopingCartService.addOption(option, [...this.extraOptionsSelected]);
-
-    // console.log('SELECTED OPTIONs ARRAY ', this.extraOptionsSelected);
-
-    // this.calculateExtraOptionsAmount(this.extraOptionsSelected);
-
-    this.shopingCartService.setSelectedShipingOption(optionId);
+    this.shopingCartService.setSelectedShipingOption(method);
 
     this.calculateTotalAmount();
 
@@ -93,13 +86,16 @@ export class ShopingCartComponent implements OnInit {
   // }
 
   getSelectedShipingOption() {
-    this.selectedShipingOption$ = this.shopingCartService.getSelectedShipingOption();
+    this.selectedShipingOption$ = this.shopingCartService.getSelectedShipingOption()
+      .pipe(
+        shareReplay(),
+      );
   }
 
   calculateTotalAmount() {
-    this.totoalAmountForAll$ = this.selectedShipingOption$.pipe(switchMap((option: Option) => {
-      if (option && option.price) {
-        return this.totalProductsAmount$.pipe(map(productsAmount => productsAmount + option.price));
+    this.totoalAmountForAll$ = this.selectedShipingOption$.pipe(switchMap((option: ShippingMethod) => {
+      if (option && option.ShippingPrice) {
+        return this.totalProductsAmount$.pipe(map(productsAmount => productsAmount + option.ShippingPrice));
       } else {
         return this.totalProductsAmount$;
       }

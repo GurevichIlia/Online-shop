@@ -1,11 +1,11 @@
-<mdb-carousel [animation]="'slide'">
+<mdb-carousel [animation]="slides?.length === 1 ? '': 'slide'">
       <mdb-carousel-item *ngFor="let slide of slides"><a routerLink="/shoping-page">
                   <!-- <div class="image-box box-1" style="background-image: 'url({{slide.image}})'"> -->
-                  <div class="image-box box-1" >
+                  <div class="image-box box-1">
                         <img class="responsive" [src]="slide.link" alt="First slide">
-                        <div class="back-color" >
+                        <div class="back-color">
                               <div class="m-auto">
-<!-- 
+                                    <!-- 
                                     <h2 [style.color]="slide.textColor">{{slide.title}}</h2>
                                     <h5 [style.color]="slide.textColor">{{slide.content}}</h5>
                                     <h3 [style.color]="slide.textColor">{{slide.subtitle}}</h3> -->

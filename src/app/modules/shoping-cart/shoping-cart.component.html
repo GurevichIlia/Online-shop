@@ -25,7 +25,7 @@
 
                   <ng-template #empty>
                         <mat-card>
-                              <h3>Cart is Empty </h3>
+                              <h3>{{'Cart is Empty' | translate}}</h3>
 
                         </mat-card>
                   </ng-template>
@@ -36,7 +36,7 @@
                                           <h2>בחר שיטת משלוח</h2>
                                           <app-extra-options (selectOption)="onSelectOption($event)"
                                                 [selectedOption]="selectedShipingOption$ | async"
-                                                [extraOptions]="extraOptions">
+                                                [shippingMethods]="shippingMethods$ | async">
                                           </app-extra-options>
                                     </div>
                                     <div class="col-12 col-xl-6 order-first">
@@ -56,7 +56,7 @@
                               <hr>
                               <div class="mt-3 col-12 col-lg-5 col-xl-5 text-right mb-4">
                                     <h2>סה"כ מחיר:
-                                          {{totoalAmountForAll$ | async | currency: 'NIS '}}</h2>
+                                          {{totoalAmountForAll$ | async | currency: 'ILS'}}</h2>
 
                               </div>
                               <div class="col-12 col-lg-3 col-xl-3">

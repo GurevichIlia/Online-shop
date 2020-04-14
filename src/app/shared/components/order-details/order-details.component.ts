@@ -1,4 +1,4 @@
-import { Option } from './../../services/shoping-cart.service';
+import { ShippingMethod } from './../../interfaces';
 import { Product, ProductInCart } from 'src/app/shared/interfaces';
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 
@@ -11,7 +11,7 @@ import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from 
 export class OrderDetailsComponent {
   @Input() orderedProductsAmount: number;
   @Input() orderedProducts: ProductInCart[] = [];
-  @Input() extraOption: Option;
+  @Input() extraOption: ShippingMethod;
   @Output() delete = new EventEmitter();
   @Output() edit = new EventEmitter();
 

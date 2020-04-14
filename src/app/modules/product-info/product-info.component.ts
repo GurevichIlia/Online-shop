@@ -1,11 +1,11 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+
+import { Product } from 'src/app/shared/interfaces';
+import { Observable, combineLatest } from 'rxjs';
 import { ProductInfoService } from './../../shared/services/product-info.service';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { ShopStateService } from './../../shared/services/shop-state.service';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Product } from 'src/app/shared/interfaces';
-import { Observable, from } from 'rxjs';
-
 
 @Component({
   selector: 'app-product-info',
@@ -15,7 +15,7 @@ import { Observable, from } from 'rxjs';
 export class ProductInfoComponent implements OnInit {
   product$: Observable<Product>;
   currentPhotoIndex = 0;
-  quantityPhotos: number;
+  // quantityPhotos: number;
   constructor(
     private route: ActivatedRoute,
     private shopStateService: ShopStateService,
@@ -27,17 +27,37 @@ export class ProductInfoComponent implements OnInit {
 
     this.product$ = this.route.paramMap
       .pipe(switchMap((params: ParamMap) =>
-        this.shopStateService.getProduct$(+params.get('id'))));
+        combineLatest(
+          [this.shopStateService.getProduct$(+params.get('id')),
+          this.productInfoService.getProductsFiles(+params.get('id'))]
+        )),
+        map(([product, productFiles]) => {
+          const transformedProduct = { ...product, files: productFiles };
+          return transformedProduct;
+        }),
+        tap(product => this.selectMainImageWhenProductInitial(product)),
+        tap(product => console.log('PRODUCT', product))
+      );
 
   }
 
-  onPreviousImage() {
-    this.currentPhotoIndex = this.productInfoService.onPreviousImage(this.currentPhotoIndex, this.quantityPhotos);
+  selectMainImageWhenProductInitial(product: Product) {
+    const imageIndex = product.files.findIndex(file => product.MainWebImageName === file.FullName);
+    this.onSelectImage(imageIndex);
+  }
+
+
+  onSelectImage(index: number) {
+    this.currentPhotoIndex = index;
+  }
+
+  onPreviousImage(photosArrayLength: number) {
+    this.currentPhotoIndex = this.productInfoService.onPreviousImage(this.currentPhotoIndex, photosArrayLength - 1);
 
   }
 
-  onNextImage() {
-    this.currentPhotoIndex = this.productInfoService.onNextImage(this.currentPhotoIndex, this.quantityPhotos);
+  onNextImage(photosArrayLength: number) {
+    this.currentPhotoIndex = this.productInfoService.onNextImage(this.currentPhotoIndex, photosArrayLength - 1);
   }
 
   addToShopingCart(product: Product) {

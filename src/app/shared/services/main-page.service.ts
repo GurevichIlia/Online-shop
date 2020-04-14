@@ -29,8 +29,19 @@ export class MainPageService {
     carouselImages: [],
     images: []
   };
-
   mainBannerImages$ = new BehaviorSubject<MainBannerImages>(this.initialMainBannerImages);
+
+  initialCategory: ProductCategory = {
+    GroupId: 0,
+    GroupName: 'All',
+    GroupNameEng: 'All',
+    GroupParenCategory: 0,
+    isHide: false,
+    instituteId: 153
+  }
+
+  currentFeaturedProductsCategory$ = new BehaviorSubject<ProductCategory>(this.initialCategory);
+  currentNewArrivalsCategory$ = new BehaviorSubject<ProductCategory>(this.initialCategory);
   constructor(
     private shopStateService: ShopStateService,
     private generalService: GeneralService,
@@ -45,10 +56,22 @@ export class MainPageService {
     console.log('IMAGES', imagesForMainBanner);
   }
 
+  getCurrentFeaturedProductsCategory$() {
+    return this.currentFeaturedProductsCategory$.asObservable();
+  }
+
+  getCurrentNewArrivalsCategory$() {
+    return this.currentNewArrivalsCategory$.asObservable();
+
+  }
+
   transformProductsForDesktopSlider(products: Product[]) {
-    const mockProducts = [...products, ...products, ...products, ...products, ...products, ...products, ...products];
-    let newProducts = [];
-    let productsPack = [];
+    if (!products) {
+      return;
+    }
+    const mockProducts = [...products];
+    let newProducts: Product[][] = [];
+    let productsPack: Product[] = [];
     mockProducts.map(existProduct => {
       productsPack.push(existProduct);
       if (productsPack.length === 4) {
@@ -65,21 +88,52 @@ export class MainPageService {
 
   }
 
-  getCurrentProducts(currentCategory$: Observable<ProductCategory>) {
+  getCurrentProductsFilteredByCategory(currentCategory$: Observable<ProductCategory>): Observable<Product[]> {
     return currentCategory$
       .pipe(
         switchMap(category => {
-          return this.shopStateService.getProducts$()
-            .pipe(map(products => products.filter(product => {
-              return +product.ProductsWebGroups_GroupId === category.GroupId;
-            })),
-              switchMap(products => {
-                return this.generalService.isMobileView$()
-                  .pipe(map(isMobile => isMobile ? products
-                    .map(product => [product]) : this.transformProductsForDesktopSlider(products)));
-              }), tap(products => console.log('FILTERED PRODUCTS', products)));
-        }));
+          return this.shopStateService.getProductsFilteredByCategory$(category.GroupId)
+        }
+        )
+        // .pipe(
+        //   filter(products => products !== undefined),
+        //   map(products => this.generalService.filterByCategory(products, category.GroupId)
+
+
+      );
   }
+
+  getNewProducts(currentCategory$: Observable<ProductCategory>) {
+    return this.getCurrentProductsFilteredByCategory(currentCategory$)
+      .pipe(
+        filter(products => products !== null && products !== undefined),
+        map(products => products.filter(product => product.IsNewItem === '1')),
+        switchMap(filteredProducts => this.transformForCarousel(filteredProducts)),
+        tap(transformedProducts => console.log('FILTERED NEW PRODUCTS', transformedProducts))
+      );
+  }
+
+  getFeaturedProducts(currentCategory$: Observable<ProductCategory>) {
+    return this.getCurrentProductsFilteredByCategory(currentCategory$)
+      .pipe(
+        map(products => products.filter(product => product.Isfeatured === '1')),
+        switchMap(filteredProducts => this.transformForCarousel(filteredProducts)),
+        tap(transformedProducts => console.log('FILTERED FATURED PRODUCTS', transformedProducts))
+      );
+  }
+
+  transformForCarousel(products: Product[]) {
+    return this.generalService.isMobileView$()
+      .pipe(
+        map(isMobileView =>
+          isMobileView
+            ? products.map(product => [product])
+            : this.transformProductsForDesktopSlider(products)
+        ));
+
+  }
+
+
 
   addMainBannerImage(image: MainBannerImage, bannerType: string) {
     const banner: MainBannerImages = {
@@ -122,14 +176,14 @@ export class MainPageService {
     return this.apiService.getGalleryImages();
   }
 
-  getImageLink(orgId: number, imageFolder: string, imageName: string) {
-    // https://secure.amax.co.il/Upload/153P/LogoFileName1/logo.jpg // EXAMPLE
-    const imageLink = `https://secure.amax.co.il/Upload/${orgId}P/${imageFolder}/${imageName}`;
-    return imageLink;
-  }
+
 
   getLogo() {
-    return this.getGalleryImages().pipe(map(images => this.getImageLink(images[0].OrgId, 'LogoFileName1', images[0].LogoFileName1)))
+    // tslint:disable-next-line: max-line-length
+    return this.getGalleryImages()
+      .pipe(
+        map(images => this.generalService.getImageLink(images[0].OrgId, 'LogoFileName1', images[0].LogoFileName1))
+      );
   }
 
   transformImagesToArray(allImages: ProductsWebImageGallery, imageQuantity: number, imageNameKey: ImageKey): ImageForCarousel[] {
@@ -139,7 +193,7 @@ export class MainPageService {
         [`${imageNameKey}${x}`]: allImages[`${imageNameKey}${x}`],
         [`SortOrder${x}`]: allImages[`SortOrder${x}`],
         [`ImageLink${x}`]: allImages[`ImageLink${x}`],
-        link: this.getImageLink(allImages.OrgId, `${imageNameKey}${x}`, allImages[`${imageNameKey}${x}`])
+        link: this.generalService.getImageLink(allImages.OrgId, `${imageNameKey}${x}`, allImages[`${imageNameKey}${x}`])
       };
 
       if (allImages[`${imageNameKey}${x}`] && allImages[`${imageNameKey}${x}`] !== '0') {

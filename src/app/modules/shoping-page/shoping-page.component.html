@@ -1,14 +1,15 @@
 <div class="row justify-content-center mb-5">
       <div class="col-xl-11 col-12">
             <div class="row mt-5">
-                  <div class="col-12 col-xl-3 sidebar ">
+                  <div class="col-12 col-xl-2 sidebar ">
                         <app-side-menu [categories]="productCategories$ | async">
                         </app-side-menu>
                   </div>
-                  <div class="col-12 col-xl-9 products">
+                  <div class="col-12 col-xl-10 products">
                         <h2>{{'Products' | translate}}</h2>
-                        <app-product-list [products]="products$ | async" (addToCart)="addToShopingCart($event)"
-                              (removeFromCart)="removeFromCart($event)" (moreInfo)="showProductFullInfo($event)">
+                        <app-product-list [products]="products$ | async"
+                              (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
+                              (moreInfo)="showProductFullInfo($event)">
                         </app-product-list>
                   </div>
             </div>

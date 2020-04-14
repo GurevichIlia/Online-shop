@@ -5,7 +5,7 @@ import { ProductCategory, Product, ProductsWebImageGallery } from './../../share
 import { ShopStateService } from './../../shared/services/shop-state.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { tap, switchMap, map } from 'rxjs/operators';
+import { tap, switchMap, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-page',
@@ -14,8 +14,8 @@ import { tap, switchMap, map } from 'rxjs/operators';
 })
 export class MainPageComponent implements OnInit {
   productCategories$: Observable<ProductCategory[]>;
-  currentFeaturedProductsCategory$ = new BehaviorSubject<ProductCategory>({} as ProductCategory);
-  currentNewArrivalsCategory$ = new BehaviorSubject<ProductCategory>({} as ProductCategory);
+  currentFeaturedProductsCategory$: Observable<ProductCategory>;
+  currentNewArrivalsCategory$: Observable<ProductCategory>;
 
   featuredProducts$: Observable<Product[][]>;
   newArrivalsProducts$: Observable<Product[][]>;
@@ -26,7 +26,7 @@ export class MainPageComponent implements OnInit {
   mainPageImages$: Observable<ProductsWebImageGallery>;
 
   imagesForCarousel$: Observable<{}>;
-  imagesForFastShop$: Observable<{}>
+  imagesForFastShop$: Observable<{}>;
   constructor(
     private shopStateService: ShopStateService,
     private router: Router,
@@ -37,29 +37,34 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.productCategories$ = this.shopStateService.getCategories$();
 
-    this.getNewArrivalsProducts();
-    this.getFeaturedProducts();
     this.isMobileView$ = this.generalService.isMobileView$();
 
     this.mainBannerImages$ = this.mainPageService.getMainBannerImages();
     this.getGalleryImages();
 
+    this.currentFeaturedProductsCategory$ = this.mainPageService.getCurrentFeaturedProductsCategory$();
+    this.currentNewArrivalsCategory$ = this.mainPageService.getCurrentNewArrivalsCategory$();
+
+    this.getNewArrivalsProducts();
+    this.getFeaturedProducts();
+
   }
 
   getNewArrivalsProducts() {
-    this.newArrivalsProducts$ = this.mainPageService.getCurrentProducts(this.currentNewArrivalsCategory$);
+    this.newArrivalsProducts$ = this.mainPageService.getNewProducts(this.currentNewArrivalsCategory$);
   }
 
   getFeaturedProducts() {
-    this.featuredProducts$ = this.mainPageService.getCurrentProducts(this.currentFeaturedProductsCategory$);
+    this.featuredProducts$ = this.mainPageService.getFeaturedProducts(this.currentFeaturedProductsCategory$);
+
   }
 
   selectFeaturedProductsCategory(category: ProductCategory) {
-    this.currentFeaturedProductsCategory$.next(category);
+    this.mainPageService.currentFeaturedProductsCategory$.next(category);
   }
 
   selectNewArrivalsCategory(category: ProductCategory) {
-    this.currentNewArrivalsCategory$.next(category);
+    this.mainPageService.currentNewArrivalsCategory$.next(category);
   }
 
   addToShopingCart(product: Product) {

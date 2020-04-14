@@ -1,5 +1,5 @@
-<div class="row">
-      <div class="col-12 col-xl-3 mb-4" *ngFor="let product of products">
+<div class="row" *ngIf="products; else loading">
+      <div class="col-12 col-xl-3 mb-4 product-box" *ngFor="let product of products">
             <app-product *ngIf="products.length !== 0; else empty" [product]="product"
                   (addToCart)="onAddToCart(product)" (removeFromCart)="onRemoveFromCart(product)"
                   (moreInfo)="onMoreInfo(product)">
@@ -10,3 +10,7 @@
 
       </div>
 </div>
+
+<ng-template #loading>
+      <mat-spinner class="mx-auto"></mat-spinner>
+</ng-template>

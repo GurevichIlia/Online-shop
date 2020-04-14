@@ -8,19 +8,19 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 
 })
 export class ProductImageComponent {
-  @Input() image: { url: string };
+  @Input() imageUrl: string;
   // @Input() index: number;
 
-  // @Output() prevImage = new EventEmitter();
-  // @Output() nextImage = new EventEmitter();
+  @Output() prevImage = new EventEmitter();
+  @Output() nextImage = new EventEmitter();
   constructor() { }
 
- 
 
-  // onPrevImage() {
-  //   this.prevImage.emit();
-  // }
-  // onNextImages() {
-  //   this.nextImage.emit();
-  // }
+
+  onPrevImage() {
+    this.prevImage.emit();
+  }
+  onNextImages() {
+    this.nextImage.emit();
+  }
 }

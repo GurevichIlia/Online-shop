@@ -1,10 +1,8 @@
-<mat-card class="product-card">
+<!-- <mat-card class="product-card">
       <mat-card-header>
-            <!-- <div mat-card-avatar class="example-header-image"></div> -->
             <mat-card-title>
                   <h1>{{product.ProdName}}</h1>
             </mat-card-title>
-            <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
 
       </mat-card-header>
       <img class="card-image m-auto" (click)="onMoreInfo()" mat-card-image
@@ -44,24 +42,57 @@
                               </i></button>
                   </div>
                   <div class="col-10 col-xl-10">
-                        <div class="price ">{{product.Price | currency:   'NIS ' }}</div>
+                        <div class="price ">{{product.Price | currency:   'ILS' }}</div>
 
                   </div>
             </div>
+      </mat-card-actions>
+</mat-card> -->
 
-            <!-- <button mat-flat-button color="accent" (click)="onMoreInfo()">More info</button> -->
-            <!-- <button class="add-to-cart-button" *ngIf="!product.addedToCart" color="accent" mat-flat-button (click)="onAddToCart()">Add to Cart <i
-                        class="material-icons ">
-                        add_shopping_cart
-                  </i></button>
-            <button #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
-                  (mouseenter)="addedButtonOnFocus = true" class="btn-added-color" mat-flat-button>Added <i
-                        class="material-icons">
-                        done
-                  </i></button>
-            <button *ngIf="addedButtonOnFocus && product.addedToCart" (mouseleave)="addedButtonOnFocus = false"
-                  (click)="onRemoveFromCard()" color="warn" mat-flat-button>Remove <i class="material-icons">
-                        delete_outline
-                  </i></button> -->
+
+<mat-card class="example-card">
+      <mat-card-header>
+            <mat-card-title>{{product.ProdName}}</mat-card-title>
+            <mat-card-subtitle>Subtitle</mat-card-subtitle>
+      </mat-card-header>
+            <img mat-card-image (click)="onMoreInfo()" [src]="product.MainWebImageName">
+
+      <mat-card-content>
+            <p class="ellipsis">
+                  {{product.ShortDescription_500}}
+            </p>
+      </mat-card-content>
+      <mat-card-actions>
+            <div class="row align-items-center">
+
+
+                  <div class="col-2 col-xl-2">
+                        <button *ngIf="!product.addedToCart" (click)="onAddToCart()" mat-fab color="accent">
+
+                              <i class="material-icons">
+                                    add_shopping_cart
+
+                              </i></button>
+                        <button class="btn-added-color" #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
+                              (mouseenter)="addedButtonOnFocus = true" mat-fab color="accent">
+
+                              <i class="material-icons">
+                                    done
+
+                              </i></button>
+
+                        <button *ngIf="addedButtonOnFocus && product.addedToCart"
+                              (mouseleave)="addedButtonOnFocus = false" (click)="onRemoveFromCard()" mat-fab
+                              color="accent">
+                              <i class="material-icons">
+                                    delete_outline
+
+                              </i></button>
+                  </div>
+                  <div class="col-10 col-xl-10">
+                        <div class="price ">{{product.Price | currency: 'ILS' }}</div>
+
+                  </div>
+            </div>
       </mat-card-actions>
 </mat-card>

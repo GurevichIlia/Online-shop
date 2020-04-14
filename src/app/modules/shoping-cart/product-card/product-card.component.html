@@ -1,10 +1,10 @@
 <div class="row align-items-center">
       <div class="col-11 col-xl-2 text-center ">
-            <img [src]="product.image.url" (click)="onShowProductInfo()">
+            <img [src]="product.MainWebImageName" (click)="onShowProductInfo()">
       </div>
       <div class="col-12 col-xl-3 text-center p-4">
             <h4>{{product.ProdName}}</h4>
-            <p>{{product.ShortDescription_500}}</p>
+            <!-- <p>{{product.ShortDescription_500}}</p> -->
 
 
       </div>
@@ -34,12 +34,12 @@
       <div class="col-6 col-xl-2 ">
             <mat-label>מחיר </mat-label>
 
-            <h4 class="big-size">{{product.Price | currency: 'NIS '}}</h4>
+            <h4 class="big-size">{{product.Price | currency: 'ILS'}}</h4>
       </div>
       <div class="col-12 col-xl-2 ">
             <mat-label>סה"כ</mat-label>
 
-            <h4 class="big-size">{{product.totalPrice | currency: 'NIS '}}</h4>
+            <h4 class="big-size">{{product.totalPrice | currency: 'ILS'}}</h4>
       </div>
       <div class="col-1 col-xl-1 text-center order-first order-xl-last order-md-last order-lg-last">
             <i class="material-icons" (click)="onRemoveFromCart()">

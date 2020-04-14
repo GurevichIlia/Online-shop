@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
-import { Option } from './../../../shared/services/shoping-cart.service';
+import { ShippingMethod } from 'src/app/shared/interfaces';
 
 
 
@@ -10,21 +10,21 @@ import { Option } from './../../../shared/services/shoping-cart.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExtraOptionsComponent implements OnInit {
- selectedOpt: Option;
-  @Input() set selectedOption(option: Option) {
+ selectedOpt: ShippingMethod;
+  @Input() set selectedOption(option: ShippingMethod) {
     
     this.selectedOpt = option;
   }
-  @Input() extraOptions: Option[] = [];
-  @Output() selectOption = new EventEmitter();
+  @Input() shippingMethods: ShippingMethod[] = [];
+  @Output() selectOption = new EventEmitter<ShippingMethod>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  onSelectOption(event: Event, optionId: number
+  onSelectOption(event: Event, method: ShippingMethod
   ) {
     event.preventDefault();
-    this.selectOption.emit(optionId);
+    this.selectOption.emit(method);
   }
 }

@@ -54,5 +54,26 @@ export class GeneralService {
     return this.isHandset$;
   }
 
-  
+  getImageLink(orgId: number, imageFolder: string, imageName: string) {
+    // https://secure.amax.co.il/Upload/153P/LogoFileName1/logo.jpg // EXAMPLE
+    const imageLink = `https://secure.amax.co.il/Upload/${orgId}P/${imageFolder}/${imageName}`;
+    return imageLink;
+  }
+
+  public filterByCategory(products: Product[], categoryId: number) {
+    if (products && categoryId) {
+      const filteredProducts = products.filter(product => {
+        const assignedGroups = product.ProductsWebGroups_GroupId as string[];
+        const findedId = assignedGroups.find(id => +id === categoryId);
+        if (findedId) {
+          return product;
+        }
+      });
+      return filteredProducts;
+    } else if (!categoryId) {
+      return products;
+    }
+
+  }
+
 }

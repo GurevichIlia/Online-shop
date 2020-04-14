@@ -1,6 +1,9 @@
-mat-card-title h1 {
-  font-size: 35px;
+mat-card {
+  // max-height: 535px;
+  max-width: 370px;
+  max-height: 100%
 }
+
 
 .price {
   font-size: 25px;
@@ -12,13 +15,18 @@ mat-card-title h1 {
   background-color: yellowgreen
 }
 
-// button {
-//   width: 100%;
-// }
 
 img {
+  max-height: 200px;
   cursor: pointer;
+  object-fit: contain;
+  height: fit-content;
 }
+
+// img:hover {
+//   transition: all 0.5s;
+//   width: 110%;
+// }
 
 .image-box {
   width: 100%;
@@ -28,14 +36,25 @@ img {
   width: 100%;
 }
 
-.discription {
-  overflow: overlay;
-}
-
 .add-to-cart-button:hover {
   background-color: yellowgreen;
 }
 
 mat-card-actions {
   margin-bottom: 0 !important;
+}
+
+
+// .example-card {
+//   max-width: 400px;
+// }
+
+.ellipsis {
+  margin-bottom: 5px;
+  height: 100px;
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  // white-space: nowrap;
+  overflow: hidden;
 }

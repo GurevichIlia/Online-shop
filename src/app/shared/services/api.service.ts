@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, tap, catchError, shareReplay } from 'rxjs/operators';
-import { ProductCategory, Product, BasicResponse, CustomerOrderInfo, GetProductsWebImageGallery } from '../interfaces';
+import { ProductCategory, Product, BasicResponse, GetProductsWebImageGallery, OrderInfo, ShippingMethod } from '../interfaces';
 import { Observable, of } from 'rxjs';
+import { Params } from '@angular/router';
 
 
 
@@ -23,58 +24,33 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  // getAllProductsAndCategoriesFromServer(): Observable<{ ProductCategories: ProductCategory[], Products: Product[] }> {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       // 'Content-Type': 'application/json',
-  //       Authorization: token
-  //     })
-  //   };
-  //   // tslint:disable-next-line: max-line-length
-  //   return this.http.get<BasicResponse>(`${this.baseUrl}Receipt/GetProductsData?urlAddr=jaffanet1`, httpOptions)
-  //     .pipe(tap(data => console.log(data)), map(response => response.Data)
-  //     );
-  // }
-
-  getProductsWebGroup(): Observable<{ ProductsWebGroups: ProductCategory[] }> {
+  getProductsWebGroup(): Observable<BasicResponse<{ ProductsWebGroups: ProductCategory[] }>> {
     // tslint:disable-next-line: max-line-length
-    return this.http.get<BasicResponse<{ ProductsWebGroups: ProductCategory[] }>>(`${this.baseUrl}ShoppingSite/GetProductsWebGroups?urlAddr=jaffanet1`, httpOptions)
-      .pipe(tap(data => console.log(data)), map(response => response.Data)
-      );
+    return this.http.get<BasicResponse<{ ProductsWebGroups: ProductCategory[] }>>(`${this.baseUrl}ShoppingSite/GetProductsWebGroups?urlAddr=jaffanet1`, httpOptions);
   }
 
-  getWebGroupsProducts(groupId = 3): Observable<{ WebGroupsProduct: Product[] }> {
+  getWebGroupsProducts(groupId: number): Observable<BasicResponse<{ WebGroupsProduct: Product[] }>> {
     // tslint:disable-next-line: max-line-length
     return this.http.get<BasicResponse<{ WebGroupsProduct: Product[] }>>(`${this.baseUrl}ShoppingSite/GetsWebGroupsProduct?urlAddr=jaffanet1&groupid=${groupId}`,
       httpOptions)
-      .pipe(tap(data => console.log(data)), map(response => response.Data)
-      );
   }
 
+  getAllProducts(groupId: number): Observable<BasicResponse<{ WebGroupsProduct: Product[] }>> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<BasicResponse<{ WebGroupsProduct: Product[] }>>(`${this.baseUrl}ShoppingSite/GetsWebGroupsProduct?urlAddr=jaffanet1&groupid=${groupId}`,
+      httpOptions);
+  }
 
-  saveCustomerInfo(orderInfo: CustomerOrderInfo, pageGuid = 'F56154EEDB0F4CE0BF5E206F05E2A6D5') {
+  saveCustomerInfo(orderInfo: OrderInfo, pageGuid = 'F56154EEDB0F4CE0BF5E206F05E2A6D5') {
     return this.http.post(`https://jaffawebapi.amax.co.il/Api/LandingPage/SaveKevaInfo?urlAddr=${pageGuid}`, orderInfo);
   }
-  // getAllProductsAndCategoriesFromServer(): Observable<{ ProductCategories: ProductCategory[], Products: Product[] }> {
-  //   // const httpOptions = {
-  //   //   headers: new HttpHeaders({
-  //   //     // 'Content-Type': 'application/json',
-  //   //     Authorization: token
-  //   //   })
-  //   // };
-  //   // tslint:disable-next-line: max-line-length
-  //   return this.http.get<BasicResponse>(`${this.baseUrl}Receipt/GetProductsData?urlAddr=jaffanet1`, httpOptions)
-  //     .pipe(tap(data => console.log(data)), map(response => response.Data)
-  //     );
-  // }
 
   uploadGalleryLogo(logo: File) {
-    debugger
     const newFile = logo;
     const formData = new FormData();
 
     formData.append('upload', newFile, newFile.name);
-    const test = formData
+    const test = formData;
     const fileHttpOptions = {
       ...httpOptions,
       headers: new HttpHeaders({
@@ -87,24 +63,6 @@ export class ApiService {
       params: new HttpParams()
     };
 
-    // {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     Authorization: token,
-    //     enctype: 'multipart/form-data',
-    //     Accept: 'application/json'
-    //   }),
-    //     params: new HttpParams()
-    // };
-    // const params = new HttpParams();
-    /** In Angular 5, including the header Content-Type can invalidate your request */
-    // headers.append('enctype', 'multipart/form-data');
-    // headers.append('Accept', 'application/json');
-    // const options = {
-    //   header: headers,
-    //   params,
-    //   reportProgress: true
-    // };
 
     return this.http
       .post(`${this.baseUrl}SystemTables/UploadGalleryLogoFile?id=1`, formData, fileHttpOptions)
@@ -122,6 +80,19 @@ export class ApiService {
       (`${this.baseUrl}ShoppingSite/GetProductsWebImageGallery?urlAddr=jaffanet1`)
       .pipe(
         map((res) => res.Data.GetProductsWebImageGallery),
-        shareReplay(3));
+        shareReplay());
+  }
+
+  public getProductsFiles(productId: number): Observable<BasicResponse<{ GetProductFileList: [] }>> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<BasicResponse<{ GetProductFileList: [] }>>(`${this.baseUrl}ShoppingSite/GetProductFileList?orgid=153&ProductId=${productId}`);
+  }
+
+  getShippingMethods(org = 'jaffanet1') {
+    return this.http.get<BasicResponse<{ StoreShipping: ShippingMethod[] }>>(`${this.baseUrl}ShoppingSite/GetStoreShipping?urlAddr=${org}`)
+      .pipe(
+        shareReplay())
+      ;
+
   }
 }

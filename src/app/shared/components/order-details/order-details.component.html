@@ -4,7 +4,8 @@
                   <i class="material-icons">
                         shopping_cart
                   </i>
-                  <span>{{'You have' | translate}} {{orderedProducts?.length}} {{'items in your cart' | translate}}</span>
+                  <span>{{'You have' | translate}} {{orderedProducts?.length}}
+                        {{'Items in your cart' | translate}}</span>
             </mat-toolbar>
       </div>
       <div class="col-12 product-card">
@@ -12,14 +13,14 @@
                   (edit)="onEdit()"></app-product-detail>
 
       </div>
-      <div class="col-12">
+      <div class="col-12"  *ngIf="extraOption && orderedProductsAmount">
             <app-total-price [extraOptionSelected]="extraOption" [totalProductsAmount]="orderedProductsAmount">
             </app-total-price>
       </div>
 
-      <div class="col-12 text-right">
+      <div class="col-12 text-right" *ngIf="extraOption">
             <hr>
-            <h3>{{'Total' | translate}}: {{orderedProductsAmount + extraOption.price | currency: 'NIS '}}</h3>
+            <h3>{{'Total' | translate}}: {{orderedProductsAmount + extraOption.ShippingPrice | currency: 'ILS'}}</h3>
       </div>
 
 

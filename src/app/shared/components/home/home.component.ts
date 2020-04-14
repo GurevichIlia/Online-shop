@@ -1,20 +1,20 @@
+import { HomeService } from './../../services/home.service';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Subject, Observable, combineLatest, } from 'rxjs';
+import { takeUntil, switchMap, map, tap } from 'rxjs/operators';
+import { Product } from '../../interfaces';
+import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
+
+import { ShippingMethod } from './../../interfaces';
 import { MainPageService } from './../../services/main-page.service';
-import { Option, ShopingCartService } from './../../services/shoping-cart.service';
+import { ShopingCartService } from './../../services/shoping-cart.service';
 import { ProductInCart } from 'src/app/shared/interfaces';
 import { GeneralService } from './../../services/general.service';
 import { NotificationsService } from './../../services/notifications.service';
 import { ShopStateService } from './../../services/shop-state.service';
-import { ApiService } from './../../services/api.service';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Subject, Observable, combineLatest, BehaviorSubject } from 'rxjs';
-import { takeUntil, switchMap, map, tap } from 'rxjs/operators';
-import { Product } from '../../interfaces';
-import { Router } from '@angular/router';
-import { ShopingPageService } from '../../services/shoping-page.service';
-import { MatSidenav } from '@angular/material/sidenav';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
-type TotalDetails = Observable<[ProductInCart[], number, Option]>;
+type TotalDetails = Observable<[ProductInCart[], number, ShippingMethod]>;
 
 @Component({
   selector: 'app-home',
@@ -31,16 +31,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   selectedProducts$: Observable<Product[]>;
   selectedProductsAmount$: Observable<number>;
-  selectedShipingOption$: Observable<Option>;
+  selectedShipingOption$: Observable<ShippingMethod>;
 
   totalDetails$: TotalDetails;
 
   currentTheme$: Observable<string>;
   isHandset$: Observable<boolean>;
 
-  logo$: Observable<string>
+  logo$: Observable<string>;
   constructor(
-    private apiService: ApiService,
+    private homeService: HomeService,
     private shopStateService: ShopStateService,
     private notifications: NotificationsService,
     private generalService: GeneralService,
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getProductCategories() {
-    this.apiService.getProductsWebGroup()
+    this.homeService.getProductsWebGroup()
       .pipe(takeUntil(this.subscription$))
       .subscribe(({ ProductsWebGroups }) => {
         console.log('GROUP GOT', ProductsWebGroups);
@@ -117,27 +117,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getAllProducts() {
-    this.apiService.getWebGroupsProducts()
+    this.homeService.getAllProducts()
       .pipe(takeUntil(this.subscription$))
-      .subscribe(({ WebGroupsProduct }) => {
-        console.log('PRODUCT GOT', WebGroupsProduct);
-
-        if (WebGroupsProduct) {
-          const products = this.generalService.addKeyToObjectArray(WebGroupsProduct);
-          this.shopStateService.setAllProducts(products);
+      .subscribe(products => {
+        if (products) {
+          this.shopStateService.setAllProducts(this.generalService.addKeyToObjectArray(products));
         }
       }, err => this.notifications.error(err, 'Something went wrong'));
-
-
-
-    // this.apiService.getWebGroupsProducts();
-
-    // .pipe(takeUntil(this.subscription$))
-
-    // .subscribe(products => {
-    //   console.log('PRODUCTS', products);
-    // })
-
 
   }
 

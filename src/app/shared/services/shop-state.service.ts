@@ -1,10 +1,11 @@
+import { GeneralService } from './general.service';
 import { ProductCategoryTree } from './../components/product-category-menu/product-category-menu.component';
 import { ShopingPageService } from './shoping-page.service';
 import { NotificationsService } from './notifications.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product, ProductCategory, ProductInCart } from '../interfaces';
-import { shareReplay, filter, map, find } from 'rxjs/operators';
+import { shareReplay, filter, map, find, tap } from 'rxjs/operators';
 
 // const images = [
 //   { url: 'https://material.angular.io/assets/img/examples/shiba2.jpg' },
@@ -18,22 +19,23 @@ const image = { url: 'https://material.angular.io/assets/img/examples/shiba2.jpg
   providedIn: 'root'
 })
 export class ShopStateService {
-  products$ = new BehaviorSubject<Product[]>(null);
+  products$ = new BehaviorSubject<Product[]>([]);
   productsInCart$ = new BehaviorSubject<ProductInCart[]>([]);
-  categories$ = new BehaviorSubject<ProductCategory[]>(null);
+  categories$ = new BehaviorSubject<ProductCategory[]>([]);
 
   constructor(
     private notifications: NotificationsService,
-    private shopingPageService: ShopingPageService
+    private shopingPageService: ShopingPageService,
+    private generalService: GeneralService
   ) { }
 
 
 
   setAllProducts(products: Product[]) {
     console.log('PRODUCTS STATE GOT', products);
-    const addedImages = products.map(product => ({ ...product, image })); // FOR TESTING ONLY
-    console.log('PRODUCTS WITH IMAGES', addedImages);
-    this.products$.next(addedImages);
+    // const addedImages = products.map(product => ({ ...product, image })); // FOR TESTING ONLY
+    // console.log('PRODUCTS WITH IMAGES', addedImages);
+    this.products$.next(products);
   }
 
   setCategories(categories: ProductCategory[]) {
@@ -50,11 +52,26 @@ export class ShopStateService {
 
   getCategories$(): Observable<ProductCategory[]> {
     return this.categories$.asObservable();
-    
+
   }
 
-  getProducts$() {
-    return this.products$.asObservable().pipe(filter(products => products !== null));
+  getProductsFilteredByCategory$(categoryId: number = null) {
+    return this.products$.asObservable()
+      .pipe(
+        map(products => {
+          return this.generalService.filterByCategory(products, categoryId);
+        })
+      );
+  }
+
+  getProductsWithoutFilter$() {
+    return this.products$.asObservable()
+      .pipe(
+        map(products => {
+          // return this.generalService.filterByCategory(products, categoryId);
+          return products;
+        })
+      );
   }
 
   // getAddedToCartProducts$() {
@@ -91,6 +108,8 @@ export class ShopStateService {
 
   setProductsToCart(products: ProductInCart[]) {
     this.productsInCart$.next(products);
+    console.log('PRODUCT IN CART', this.productsInCart$.getValue());
+
   }
 
   removeFromCart(product: Product) {
@@ -113,8 +132,12 @@ export class ShopStateService {
 
   getProduct$(id: number) {
     // tslint:disable-next-line: max-line-length
-    return this.getProducts$().pipe(map(products => products.find((product: { ProductId: string | number; }) => +product.ProductId === id)));
-
+    return this.getProductsWithoutFilter$()
+      .pipe(
+        filter(products => products !== null && products !== undefined),
+        tap(products => console.log('PRODUCTS BLYA', products)),
+        map(products => products.find((product: { ProductId: string | number; }) => +product.ProductId === id))
+      );
   }
 
 

@@ -1,5 +1,10 @@
-<div  class="imageBlock text-center">
-      <img [src]="image.url" alt="">
+<div class="imageBlock text-center">
+      <img (swipeleft)="onNextImages()" (swiperight)="onPrevImage()" [src]="imageUrl">
 
-
+      <span (click)=" onNextImages()" class="material-icons left d-inline d-xl-none d-lg-none d-md-none">
+            arrow_left
+      </span>
+      <span (click)=" onPrevImage()" class="material-icons right d-inline d-xl-none d-lg-none d-md-none">
+            arrow_right
+      </span>
 </div>

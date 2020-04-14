@@ -5,12 +5,22 @@
       "About": "About",
       "Featured Products": "Featured Products",
       "New Arrivals": "New Arrivals",
-      "Quntity": "Quntity",
+      "Quantity": "Quantity",
       "Enter Your Information": "Enter Your Information",
       "Enter Your Contact Infomation": "Enter Your Contact Infomation",
       "Show Order details": "Show Order details",
       "You have": "You have",
-      "items in your cart": "items in your cart",
+      "Items in your cart": "items in your cart",
       "Products": "Products",
-      "Total": "Total price"
+      "Total": "Total price",
+      "Back to Shop": "Back to shop",
+      "Description": "Description",
+      "Remove": "Remove",
+      "Buy now": "Buy now",
+      "Added": "Added",
+      "Add to Cart": "Add to Cart"
+
+
+
+
 }

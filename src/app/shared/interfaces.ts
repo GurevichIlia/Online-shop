@@ -27,7 +27,7 @@ export interface Product {
       // Cases: number;
       // Price: number;
       // CurrencyId: string;
-      // MinPieces: number;
+      MinPieces: number;
       // Comments: string;
       // Deleted: boolean;
       // ValidDate: string;
@@ -36,7 +36,7 @@ export interface Product {
       // PricePerUnitBeforeVat: number;
       // HideFromStock: boolean;
       ProductId: string;
-      ProductsWebGroups_GroupId: string;
+      ProductsWebGroups_GroupId: string | string[];
       ProdName: string;
       ProdNameEng: string;
       Price: string;
@@ -45,7 +45,23 @@ export interface Product {
       addedToCart?: boolean;
       ShortDescription_500: string;
       LongDescription_4000: string;
-      image?: { url: string }; // FOR TESTING
+      MainWebImageName: string;
+      Isfeatured: string;
+      IsNewItem: string;
+      Pieces: string;
+      files?: ProductsFile[];
+      // image?: { url: string }; // FOR TESTING
+}
+
+export interface ProductsFile {
+      Name: string;
+      FullName: string;
+      Size: number;
+      CreationTime: string;
+      LastAccessTime: string;
+      LastWriteTime: string;
+      IsFolder: boolean;
+      FileSystemType: string;
 }
 
 export interface ProductInCart extends Product {
@@ -72,8 +88,9 @@ export interface CustomerInfoBase {
       TotalMonthtoCharge?: number;
 }
 
-export interface CustomerOrderInfo extends CustomerInfoBase, CustomerInfo {
-
+export interface OrderInfo extends CustomerInfoBase, CustomerInfo {
+      ShippingMethod: number;
+      order: ProductInCart[];
 }
 
 export interface ParamsAfterPayment {
@@ -149,5 +166,13 @@ export interface ImageForFastShop {
 
 export type ImageKey = 'ImageName' | 'FooterImage' | 'TopImage';
 
+export interface ShippingMethod {
+      Shippingid: number;
+      ShippingMethood: string;
+      ShippingMethoodEng: string;
+      ShippingPrice: number;
+      ShippingOrder: number;
+      OrgId: number;
 
+}
 // const updateValue: <T extends keyof State, K extends State[T]> = (name: T, value: K): void => this.setState({ [name]: value });

@@ -1,5 +1,5 @@
-import { Option } from './../../../services/shoping-cart.service';
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ShippingMethod } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-total-price',
@@ -8,7 +8,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TotalPriceComponent implements OnInit {
-  @Input() extraOptionSelected: Option;
+  @Input() extraOptionSelected: ShippingMethod;
   @Input() totalProductsAmount: number;
   constructor() { }
 

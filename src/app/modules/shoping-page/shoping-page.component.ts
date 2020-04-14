@@ -1,9 +1,9 @@
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
-import { map, switchMap, startWith, tap, takeUntil } from 'rxjs/operators';
-import { ProductCategory, Product } from 'src/app/shared/interfaces';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Product } from 'src/app/shared/interfaces';
 
 import { ShopingPageService } from './../../shared/services/shoping-page.service';
 import { ShopStateService } from './../../shared/services/shop-state.service';
@@ -29,23 +29,15 @@ export class ShopingPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // this.selectedProductCategory = this.fb.control('');
     // this.selectedProductCategory$ = this.shopingPageService.selectedCategory$;
-    this.productCategories$ = this.shopStateService.getCategoriesForTree$().pipe(tap(cat => console.log('CATEGORIES IN PAGE', cat)));
+    this.productCategories$ = this.shopStateService.getCategoriesForTree$();
 
 
     this.products$ = this.shopingPageService.getSelectedCategory$()
       .pipe(
         switchMap(category => {
-          let products$: Observable<Product[]>;
-          if (category) {
-            products$ = this.shopStateService.getProducts$()
-              .pipe(map(products => products.filter(product => +product.ProductsWebGroups_GroupId === category)));
-
-          } else {
-            products$ = this.shopStateService.getProducts$();
-          }
-          return products$.pipe(map(products => [...products, ...products, ...products, ...products]));
-        }));
-
+          return this.shopStateService.getProductsFilteredByCategory$(category);
+          // .pipe(map(products => [...products, ...products, ...products, ...products]));
+        }), tap(products => console.log('CURRENT PRODUCTS By CATEGORY', products)));
     // this.shopingPageService.getSelectedCategory$()
     //   .pipe(takeUntil(this.subscription$))
     //   .subscribe(categoryId => {
@@ -76,6 +68,6 @@ export class ShopingPageComponent implements OnInit, OnDestroy {
     // Called once, before the instance is destroyed.
     // Add 'implements OnDestroy' to the class.
     this.subscription$.next();
-    this.subscription$.complete()
+    this.subscription$.complete();
   }
 }

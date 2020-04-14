@@ -1,5 +1,11 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { MainBannerImage } from '../../services/main-page.service';
+import { ProductsFile } from './../../interfaces';
+
+
+export interface Config {
+  [key: string]: string;
+}
+
 
 @Component({
   selector: 'app-banner-list',
@@ -8,22 +14,25 @@ import { MainBannerImage } from '../../services/main-page.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BannerListComponent {
-  @Input() set banners(banners: MainBannerImage[]) {
-    console.log('BANNERS', banners);
-    this._banners = banners;
-  }
-  @Output() edit = new EventEmitter<MainBannerImage>();
-  @Output() delete = new EventEmitter<number>();
+  @Input() set banners(banners: ProductsFile[] | { url: string }[]) {
 
-  _banners: MainBannerImage[];
+    console.log('PRODUCT IMAGES', banners);
+    this._banners = banners ? banners : null;
+  }
+
+
+  @Output() delete = new EventEmitter<{ image: ProductsFile, index: number }>();
+  @Output() select = new EventEmitter<number>();
+
+
+  _banners: ProductsFile[] | { url: string }[] = [];
   constructor() { }
 
-
-  onEdit(banner: MainBannerImage) {
-    this.edit.emit(banner);
+  onSelect(index: number) {
+    this.select.emit(index);
   }
 
-  onDelete(id: number) {
-    this.delete.emit(id);
+  onDelete(image: ProductsFile, index: number) {
+    this.delete.emit({ image, index });
   }
 }

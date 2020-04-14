@@ -1,11 +1,11 @@
 <div class="row product-box align-items-center text-center">
       <div class="col-4">
-            <img width="100%" [src]="product.image.url">
+            <img width="100%" [src]="product.MainWebImageName">
       </div>
       <div class="col-6">
             <p class="product-name">{{product.ProdName}}</p>
             <p>{{product.quantity}}</p>
-            <p>{{product.totalPrice | currency: 'NIS '}}</p>
+            <p>{{product.totalPrice | currency: 'ILS'}}</p>
 
       </div>
       <div class="col-2">

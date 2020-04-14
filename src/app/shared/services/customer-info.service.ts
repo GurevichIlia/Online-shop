@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ProductInCart } from '../interfaces';
 
 export interface CustomerInfo {
   firstName: string;
@@ -48,5 +49,14 @@ export class CustomerInfoService {
 
   refreshFormState() {
     this.setCustomerFormState({ ...this.initialFormValue });
+  }
+  // Delete because there is problem when try to save on the server
+  removeFilesFromProductCard(products: ProductInCart[]) {
+    return products.map(product => {
+      const newProduct = { ...product };
+      delete newProduct.files;
+
+      return newProduct;
+    });
   }
 }

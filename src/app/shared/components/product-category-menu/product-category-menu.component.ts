@@ -28,7 +28,7 @@ export class ProductCategoryMenuComponent implements OnChanges {
 
   ngOnChanges() {
     this.dataSource.data = this.categoriesTree;
-    if (this.dataSource.data.length !== 0) {
+    if (this.dataSource.data && this.dataSource.data.length !== 0) {
       this.treeControl.dataNodes = this.dataSource.data;
       this.treeControl.expandAll();
 

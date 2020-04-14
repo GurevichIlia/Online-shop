@@ -1,31 +1,31 @@
 <div class="sidebarContainer row">
       <div class="col-12">
-            <h1>Discription </h1>
+            <h1>{{'Description' | translate}} </h1>
 
             <p>
                   {{product.LongDescription_4000}}
             </p>
 
-            <h1>{{product.Price | currency:   'NIS ' }}</h1>
+            <h1>{{product.Price | currency:   'ILS' }}</h1>
       </div>
 
 
       <mat-toolbar class="justify-content-around m-auto buttons">
-            <button color="default" mat-stroked-button (click)="onBuyNow()">Buy now<i class="material-icons">
+            <button color="default" mat-stroked-button (click)="onBuyNow()">{{'Buy now' | translate}}<i class="material-icons">
                         shopping_basket
                   </i></button>
 
             <button *ngIf="!product.addedToCart" color="primary" class="add-to-cart" mat-flat-button
-                  (click)="onAddToCart()">Add to Cart <i class="material-icons">
+                  (click)="onAddToCart()"> {{'Add to Cart' | translate}}<i class="material-icons">
                         add_shopping_cart
                   </i></button>
             <button #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
-                  (mouseenter)="addedButtonOnFocus = true" class="btn-added-color" mat-flat-button>Added <i
+                  (mouseenter)="addedButtonOnFocus = true" class="btn-added-color" mat-flat-button> {{'Added' | translate}}<i
                         class="material-icons">
                         done
                   </i></button>
             <button *ngIf="addedButtonOnFocus && product.addedToCart" (mouseleave)="addedButtonOnFocus = false"
-                  (click)="onRemoveFromCard()" color="warn" mat-flat-button>Remove <i class="material-icons">
+                  (click)="onRemoveFromCard()" color="warn" mat-flat-button> {{'Remove' | translate}}<i class="material-icons">
                         delete_outline
                   </i></button>
 
