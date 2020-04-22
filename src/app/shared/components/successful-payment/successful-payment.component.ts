@@ -23,11 +23,11 @@ export class SuccessfulPaymentComponent implements OnInit {
   ngOnInit(): void {
     const params: ParamsAfterPayment = this.route.snapshot.queryParamMap['params'];
     const parentLocation = parent.location.href.substring(0, parent.location.href.indexOf('?'));
-    if (parentLocation !== 'http://localhost:4200/payment/successful') {
+    if (parentLocation !== 'https://shop.amax.co.il/payment/successful') {
       // this.router.navigateByUrl('http://localhost:4200/payment/successful')
       //  .navigate(['payment/successful']);
       // tslint:disable-next-line: max-line-length
-      parent.location.href = `http://localhost:4200/payment/successful?terminalnumber=${params.terminalnumber}&lowprofilecode=${params.lowprofilecode}&ResponeCode=${params.ResponseCode}&Operation=${params.Operation}&ResponseCode=${params.ResponseCode}&Status=${params.Status}`;
+      parent.location.href = `https://shop.amax.co.il/payment/successful?terminalnumber=${params.terminalnumber}&lowprofilecode=${params.lowprofilecode}&ResponeCode=${params.ResponseCode}&Operation=${params.Operation}&ResponseCode=${params.ResponseCode}&Status=${params.Status}`;
       return;
     }
     this.paymentService.setParams(params);
@@ -35,4 +35,8 @@ export class SuccessfulPaymentComponent implements OnInit {
     console.log('PARAMS', this.params);
   }
 
+
+  toShop() {
+    this.router.navigate(['/shoping-page']);
+  }
 }

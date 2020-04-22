@@ -65,6 +65,7 @@ export interface ProductsFile {
 }
 
 export interface ProductInCart extends Product {
+      ProductsWebGroups_GroupId: string;
       quantity: number;
       totalPrice: number;
 }
@@ -89,6 +90,7 @@ export interface CustomerInfoBase {
 }
 
 export interface OrderInfo extends CustomerInfoBase, CustomerInfo {
+      numberOfPayments: number;
       ShippingMethod: number;
       order: ProductInCart[];
 }
@@ -174,5 +176,28 @@ export interface ShippingMethod {
       ShippingOrder: number;
       OrgId: number;
 
+}
+
+export interface StoreSettings {
+      SettingId: string;
+      StoreName: string;
+      StoreNameEng: string;
+      StorePhone1: string;
+      StorePhone2: string;
+      StoreFullAddress: string;
+      StroreHours: string;
+      StoreEmail: string;
+      StoreURL: string;
+      StorePopUpMessage: string;
+      StoreTiltle1: string;
+      StoreTiltle2: string;
+      Facebook: string;
+      whatsapp: string;
+      orgId: string;
+      VatRate: string;
+      LeadCurrency: string;
+      ProductPricesIncludeVat: string;
+      LandingPagesGUID: string;
+      LandingPagesGUIDForDonations: string;
 }
 // const updateValue: <T extends keyof State, K extends State[T]> = (name: T, value: K): void => this.setState({ [name]: value });

@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { Product } from 'src/app/shared/interfaces';
+import { Product, ProductCategory } from 'src/app/shared/interfaces';
 
 import { ShopingPageService } from './../../shared/services/shoping-page.service';
 import { ShopStateService } from './../../shared/services/shop-state.service';
@@ -17,7 +17,6 @@ import { ProductCategoryTree } from 'src/app/shared/components/product-category-
 export class ShopingPageComponent implements OnInit, OnDestroy {
   products$: Observable<Product[]>;
   productCategories$: Observable<ProductCategoryTree[]>;
-  selectedProductCategory$ = new Subject();
   subscription$ = new Subject();
   constructor(
     private shopStateService: ShopStateService,
@@ -30,7 +29,6 @@ export class ShopingPageComponent implements OnInit, OnDestroy {
     // this.selectedProductCategory = this.fb.control('');
     // this.selectedProductCategory$ = this.shopingPageService.selectedCategory$;
     this.productCategories$ = this.shopStateService.getCategoriesForTree$();
-
 
     this.products$ = this.shopingPageService.getSelectedCategory$()
       .pipe(

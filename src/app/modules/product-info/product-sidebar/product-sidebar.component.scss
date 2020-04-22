@@ -3,11 +3,51 @@
 }
 
 button {
-  width: 47%;
+  margin-bottom: 5px;
+  padding: 5px 15px 5px 15px;
+  font-size: 18px;
 }
+
 .add-to-cart:hover {
   background-color: yellowgreen;
 }
-.buttons-block{
+
+.buttons-block {
   width: 90%;
+}
+
+.ngx-timepicker-control__arrow {
+  font-size: 14px;
+  color: rgba(0, 0, 0, .4);
+  cursor: pointer;
+  transition: color .2s;
+  /* -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none; */
+  user-select: none;
+
+}
+
+.ngx-timepicker-control__arrow:hover {
+  color: black;
+}
+
+.timeBlock {
+  display: grid;
+  width: 5px;
+}
+
+.quantity {
+  width: 100%;
+}
+
+.big-size {
+  font-size: 22px;
+}
+
+.in-cart-button {
+  width: 70%;
+  margin-inline-start: 11px;
+  background-color: yellowgreen
+
 }

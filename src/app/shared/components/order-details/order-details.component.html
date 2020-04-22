@@ -8,7 +8,7 @@
                         {{'Items in your cart' | translate}}</span>
             </mat-toolbar>
       </div>
-      <div class="col-12 product-card">
+      <div class="col-12 product-card mt-3">
             <app-product-detail *ngFor="let product of orderedProducts" [product]="product" (delete)="onDelete(product)"
                   (edit)="onEdit()"></app-product-detail>
 

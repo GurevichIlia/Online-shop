@@ -1,7 +1,7 @@
 import { GeneralService } from './general.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, EMPTY } from 'rxjs';
+import {  BehaviorSubject } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
 
 @Injectable({
@@ -56,7 +56,7 @@ export class ShopingPageService {
             return [];
           }
         }),
-        shareReplay(6)
+        shareReplay(1)
       );
   }
 }

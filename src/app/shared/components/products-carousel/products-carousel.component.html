@@ -12,12 +12,12 @@
             </ul>
       </div>
       <div class="col-12 col-xl-11 mb-5" *ngIf="products; else loader">
-            <mdb-carousel [type]="'carousel-multi-item'" [animation]="products.length > 1 ? 'slide': ''"
+            <mdb-carousel [isControls]="false" [type]="'carousel-multi-item'" [animation]="products.length > 1 ? 'slide': ''"
                   *ngIf="products.length !== 0; else empty">
-                  <mdb-carousel-item *ngFor="let product of products">
+                  <mdb-carousel-item *ngFor="let product of products; trackBy:trackByFn">
                         <div class="container-fluid">
                               <div class="row mb-5">
-                                    <div class="col-12 col-xl-3" *ngFor="let card of product">
+                                    <div class="col-12 col-xl-3" *ngFor="let card of product; trackBy:trackByFn">
                                           <app-product (addToCart)="onAddToCart(card)"
                                                 (removeFromCart)="onRemoveFromCart(card)" (moreInfo)="onMoreInfo(card)"
                                                 [product]="card">

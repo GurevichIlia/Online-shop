@@ -1,6 +1,7 @@
-.content {
-  min-height: 70vh;
-}
+// .content {
+//   // min-height: 70vh;
+//   height: auto;
+// }
 
 
 
@@ -13,3 +14,25 @@
 mat-sidenav {
   width: 350px;
 }
+
+mat-sidenav-content {
+  overflow: unset !important;
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  /* Footer height */
+}
+
+.content {
+  padding-bottom: 90px;
+}
+
+.wrapper {
+  position: relative;
+  /* min-height: 94vh; */
+
+  min-height: 100%;
+}
+

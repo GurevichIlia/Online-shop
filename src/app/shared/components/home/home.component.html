@@ -9,24 +9,45 @@
       </mat-sidenav>
 
       <mat-sidenav-content dir='rtl'>
+            <!-- <div class="mobile-search-window">
+                  <div class="container">
+                        <div class="d-flex">
+                              <div>
+                              <app-search></app-search>
+                        </div>
+                        <div>
+                              cancel
+                        </div>
+                  </div>
+            </div> -->
 
+            <!-- </div> -->
             <app-header [logo]="logo$ | async" [isShowMenu]="isHandset$ | async"
                   [addedProductsQuantity]="(addedProductsToCart$ |async)?.length" (openShopingCart)="openShopingCart()"
                   (selectTheme)="onSelectTheme($event)">
             </app-header>
 
 
-            <div class="content container-fluid">
 
-                  <router-outlet></router-outlet>
+
+            <!-- Add Content Here -->
+
+            <div class="wrapper">
+                  <div class="content container-fluid">
+
+                        <router-outlet></router-outlet>
+
+                  </div>
+
+                  <div class="footer">
+                        <app-footer [storeSettings]="storeSettings$ | async"></app-footer>
+                  </div>
 
             </div>
 
 
             <!-- </div> -->
-            <div class="footer">
-                  <app-footer></app-footer>
-            </div>
+
 
 
 

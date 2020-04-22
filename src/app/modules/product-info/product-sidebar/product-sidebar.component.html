@@ -1,4 +1,4 @@
-<div class="sidebarContainer row">
+<div class=" row ">
       <div class="col-12">
             <h1>{{'Description' | translate}} </h1>
 
@@ -6,28 +6,78 @@
                   {{product.LongDescription_4000}}
             </p>
 
-            <h1>{{product.Price | currency:   'ILS' }}</h1>
+            <h2>{{'Price' | translate}} {{product.Price | currency:   'ILS' }}</h2>
       </div>
+      <div class="col-6 col-xl-4">
+            <div class="row align-items-center">
+                  <div class="col-8">
+                        <mat-form-field class="big-size quantity">
+                              <mat-label>{{'Quantity' | translate}}</mat-label>
+                              <input [formControl]="_quantity" type="text" matInput>
+                        </mat-form-field>
+
+                  </div>
+                  <div class="col-4">
+                        <span class="timeBlock">
+                              <span (click)="onIncrease()" class="ngx-timepicker-control__arrow" role="button"> ▲
+                              </span>
+                              <span (click)="onDecrease()" class="ngx-timepicker-control__arrow" role="button"> ▼
+                              </span>
+                        </span>
+                  </div>
+
+            </div>
 
 
-      <mat-toolbar class="justify-content-around m-auto buttons">
-            <button color="default" mat-stroked-button (click)="onBuyNow()">{{'Buy now' | translate}}<i class="material-icons">
-                        shopping_basket
-                  </i></button>
+      </div>
+      <div class="col-12">
+            <h1>{{'Total' | translate}} {{totalAmount | currency:   'ILS' }}</h1>
 
-            <button *ngIf="!product.addedToCart" color="primary" class="add-to-cart" mat-flat-button
-                  (click)="onAddToCart()"> {{'Add to Cart' | translate}}<i class="material-icons">
-                        add_shopping_cart
-                  </i></button>
-            <button #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
-                  (mouseenter)="addedButtonOnFocus = true" class="btn-added-color" mat-flat-button> {{'Added' | translate}}<i
+      </div>
+      <div class="justify-content-around m-auto buttons col-12">
+            <div class="row">
+                  <div class=" col-12 col-xl-4 order-xl-first order-lg-first">
+                        <button class="w-100" color="default" mat-stroked-button
+                              (click)="onBuyNow()">{{'Buy now' | translate}}
+                              <i class="material-icons">
+                                    shopping_basket
+                              </i></button>
+                  </div>
+                  <div class="col-12 col-xl-8 order-first ">
+                        <button class="w-100" *ngIf="!product.addedToCart" color="primary"
+                              mat-flat-button (click)="onAddToCart()"> {{'Add to Cart' | translate}}<i
+                                    class="material-icons">
+                                    add_shopping_cart
+                              </i></button>
+
+                        <button color="primary" matTooltip="{{'Add more' | translate}}" #addedButton
+                              *ngIf="!addedButtonOnFocus && product.addedToCart" (click)="onAddToCart()"
+                              mat-flat-button>
+                              +{{quantity}} <small>{{'pcs' | translate}}.</small>
+
+                        </button>
+                        <button (click)="onBuyNow()" class="in-cart-button" #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
+                              mat-flat-button>
+                              {{'In Cart' | translate}} {{product.quantity}}<small>{{'pcs' | translate}}.</small><i
+                                    class="material-icons">
+                                    done
+                              </i></button>
+                  </div>
+   
+            </div>
+
+
+
+
+
+
+
+
+            <!-- <button *ngIf="addedButtonOnFocus && product.addedToCart" (mouseleave)="addedButtonOnFocus = false"
+                  (click)="onRemoveFromCard()" color="warn" mat-flat-button> {{'Remove' | translate}}<i
                         class="material-icons">
-                        done
-                  </i></button>
-            <button *ngIf="addedButtonOnFocus && product.addedToCart" (mouseleave)="addedButtonOnFocus = false"
-                  (click)="onRemoveFromCard()" color="warn" mat-flat-button> {{'Remove' | translate}}<i class="material-icons">
                         delete_outline
-                  </i></button>
+                  </i></button> -->
 
-      </mat-toolbar>
+      </div>
 </div>

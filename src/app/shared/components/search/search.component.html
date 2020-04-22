@@ -1,0 +1,42 @@
+<!-- <mat-form-field id="search-input" class="input" [ngClass]="{'focused' : isFocused || (isMobileView$ | async)}" -->
+
+<div class="input-group " [ngClass]="{'focused' : isFocused || (isMobileView$ | async)}">
+      <div class="border-span">
+            <span class="input-group-text border-span" id="basic-addon1">
+                  <mat-icon matSuffix *ngIf="!searchControl.value">search</mat-icon>
+                  <mat-icon id="search-icon" matSuffix *ngIf="searchControl.value" (click)="clearInput()">cancel
+                  </mat-icon>
+            </span>
+      </div>
+      <input type="text" class="form-control border-input" (blur)="onBlur()" (focus)="onFocus()" [formControl]="searchControl"
+            placeholder="{{'Search' | translate}}"  [matAutocomplete]="auto"
+            aria-describedby="basic-addon1">
+</div>
+
+<!-- <input id="search-input" [ngClass]="{'focused' : isFocused || (isMobileView$ | async)}" #searchInput
+      placeholder="{{'Search' | translate}}" (blur)="onBlur()" (focus)="onFocus()" type="text" matInput
+      [formControl]="searchControl" [matAutocomplete]="auto"> -->
+
+<!-- <mat-icon matSuffix *ngIf="!searchControl.value">search</mat-icon>
+<mat-icon id="search-icon" matSuffix *ngIf="searchControl.value" (click)="clearInput()">cancel</mat-icon> -->
+
+
+
+<!-- </mat-form-field> -->
+
+
+
+<mat-autocomplete class="mt-2 " #auto="matAutocomplete">
+      <mat-option (click)="openProductInfo(product.ProductId)"
+            *ngFor="let product of products$ | async | slice : 0 : 15; trackBy: trackByFn" [value]="product.ProdName">
+            <div class="d-flex align-items-center overflow">
+                  <mat-icon>search</mat-icon>
+                  <span class="mx-1" [innerHTML]="product.PartNumber"></span>
+
+
+                  <span class="mx-2" [innerHTML]="product.ProdName">
+                  </span>
+                  <span class="mr-auto">{{product.Price | currency: 'ILS'}}</span>
+            </div>
+      </mat-option>
+</mat-autocomplete>

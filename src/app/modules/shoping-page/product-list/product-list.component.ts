@@ -13,15 +13,15 @@ export interface Tile {
   styleUrls: ['./product-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent {
   @Input() products: Product[];
   @Output() addToCart = new EventEmitter();
   @Output() moreInfo = new EventEmitter();
   @Output() removeFromCart = new EventEmitter();
 
-  constructor() { }
 
-  ngOnInit(): void {
+  trackByFn(index, item) {
+    return index; // or item.id
   }
 
   onAddToCart(product: Product) {

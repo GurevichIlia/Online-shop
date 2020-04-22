@@ -24,7 +24,18 @@
 
                         <div class="col-12">
 
-                              <app-info-form (continuePayment)="saveOrderInfo()" [form]="form"></app-info-form>
+                              <app-info-form (continuePayment)="saveOrderInfo()" [form]="form">
+                                    <button [disabled]="isLoading" type="submit" color="accent" class="submit-button"
+                                          mat-raised-button (click)="saveOrderInfo()">בצע הזמנה <span
+                                                class="material-icons">
+                                                check
+                                          </span></button>
+
+                                    <button type="button" color="primary"  mat-raised-button
+                                          (click)="goBack()">{{'Back' | translate}}<span class="material-icons">
+                                                check
+                                          </span></button>
+                              </app-info-form>
                         </div>
 
 

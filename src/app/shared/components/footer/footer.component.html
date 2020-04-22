@@ -1,1 +1,66 @@
-<mat-toolbar>Footer</mat-toolbar>
+<footer class="footer-distributed text-justify" *ngIf="storeSettings">
+
+      <div class="footer-left">
+
+            <h3>{{storeSettings.StoreName}}<span></span></h3>
+
+            <p class="footer-links">
+                  <a routerLink="/main-page">{{'Home' | translate}}</a>
+                  ·
+                  <a routerLink="/shoping-page">{{'Pricing' | translate}}</a>
+                  ·
+                  <a routerLink="/main-page">{{'About' | translate}}</a>
+                  ·
+                  <a routerLink="/main-page">{{'Contact' | translate}}</a>
+            </p>
+
+            <p class="footer-company-name">{{storeSettings.StoreName}} &copy; 2020</p>
+      </div>
+
+      <div class="footer-center">
+
+            <div>
+                  <i class="fa fa-map-marker"></i>
+                  <p><span>{{storeSettings.StoreFullAddress}}</span></p>
+            </div>
+
+            <div>
+                  <i class="fa fa-phone"></i>
+                  <p>{{storeSettings.StorePhone1}} , </p>
+                  <p> {{ storeSettings.StorePhone2}}</p>
+
+            </div>
+
+            <div>
+                  <i class="fa fa-clock"></i>
+                  <p>{{storeSettings.StroreHours}}</p>
+
+            </div>
+
+            <div>
+                  <i class="fa fa-envelope"></i>
+                  <p><a href="mailto:{{storeSettings.StoreEmail}}">{{storeSettings.StoreEmail}}</a></p>
+            </div>
+
+      </div>
+
+      <div class="footer-right">
+
+            <p class="footer-company-about">
+                  <span>{{storeSettings.StoreTiltle1}}</span>
+                  {{storeSettings.StoreTiltle2}}
+            </p>
+
+            <div class="footer-icons">
+
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                  <a href="#"><i class="fa fa-linkedin"></i></a>
+                  <a href="#"><i class="fa fa-whatsapp"></i></a>
+
+            </div>
+            <span [style.color]="'white'"> v1.00</span>
+
+      </div>
+
+</footer>

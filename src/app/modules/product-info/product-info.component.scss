@@ -1,8 +1,8 @@
-
-a{
+a {
   text-decoration: none;
   color: black;
 }
+
 .title {
   width: 100%;
   height: 56px;
@@ -11,6 +11,7 @@ a{
 
 .sidebar {
   height: 70%;
+  text-align: justify;
 }
 
 .productBox {
@@ -20,4 +21,8 @@ a{
 
 .productName>h1 {
   font-size: 35px;
+}
+
+.main-container {
+  margin-bottom: 260px;
 }

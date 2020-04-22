@@ -240,3 +240,49 @@ button.toast-close-button {
     width: 25em;
   }
 }
+
+
+
+#search-input .mat-form-field-outline.ng-tns-c103-2.ng-star-inserted {
+  background-color: white !important;
+  border-radius: 5px !important;
+
+}
+
+#search-input .mat-form-field-wrapper.ng-tns-c103-2 {
+  padding-bottom: 0 !important
+}
+
+#search-input .mat-form-field-infix.ng-tns-c103-2 {
+  padding: 10px !important;
+  border: none;
+}
+
+#search-input #mat-input-0 {
+  font-size: 20px !important;
+}
+
+
+
+
+
+
+@media all and (min-width: 241px) and (max-width: 480px) {
+
+  #cdk-overlay-0 {
+    right: 0 !important;
+    width: 100% !important
+  }
+
+}
+
+
+#mat-autocomplete-0 {
+  overflow: overlay;
+  width: 100%;
+  max-height: 500px !important;
+}
+
+#search-input .mat-form-field-suffix {
+  top: 5px !important;
+}

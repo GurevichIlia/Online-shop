@@ -10,3 +10,13 @@ button {
 .showDetailBlock {
   height: 100px;
 }
+
+app-info-form button {
+  width: 46%;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.submit-button:hover {
+  background-color: yellowgreen;
+}

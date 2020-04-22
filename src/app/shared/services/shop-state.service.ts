@@ -83,28 +83,89 @@ export class ShopStateService {
     return this.productsInCart$.asObservable();
   }
 
-  addToCart(product: Product) {
+  // addToCart(product: Product, productQuantity = 1) {
+  //   const oldState = this.products$.getValue();
+
+  //   const newState = oldState.map((existProduct: Product) => {
+  //     if (existProduct.ProductId === product.ProductId) {
+  //       return {
+  //         ...existProduct, addedToCart: true
+  //       };
+  //     } else {
+  //       return existProduct;
+  //     }
+
+  //   });
+  //   this.notifications.success('', 'Added to Cart');
+
+  //   this.setAllProducts(newState);
+
+  //   this.setProductsToCart(this.copyArrayWithAddedToCartProducts(newState, productQuantity));
+  // }
+
+  addToCart(product: Product, productQuantity = 1) {
+    let addedProducts = [...this.productsInCart$.getValue()];
+
     const oldState = this.products$.getValue();
 
     const newState = oldState.map((existProduct: Product) => {
       if (existProduct.ProductId === product.ProductId) {
-        return { ...existProduct, addedToCart: true };
+        return {
+          ...existProduct, addedToCart: true
+        };
       } else {
         return existProduct;
       }
 
     });
-    this.notifications.success('', 'Added to Cart');
 
     this.setAllProducts(newState);
 
-    this.setProductsToCart(this.copyArrayWithAddedToCartProducts(newState));
+
+    const productIsExist = addedProducts.find(existProduct => existProduct.ProductId === product.ProductId);
+    if (productIsExist) {
+
+      addedProducts = this.productsInCart$.getValue()
+        .map(productInCart => {
+          if (productInCart.ProductId === product.ProductId) {
+            const quantity = productQuantity === 1 ? productInCart.quantity + 1 : productInCart.quantity + productQuantity;
+            const updatedProduct = {
+              ...productInCart,
+              quantity,
+              totalPrice: +productInCart.Price * quantity,
+              ProductsWebGroups_GroupId: this.shopingPageService.selectedCategory.getValue().toString()
+            };
+            return updatedProduct;
+          } else {
+            return productInCart;
+          }
+        })
+    } else {
+      addedProducts.push(
+        {
+          ...product,
+          quantity: productQuantity,
+          totalPrice: +product.Price * productQuantity,
+          ProductsWebGroups_GroupId: this.shopingPageService.selectedCategory.getValue().toString()
+        }
+      )
+    }
+
+    this.setProductsToCart(addedProducts);
+    this.notifications.success('', 'Added to Cart');
+
   }
 
-  copyArrayWithAddedToCartProducts(allProdacts: Product[]) {
-    return [...allProdacts.filter(productInCart => productInCart.addedToCart === true)
-      .map(productInCart => ({ ...productInCart, quantity: 1, totalPrice: +productInCart.Price }))];
-  }
+  // copyArrayWithAddedToCartProducts(allProdacts: Product[], productQuantity = 1) {
+  //   return [...allProdacts.filter(productInCart => productInCart.addedToCart === true)
+  //     .map(productInCart =>
+  //       ({
+  //         ...productInCart,
+  //         quantity: productQuantity,
+  //         totalPrice: +productInCart.Price * productQuantity,
+  //         ProductsWebGroups_GroupId: this.shopingPageService.selectedCategory.getValue().toString()
+  //       }))];
+  // }
 
   setProductsToCart(products: ProductInCart[]) {
     this.productsInCart$.next(products);

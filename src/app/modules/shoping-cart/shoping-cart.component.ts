@@ -3,12 +3,13 @@ import { GeneralService } from './../../shared/services/general.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { switchMap, map, tap, shareReplay } from 'rxjs/operators';
+import { switchMap, map, tap, shareReplay, debounceTime } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { ShopingCartService } from './../../shared/services/shoping-cart.service';
 import { ShopStateService } from './../../shared/services/shop-state.service';
 import { Product, ProductInCart, ShippingMethod } from 'src/app/shared/interfaces';
+import { FormControl, Validators } from '@angular/forms';
 
 
 
@@ -27,6 +28,8 @@ export class ShopingCartComponent implements OnInit {
   totoalAmountForAll$: Observable<number>;
 
   isCartEmpty = true;
+  numberOfPayments = new FormControl(1, [Validators.max(3), Validators.min(1)]);
+  numberOfPayments$: Observable<number>;
   constructor(
     private shopStateService: ShopStateService,
     private shopingCartService: ShopingCartService,
@@ -36,6 +39,8 @@ export class ShopingCartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    window.scrollTo({ top: 100 });
+
     this.selectedProducts$ = this.shopStateService.getAddedToCartProducts$()
       .pipe(map(products => {
 
@@ -48,6 +53,12 @@ export class ShopingCartComponent implements OnInit {
     this.getSelectedShipingOption();
 
     this.shippingMethods$ = this.shopingCartService.getShippingMethods();
+
+    this.numberOfPayments$ = this.shopingCartService.getNumberOfPayments()
+      .pipe(
+        tap(numberOfPayments => this.numberOfPayments.patchValue(numberOfPayments)
+        )
+      );
   }
 
   onShowProductInfo(product: Product) {
@@ -69,15 +80,19 @@ export class ShopingCartComponent implements OnInit {
       return this.notifications.warn('Please add product to Cart');
     }
 
-    this.router.navigate(['customer-info']);
+    if (this.numberOfPayments.invalid) {
+      return this.notifications.warn(`Maximum number of payments 3`);
+    }
 
+    this.router.navigate(['customer-info']);
+    this.shopingCartService.setNumberOfPayments(this.numberOfPayments.value);
   }
 
   onSelectOption(method: ShippingMethod) {
 
     this.shopingCartService.setSelectedShipingOption(method);
 
-    this.calculateTotalAmount();
+    // this.calculateTotalAmount();
 
   }
 
@@ -88,19 +103,36 @@ export class ShopingCartComponent implements OnInit {
   getSelectedShipingOption() {
     this.selectedShipingOption$ = this.shopingCartService.getSelectedShipingOption()
       .pipe(
+        debounceTime(1),
+        switchMap(selectedShippingMethod => {
+          if (selectedShippingMethod) {
+            return of(selectedShippingMethod)
+          } else {
+            return this.shippingMethods$.pipe(
+              map(methods => methods[0]),
+              tap(initialMethod => this.shopingCartService.setSelectedShipingOption(initialMethod))
+            )
+          }
+        }),
         shareReplay(),
+        tap(op => console.log('SELECTED OPTION', op))
       );
   }
 
   calculateTotalAmount() {
-    this.totoalAmountForAll$ = this.selectedShipingOption$.pipe(switchMap((option: ShippingMethod) => {
-      if (option && option.ShippingPrice) {
-        return this.totalProductsAmount$.pipe(map(productsAmount => productsAmount + option.ShippingPrice));
-      } else {
-        return this.totalProductsAmount$;
-      }
+    this.totoalAmountForAll$ = this.selectedShipingOption$
+      .pipe(
+        switchMap((option: ShippingMethod) => {
+          if (option && option.ShippingPrice) {
+            return this.totalProductsAmount$
+              .pipe(
+                map(productsAmount => productsAmount + option.ShippingPrice)
+              );
+          } else {
+            return this.totalProductsAmount$;
+          }
 
-    }));
+        }));
 
   }
 }

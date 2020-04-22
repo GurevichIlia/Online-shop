@@ -1,0 +1,87 @@
+.input {
+  font-size: 10px;
+}
+
+div.input-group {
+  transition: width 0.5s;
+  width: 45%;
+}
+
+.focused {
+  width: 100% !important;
+}
+
+mat-icon {
+  font-size: 25px !important;
+  color: #b5b0b0;
+}
+
+.border-span {
+  border-radius: 0 5px 5px 0 !important
+}
+
+.border-input {
+  border-radius: 5px 0 0 5px !important
+}
+
+// mat-form-field .mat-form-field-outline.ng-tns-c103-2.ng-star-inserted {
+//   background-color: white !important;
+//   border-radius: 5px !important;
+
+
+// }
+
+// mat-form-field .mat-form-field-wrapper.ng-tns-c103-2 {
+//   padding-bottom: 0 !important
+// }
+
+// mat-form-field .mat-form-field-infix.ng-tns-c103-2 {
+//   padding: 10px !important;
+//   border: none;
+
+//   input {
+//     font-size: 20px !important;
+//   }
+
+// }
+
+
+
+
+
+
+
+.more-width-autocomplete #cdk-overlay-0 {
+  width: 700px !important;
+  right: 0 !important;
+
+}
+
+.isMobileView .cdk-overlay-pane {
+  right: 0 !important;
+  width: 100% !important;
+
+}
+
+.more-width-autocomplete.mat-autocomplete-panel {
+  width: 800px !important;
+  max-width: 800px !important;
+
+}
+
+.overflow {
+  overflow: auto;
+}
+
+@media all and (min-width: 241px) and (max-width: 480px) {
+
+  #cdk-overlay-0 {
+    right: 0 !important;
+    width: 100% !important
+  }
+
+}
+
+#search-icon {
+  cursor: pointer;
+}

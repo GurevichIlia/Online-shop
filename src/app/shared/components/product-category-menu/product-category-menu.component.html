@@ -1,7 +1,7 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
       <!-- This is the tree node template for leaf nodes -->
-      <mat-tree-node mat-ripple matTreeNodePadding [matTreeNodePaddingIndent]="20" 
-            *matTreeNodeDef="let node" matTreeNodeToggle>
+      <mat-tree-node [ngClass]="{'is-active': node.GroupId === (selectedProductCategory$ | async) }" mat-ripple matTreeNodePadding
+            [matTreeNodePaddingIndent]="20" *matTreeNodeDef="let node" matTreeNodeToggle>
             <li (click)="setCategory(node.GroupId)" class="mat-tree-node">
                   <!-- use a disabled button to provide padding for tree leaf -->
                   <button mat-icon-button disabled></button>
@@ -13,10 +13,10 @@
             </li>
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
-      <mat-nested-tree-node matTreeNodePadding [matTreeNodePaddingIndent]="20" matTreeNodeToggle
+      <mat-nested-tree-node [ngClass]="{'is-active': node.GroupId === (selectedProductCategory$ | async)}" matTreeNodePadding [matTreeNodePaddingIndent]="20" matTreeNodeToggle
             *matTreeNodeDef="let node; when: hasChild">
             <li (click)="setCategory(node.GroupId)">
-                  <div class="mat-tree-node">
+                  <div class="mat-tree-node" [ngClass]="{'is-active': node.GroupId === (selectedProductCategory$ | async)}">
                         <button mat-icon-button [attr.aria-label]="'toggle ' + node.GroupName">
                               <mat-icon class="mat-icon-rtl-mirror">
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

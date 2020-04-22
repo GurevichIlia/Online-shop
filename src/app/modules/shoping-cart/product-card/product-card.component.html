@@ -3,7 +3,7 @@
             <img [src]="product.MainWebImageName" (click)="onShowProductInfo()">
       </div>
       <div class="col-12 col-xl-3 text-center p-4">
-            <h4>{{product.ProdName}}</h4>
+            <h4 [ngStyle]="{'font-size': product.ProdName.length > 30? '17px': '20px'}">{{product.ProdName}}</h4>
             <!-- <p>{{product.ShortDescription_500}}</p> -->
 
 

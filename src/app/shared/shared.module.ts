@@ -28,6 +28,7 @@ import { CarouselModule } from 'angular-bootstrap-md';
 import { TranslateModule } from '@ngx-translate/core';
 import { BannerListComponent } from './components/banner-list/banner-list.component';
 import { GetLinkPipe } from './pipes/get-link.pipe';
+import { SearchComponent } from './components/search/search.component';
 
 
 
@@ -51,7 +52,9 @@ import { GetLinkPipe } from './pipes/get-link.pipe';
     ProductComponent,
     ProductsCarouselComponent,
     BannerListComponent,
-    GetLinkPipe
+    GetLinkPipe,
+    SearchComponent,
+ 
   ],
   imports: [
     CommonModule,
@@ -60,7 +63,7 @@ import { GetLinkPipe } from './pipes/get-link.pipe';
     ReactiveFormsModule,
     MaterialModule,
     CarouselModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
 
   ],
   exports: [
@@ -69,7 +72,7 @@ import { GetLinkPipe } from './pipes/get-link.pipe';
     MaterialModule,
     CarouselModule,
     TranslateModule,
-    
+
     HomeComponent,
     HeaderComponent,
     FooterComponent,

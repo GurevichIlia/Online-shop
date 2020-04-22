@@ -2,7 +2,7 @@ import { GeneralService } from './general.service';
 import { Product } from './../interfaces';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/internal/operators/map';
-import { tap } from 'rxjs/operators';
+import { tap, pluck, shareReplay } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
 
@@ -64,5 +64,13 @@ export class HomeService {
     }
     console.log('NEW ARRAy', array);
     return array;
+  }
+
+  getStoreSetting() {
+    return this.apiService.getStoreSettings()
+      .pipe(
+        pluck('Data', 'GetStoreSetting', 0),
+        shareReplay()
+      );
   }
 }

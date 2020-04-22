@@ -24,6 +24,7 @@ export class PaymentInfoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo({ top: 0 })
     this.paymentLink$ = this.paymentService.getPaymentLink().pipe(debounceTime(1));
 
 

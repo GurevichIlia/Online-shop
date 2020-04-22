@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { Product, ProductCategory } from '../../interfaces';
 
 @Component({
   selector: 'app-products-carousel',
   templateUrl: './products-carousel.component.html',
   styleUrls: ['./products-carousel.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  // encapsulation: ViewEncapsulation.None
 })
 export class ProductsCarouselComponent {
 
@@ -18,6 +19,9 @@ export class ProductsCarouselComponent {
   @Output() moreInfo = new EventEmitter();
   @Output() removeFromCart = new EventEmitter();
 
+  trackByFn(index, item) {
+    return index; // or item.id
+  }
 
   onAddToCart(product: Product) {
     this.addToCart.emit(product);

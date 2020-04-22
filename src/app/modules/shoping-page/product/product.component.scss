@@ -1,7 +1,9 @@
 mat-card {
   // max-height: 535px;
   max-width: 370px;
-  max-height: 100%
+  max-height: 100%;
+  cursor: pointer;
+
 }
 
 
@@ -18,7 +20,6 @@ mat-card {
 
 img {
   max-height: 200px;
-  cursor: pointer;
   object-fit: contain;
   height: fit-content;
 }
@@ -58,3 +59,8 @@ mat-card-actions {
   // white-space: nowrap;
   overflow: hidden;
 }
+
+// mat-card:hover {
+//   transform: translate(-1px, -1px);
+//   box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.30)
+// }

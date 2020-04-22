@@ -17,3 +17,20 @@ li {
   min-height: 600px;
   height: 700px;
 }
+
+.carousel-indicators li.ng-star-inserted {
+  background-color: gainsboro;
+
+}
+
+.carousel-indicators li.ng-star-inserted.active {
+
+  background-color: gray;
+}
+
+
+
+.controls-top.ng-star-inserted {
+  display: none;
+
+}

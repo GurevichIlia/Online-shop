@@ -1,8 +1,10 @@
-import { ShopingPageService } from './../../services/shoping-page.service';
 import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ProductCategory } from '../../interfaces';
+import { Observable } from 'rxjs';
+import { ShopingPageService } from './../../services/shoping-page.service';
+
 /**
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
@@ -18,12 +20,18 @@ export interface ProductCategoryTree extends ProductCategory {
   styleUrls: ['./product-category-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductCategoryMenuComponent implements OnChanges {
+export class ProductCategoryMenuComponent implements OnChanges, OnInit {
   @Input() categoriesTree: ProductCategoryTree[];
   treeControl = new NestedTreeControl<ProductCategoryTree>(node => node.children);
   dataSource = new MatTreeNestedDataSource<ProductCategoryTree>();
+  selectedProductCategory$: Observable<number>;
 
   constructor(private shopingPageService: ShopingPageService) {
+  }
+
+  ngOnInit() {
+    this.selectedProductCategory$ = this.shopingPageService.getSelectedCategory$();
+
   }
 
   ngOnChanges() {

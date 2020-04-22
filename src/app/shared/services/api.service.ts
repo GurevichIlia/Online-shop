@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, tap, catchError, shareReplay } from 'rxjs/operators';
-import { ProductCategory, Product, BasicResponse, GetProductsWebImageGallery, OrderInfo, ShippingMethod } from '../interfaces';
+import { ProductCategory, Product, BasicResponse, GetProductsWebImageGallery, OrderInfo, ShippingMethod, StoreSettings } from '../interfaces';
 import { Observable, of } from 'rxjs';
 import { Params } from '@angular/router';
 
@@ -95,4 +95,10 @@ export class ApiService {
       ;
 
   }
+
+  public getStoreSettings(orgName = 'jaffanet1', orgId: number = 153): Observable<BasicResponse<{ GetStoreSetting: StoreSettings[] }>> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<BasicResponse<{ GetStoreSetting: StoreSettings[] }>>(`${this.baseUrl}ShoppingSite/GetStoresetting?urlAddr=${orgName}&OrgId=${orgId}`);
+  }
+
 }

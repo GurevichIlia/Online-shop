@@ -14,7 +14,7 @@ export class NotificationsService {
       ) {
       }
       success(message?: string, title?: string) {
-            this.toastrService.success(message, title);
+            this.toastrService.show(message, title);
       }
 
       warn(message?: string, title?: string) {

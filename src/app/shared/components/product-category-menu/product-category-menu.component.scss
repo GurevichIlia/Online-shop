@@ -19,16 +19,22 @@ span.group-name {
 
 mat-tree-node:hover {
   cursor: pointer;
-  background-color: whitesmoke;
+  background-color: bisque;
 
 }
 
 .mat-tree-node:hover {
   cursor: pointer;
-  background-color: whitesmoke;
+  background-color: bisque;
 
 }
 
 .group-name {
   font-size: 20px;
+}
+
+
+.is-active {
+  background-color: bisque;
+
 }

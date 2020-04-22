@@ -29,6 +29,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
   totalPrice = 0;
   form: FormGroup;
   subscription$ = new Subject();
+  isLoading = false;
   constructor(
     private fb: FormBuilder,
     private customerInfoService: CustomerInfoService,
@@ -60,7 +61,8 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
       .pipe(switchMap((products: ProductInCart[]) => {
         const productsAmount = this.generalService.calculateProductAmount(products);
         return this.shopingCartService.getSelectedShipingOption()
-          .pipe(map(option => option.ShippingPrice + productsAmount),
+          .pipe(
+            map(option => option.ShippingPrice + productsAmount),
             tap(totalPrice => this.totalPrice = totalPrice));
       }));
   }
@@ -99,7 +101,9 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
 
   getFormState() {
     this.customerInfoService.getCustomerFormState()
-      .pipe(takeUntil(this.subscription$))
+      .pipe(
+        takeUntil(this.subscription$)
+      )
       .subscribe(state => {
         this.updateForm(state);
       });
@@ -107,36 +111,40 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
 
   saveOrderInfo(customerInfo: CustomerInfo = this.form.value) {
     const finalOrder$ = this.shopStateService.getAddedToCartProducts$();
-    const ShippingMethod$ = this.shopingCartService.getSelectedShipingOption();
+    const shippingMethod$ = this.shopingCartService.getSelectedShipingOption();
+    const numberOfPayments$ = this.shopingCartService.getNumberOfPayments();
+    this.isLoading = true;
+    combineLatest([finalOrder$, shippingMethod$, numberOfPayments$])
+      .pipe(
+        switchMap(([finalOrder, shippingMethod, numberOfPayments]) => {
+          if (this.form.valid) {
+            const orderInfo: OrderInfo = {
+              firstName: customerInfo.firstName,
+              lastName: customerInfo.lastName,
+              receiptName: customerInfo.receiptName,
+              cellphone: customerInfo.cellphone,
+              email: customerInfo.email,
+              buildingNumber: customerInfo.buildingNumber,
+              street: customerInfo.street,
+              floor: customerInfo.floor,
+              flat: customerInfo.flat,
+              city: customerInfo.city,
+              zipCode: customerInfo.zipCode,
+              kevaAmount: this.totalPrice,
+              TotalMonthtoCharge: 999,
+              numberOfPayments: +numberOfPayments,
+              ShippingMethod: shippingMethod.Shippingid,
+              order: this.customerInfoService.removeFilesFromProductCard(finalOrder)
 
-    combineLatest([finalOrder$, ShippingMethod$])
-      .pipe(switchMap((combinedValue) => {
-        if (this.form.valid) {
-          const orderInfo: OrderInfo = {
-            firstName: customerInfo.firstName,
-            lastName: customerInfo.lastName,
-            receiptName: customerInfo.receiptName,
-            cellphone: customerInfo.cellphone,
-            email: customerInfo.email,
-            buildingNumber: customerInfo.buildingNumber,
-            street: customerInfo.street,
-            floor: customerInfo.floor,
-            flat: customerInfo.flat,
-            city: customerInfo.city,
-            zipCode: customerInfo.zipCode,
-            kevaAmount: this.totalPrice,
-            TotalMonthtoCharge: 999,
-            ShippingMethod: combinedValue[1].Shippingid,
-            order: this.customerInfoService.removeFilesFromProductCard(combinedValue[0])
+            }
+            console.log('FINAL ORDER', orderInfo)
+            console.log('FINAL ORDER', JSON.stringify(orderInfo));
 
+            return this.apiService.saveCustomerInfo(orderInfo);
           }
-          console.log('FINAL ORDER', orderInfo)
-          console.log('FINAL ORDER', JSON.stringify(orderInfo));
-
-          return this.apiService.saveCustomerInfo(orderInfo);
-        }
-      }),
-       takeUntil(this.subscription$))
+        }),
+        tap(res => this.isLoading = false),
+        takeUntil(this.subscription$))
       .subscribe(response => {
         console.log('AFTER SAVE', response);
         if (response && response['IsError'] !== true) {
@@ -148,7 +156,9 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
   }
 
 
-
+  goBack() {
+    this.router.navigate(['/shoping-cart']);
+  }
 
   openOrderDetails() {
     this.generalService.openOrderSetails();

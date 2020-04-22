@@ -1,12 +1,12 @@
 import { HomeService } from './../../services/home.service';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, Observable, combineLatest, } from 'rxjs';
-import { takeUntil, switchMap, map, tap } from 'rxjs/operators';
+import { takeUntil, switchMap, map, tap, take } from 'rxjs/operators';
 import { Product } from '../../interfaces';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { ShippingMethod } from './../../interfaces';
+import { ShippingMethod, StoreSettings } from './../../interfaces';
 import { MainPageService } from './../../services/main-page.service';
 import { ShopingCartService } from './../../services/shoping-cart.service';
 import { ProductInCart } from 'src/app/shared/interfaces';
@@ -39,6 +39,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   isHandset$: Observable<boolean>;
 
   logo$: Observable<string>;
+  productsFiltredBySearch$: Observable<Product[]>;
+
+  storeSettings$: Observable<StoreSettings>;
   constructor(
     private homeService: HomeService,
     private shopStateService: ShopStateService,
@@ -50,6 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    window.scrollTo({ top: 0 });
     // this.apiService.getAllProductsAndCategoriesFromServer()
     //   .pipe(takeUntil(this.subscription$))
     //   .subscribe(productsAndCat => {
@@ -81,6 +85,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isHandset$ = this.generalService.isMobileView$();
 
     this.logo$ = this.mainpageService.getLogo();
+
+    this.getStoreSettings();
   }
 
   close(reason: string) {
@@ -152,6 +158,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSelectTheme(theme: string) {
     this.generalService.setTheme(theme);
+  }
+
+  getStoreSettings() {
+    this.storeSettings$ = this.homeService.getStoreSetting()
+      .pipe(
+        take(1),
+        tap(settings => console.log('SETTINGS', settings))
+      );
+    // .subscribe(settings => console.log('SETTINGS', settings))
   }
 
   ngOnDestroy(): void {

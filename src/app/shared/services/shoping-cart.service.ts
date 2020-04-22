@@ -4,13 +4,15 @@ import { Injectable } from '@angular/core';
 
 import { ProductInCart, ShippingMethod } from '../interfaces';
 import { ShopStateService } from './shop-state.service';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopingCartService {
   selectedShipingOption$ = new BehaviorSubject<ShippingMethod>(null);
+  numberOfPayments$ = new BehaviorSubject<number>(1);
+
   constructor(
     private shopStateService: ShopStateService,
     private apiService: ApiService
@@ -30,6 +32,9 @@ export class ShopingCartService {
     this.selectedShipingOption$.next(method);
   }
 
+  setInitialShippingOption(method: ShippingMethod) {
+    this.setSelectedShipingOption(method);
+  }
 
   getSelectedShipingOption() {
     return this.selectedShipingOption$.asObservable();
@@ -37,8 +42,18 @@ export class ShopingCartService {
 
   getShippingMethods() {
     return this.apiService.getShippingMethods()
-      .pipe(map(res => res.Data.StoreShipping),
-        tap(methods => this.setSelectedShipingOption(methods[0])));
+      .pipe(
+        map(res => res.Data.StoreShipping),
+        shareReplay()
+      );
 
+  }
+
+  setNumberOfPayments(numberOfPayments: number) {
+    this.numberOfPayments$.next(numberOfPayments);
+  }
+
+  public getNumberOfPayments() {
+    return this.numberOfPayments$.asObservable();
   }
 }

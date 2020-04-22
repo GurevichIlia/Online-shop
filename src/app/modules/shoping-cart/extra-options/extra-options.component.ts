@@ -12,7 +12,6 @@ import { ShippingMethod } from 'src/app/shared/interfaces';
 export class ExtraOptionsComponent implements OnInit {
  selectedOpt: ShippingMethod;
   @Input() set selectedOption(option: ShippingMethod) {
-    
     this.selectedOpt = option;
   }
   @Input() shippingMethods: ShippingMethod[] = [];
