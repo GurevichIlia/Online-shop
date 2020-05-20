@@ -1,7 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
-import { map } from 'rxjs/operators';
 import { ParamsAfterPayment } from '../interfaces';
 
 @Injectable({

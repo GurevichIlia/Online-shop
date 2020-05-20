@@ -1,30 +1,23 @@
-<mat-sidenav-container class="example-container" appChangeTheme [themeName]="currentTheme$ | async"
+<mat-sidenav-container dir="rtl" class="example-container"  appChangeTheme [themeName]="currentTheme$ | async"
       (backdropClick)="close('backdrop')">
-      <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose position="end">
+      <mat-sidenav dir="rtl" #sidenav class="orderDetails" (keydown.escape)="close('escape')"  position="end" disableClose>
             <div *ngIf="totalDetails$ | async as totalDetails">
-                  <app-order-details [orderedProducts]="totalDetails[0]" [orderedProductsAmount]="totalDetails[1]"
-                        [extraOption]="totalDetails[2]" (delete)="removeFromCart($event)" (edit)="onEditShopingCart()">
+                  <app-order-details [numberOfPayments]="numberOfPayments$ | async" [orderedProducts]="totalDetails[0]"
+                        [orderedProductsAmount]="totalDetails[1]" [extraOption]="totalDetails[2]"
+                        (delete)="removeFromCart($event)" (edit)="onEditShopingCart()">
                   </app-order-details>
             </div>
       </mat-sidenav>
+      <mat-sidenav dir="rtl" position="start"  #mobileMenu [hidden]="!(isShowMobileMenu$ | async)" (keydown.escape)="close('escape')"
+           >
+            <app-mobile-menu></app-mobile-menu>
+      </mat-sidenav>
 
       <mat-sidenav-content dir='rtl'>
-            <!-- <div class="mobile-search-window">
-                  <div class="container">
-                        <div class="d-flex">
-                              <div>
-                              <app-search></app-search>
-                        </div>
-                        <div>
-                              cancel
-                        </div>
-                  </div>
-            </div> -->
 
-            <!-- </div> -->
-            <app-header [logo]="logo$ | async" [isShowMenu]="isHandset$ | async"
+            <app-header [logo]="logo$ | async" [isShowMenu]="isHandset$ | async" [categories]="productCategories$ | async"
                   [addedProductsQuantity]="(addedProductsToCart$ |async)?.length" (openShopingCart)="openShopingCart()"
-                  (selectTheme)="onSelectTheme($event)">
+                  (selectTheme)="onSelectTheme($event)" (redirect)="redirectToProductsList()" (showMobileMenu)="onShowMobileMenu()">
             </app-header>
 
 
@@ -33,7 +26,7 @@
             <!-- Add Content Here -->
 
             <div class="wrapper">
-                  <div class="content container-fluid">
+                  <div class="content">
 
                         <router-outlet></router-outlet>
 

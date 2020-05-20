@@ -1,4 +1,4 @@
-import { MainPageService, MainBannerImage, MainBannerImages } from './../../shared/services/main-page.service';
+import { MainPageService, MainBannerImage, MainBannerImages, TopImages } from './../../shared/services/main-page.service';
 import { GeneralService } from './../../shared/services/general.service';
 import { Router } from '@angular/router';
 import { ProductCategory, Product, ProductsWebImageGallery } from './../../shared/interfaces';
@@ -23,7 +23,7 @@ export class MainPageComponent implements OnInit {
 
   mainBannerImages$: Observable<MainBannerImages>;
 
-  mainPageImages$: Observable<ProductsWebImageGallery>;
+  imagesForTop$: Observable<TopImages>;
 
   imagesForCarousel$: Observable<{}>;
   imagesForFastShop$: Observable<{}>;
@@ -81,7 +81,8 @@ export class MainPageComponent implements OnInit {
   }
 
   getGalleryImages() {
-    this.mainPageImages$ = this.mainPageService.getGalleryImages().pipe(map(images => images[0]), tap(x => console.log('IMAGES', x)));
+    this.imagesForTop$ = this.mainPageService.getImagesForTop();
+
     this.getImagesForCarousel();
     this.getImagesForFastShop();
   }

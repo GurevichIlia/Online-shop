@@ -1,5 +1,4 @@
-import { GeneralService } from './general.service';
-import { ApiService } from './api.service';
+
 import { Injectable } from '@angular/core';
 import {  BehaviorSubject } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
@@ -11,8 +10,7 @@ export class ShopingPageService {
   selectedCategory = new BehaviorSubject<number>(0);
   selectedCategory$ = this.selectedCategory.asObservable();
   constructor(
-    private apiService: ApiService,
-    private generalService: GeneralService
+
   ) { }
 
   setCategory(categoryId: number) {
@@ -45,18 +43,18 @@ export class ShopingPageService {
     return children;
   }
 
-  getWebGroupsProducts(productId: number) {
-    return this.apiService.getWebGroupsProducts(productId)
-      .pipe(
-        map(({ Data }) => {
-          if (Data.WebGroupsProduct) {
-            const products = this.generalService.addKeyToObjectArray(Data.WebGroupsProduct);
-            return products;
-          } else {
-            return [];
-          }
-        }),
-        shareReplay(1)
-      );
-  }
+  // getWebGroupsProducts(productId: number) {
+  //   return this.apiService.getWebGroupsProducts(productId)
+  //     .pipe(
+  //       map(({ Data }) => {
+  //         if (Data.WebGroupsProduct) {
+  //           const products = this.generalService.addKeyToObjectArray(Data.WebGroupsProduct);
+  //           return products;
+  //         } else {
+  //           return [];
+  //         }
+  //       }),
+  //       shareReplay(1)
+  //     );
+  // }
 }

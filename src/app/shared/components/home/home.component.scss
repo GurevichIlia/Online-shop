@@ -11,7 +11,7 @@
   bottom: 0;
 }
 
-mat-sidenav {
+mat-sidenav.orderDetails {
   width: 350px;
 }
 
@@ -26,6 +26,8 @@ mat-sidenav-content {
 }
 
 .content {
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 90px;
 }
 
@@ -35,4 +37,18 @@ mat-sidenav-content {
 
   min-height: 100%;
 }
+@media (min-width: 1200px) {
+  .content {
+    width: 1140px !important;
+  }
+}
+
+@media (min-width: 1520px) {
+  .content {
+    width: 1550px !important;
+  }
+}
+
+
+
 

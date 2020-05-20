@@ -9,7 +9,7 @@
                               <mat-label>שם פרטי</mat-label>
                               <input formControlName="firstName" matInput required placeholder="{{'שם פרטי'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
@@ -17,7 +17,7 @@
                               <mat-label>שם םשפחה</mat-label>
                               <input formControlName="lastName" matInput required placeholder="{{'שם םשפחה'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
@@ -25,7 +25,7 @@
                               <mat-label>קבלה על שם</mat-label>
                               <input formControlName="receiptName" matInput placeholder="{{'קבלה על שם'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
@@ -39,7 +39,7 @@
                               <input formControlName="email" matInput required placeholder="{{'אימייל'}}" />
                               <mat-error>
                                     <span *ngIf="form.get('email').hasError('required')" class="mb-1">
-                                          {{'This field should not be empty.' }}
+                                          {{'This field should not be empty' | translate }}
                                     </span>
                                     <span *ngIf="form.get('email').hasError('email')" class="mb-1">
                                           {{'Email is not valid.' }}
@@ -52,7 +52,7 @@
                               <mat-label>טלפון</mat-label>
                               <input formControlName="cellphone" matInput required placeholder="{{'טלפון'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
                   </div>
@@ -66,7 +66,7 @@
                               <mat-label>עיר/יישוב</mat-label>
                               <input formControlName="city" matInput required placeholder="{{'עיר/יישוב'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
@@ -74,7 +74,7 @@
                               <mat-label>רחוב</mat-label>
                               <input formControlName="street" matInput required placeholder="{{'רחוב'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
@@ -82,32 +82,32 @@
                               <mat-label>מסי בית</mat-label>
                               <input formControlName="buildingNumber" matInput required placeholder="{{'מסי בית'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
 
                         <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
                               <mat-label>קומה</mat-label>
-                              <input formControlName="floor" matInput placeholder="{{'קומה '}}" />
+                              <input formControlName="floor" type="number" matInput placeholder="{{'קומה '}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
                               <mat-label>מספר דירה</mat-label>
-                              <input formControlName="flat" matInput required placeholder="{{'מספר דירה'}}" />
+                              <input formControlName="flat" type="number" matInput required placeholder="{{'מספר דירה'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-12 col-xl-6 ">
                               <mat-label>מיקוד</mat-label>
-                              <input formControlName="zipCode" matInput required placeholder="{{'מיקוד'}}" />
+                              <input formControlName="zipCode" type="number" matInput required placeholder="{{'מיקוד'}}" />
                               <mat-error class="mb-1">
-                                    {{'This field should not be empty.' }}
+                                    {{'This field should not be empty' | translate }}
                               </mat-error>
                         </mat-form-field>
 
@@ -119,7 +119,7 @@
 
 
             <div class="col-12 col-xl-6 mb-4 mt-2 text-left">
-          
+
                   <ng-content></ng-content>
             </div>
       </div>

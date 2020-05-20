@@ -8,7 +8,7 @@ import { ImageForFastShop } from 'src/app/shared/interfaces';
 })
 export class FastShopComponent implements OnInit {
   @Input() set imagesForFastShop(imagesForFastShop: ImageForFastShop[]) {
-    if (imagesForFastShop) {
+    if (imagesForFastShop && imagesForFastShop.length !== 0 ) {
       this.image1 = { ...imagesForFastShop[0], link: `url(${imagesForFastShop[0].link})` };
       this.image2 = { ...imagesForFastShop[1], link: `url(${imagesForFastShop[1].link})` };
       this.image3 = { ...imagesForFastShop[2], link: `url(${imagesForFastShop[2].link})` };

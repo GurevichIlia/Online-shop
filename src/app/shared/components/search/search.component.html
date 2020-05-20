@@ -8,7 +8,7 @@
                   </mat-icon>
             </span>
       </div>
-      <input type="text" class="form-control border-input" (blur)="onBlur()" (focus)="onFocus()" [formControl]="searchControl"
+      <input #Search  type="text" class="form-control border-input" (blur)="onBlur()" (focus)="onFocus()" [formControl]="searchControl"
             placeholder="{{'Search' | translate}}"  [matAutocomplete]="auto"
             aria-describedby="basic-addon1">
 </div>

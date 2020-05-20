@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class DetectChangeDirective {
 
-  constructor(private element: ElementRef, private sanitizer: DomSanitizer) {
+  constructor() {
 
     // debugger
     // const event$ = fromEvent(this.element.nativeElement, 'click');
@@ -15,13 +15,10 @@ export class DetectChangeDirective {
     // event$.subscribe(() => console.log('EVENT WORKS', this.element));
     // this.element.nativeElement.innerHTML = 'HELLO';
     // this.element.nativeElement.addEventListener('click', console.log(this.element));
-    const test = this.element.nativeElement.contentWindow;
 
   }
 
-  @HostListener('click') show() {
-    console.log('RELOAD', this.element);
-  }
+
 
 
   // @HostListener('click') onClick() {

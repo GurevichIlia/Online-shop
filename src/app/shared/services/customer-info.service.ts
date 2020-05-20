@@ -21,17 +21,17 @@ export interface CustomerInfo {
 })
 export class CustomerInfoService {
   initialFormValue: CustomerInfo = {
-    firstName: 'test',
-    lastName: 'test',
-    receiptName: 'test',
-    cellphone: 'test',
-    email: 'test@test.com',
-    buildingNumber: 'test',
-    street: 'test',
-    floor: 'test',
-    flat: 'test',
-    city: 'test',
-    zipCode: 'test'
+    firstName: '',
+    lastName: '',
+    receiptName: '',
+    cellphone: '',
+    email: '',
+    buildingNumber: '',
+    street: '',
+    floor: '',
+    flat: '',
+    city: '',
+    zipCode: ''
 
 
   };

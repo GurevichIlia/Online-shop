@@ -42,3 +42,20 @@ li {
     color: rgba(53, 53, 53, 0.81)
   }
 }
+
+.slowShow {
+  animation: show 2s;
+
+
+  @keyframes show {
+
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+
+  }
+}

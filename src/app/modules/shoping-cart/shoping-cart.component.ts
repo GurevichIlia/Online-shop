@@ -3,7 +3,7 @@ import { GeneralService } from './../../shared/services/general.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { switchMap, map, tap, shareReplay, debounceTime } from 'rxjs/operators';
+import { switchMap, map, tap, shareReplay, debounceTime, filter } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { ShopingCartService } from './../../shared/services/shoping-cart.service';
@@ -105,10 +105,11 @@ export class ShopingCartComponent implements OnInit {
       .pipe(
         debounceTime(1),
         switchMap(selectedShippingMethod => {
-          if (selectedShippingMethod) {
-            return of(selectedShippingMethod)
+          if (selectedShippingMethod && selectedShippingMethod.Shippingid) {
+            return of(selectedShippingMethod);
           } else {
             return this.shippingMethods$.pipe(
+              filter(methods => methods.length !== 0),
               map(methods => methods[0]),
               tap(initialMethod => this.shopingCartService.setSelectedShipingOption(initialMethod))
             )

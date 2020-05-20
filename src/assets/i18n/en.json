@@ -13,17 +13,21 @@
       "Items in your cart": "items in your cart",
       "Products": "Products",
       "Total": "Total price",
-      "Back to Shop": "Back to shop",
+      "Back to Shop": "Back to Shop",
       "Description": "Description",
       "Remove": "Remove",
       "Buy now": "Buy now",
       "Added": "Added",
       "Add to Cart": "Add to Cart",
       "Price": "Price",
-      "Search":"Search"
-
-
-
-
+      "Search": "Search",
+      "Number of payments": "Number of payments",
+      "Each payment": "Each payment",
+      "Order Details": "Order Details",
+      "Back": "Back",
+      "Successful payment" : "Successful payment",
+      "In cart":"In cart",
+      "pcs":"psc.",
+      "No one product":"No one product"
 
 }

@@ -1,9 +1,9 @@
 import { ApiService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
 import { Injectable } from '@angular/core';
-import { Product, ProductCategory, ProductsWebImageGallery, ImageForCarousel, ImageKey } from 'src/app/shared/interfaces';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { switchMap, map, tap, filter, shareReplay } from 'rxjs/operators';
+import { Product, ProductCategory, ProductsWebImageGallery, ImageForCarousel, ImageKey, GetProductsWebImageGallery } from 'src/app/shared/interfaces';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { switchMap, map, tap, filter, shareReplay, pluck } from 'rxjs/operators';
 import { GeneralService } from './general.service';
 import { ShopStateService } from './shop-state.service';
 
@@ -21,6 +21,24 @@ export interface MainBannerImages {
   images: MainBannerImage[];
 }
 
+export interface TransformedImage<T> {
+  ImageLink: string;
+  ImageName1: string;
+  SortOrder1: number;
+  link: string;
+}
+
+export interface TopImages {
+  TopImage1: string;
+  TopImage1Link: string;
+  link1: string;
+  TopImage2: string;
+  TopImage2Link: string;
+  link2: string;
+
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,6 +47,7 @@ export class MainPageService {
     carouselImages: [],
     images: []
   };
+
   mainBannerImages$ = new BehaviorSubject<MainBannerImages>(this.initialMainBannerImages);
 
   initialCategory: ProductCategory = {
@@ -38,10 +57,12 @@ export class MainPageService {
     GroupParenCategory: 0,
     isHide: false,
     instituteId: 153
-  }
+  };
 
   currentFeaturedProductsCategory$ = new BehaviorSubject<ProductCategory>(this.initialCategory);
   currentNewArrivalsCategory$ = new BehaviorSubject<ProductCategory>(this.initialCategory);
+
+  allImages$: Observable<ProductsWebImageGallery> = of(null);
   constructor(
     private shopStateService: ShopStateService,
     private generalService: GeneralService,
@@ -109,7 +130,7 @@ export class MainPageService {
         filter(products => products !== null && products !== undefined),
         map(products => products.filter(product => product.IsNewItem === '1')),
         switchMap(filteredProducts => this.transformForCarousel(filteredProducts)),
-        tap(transformedProducts => console.log('FILTERED NEW PRODUCTS', transformedProducts))
+        // tap(transformedProducts => console.log('FILTERED NEW PRODUCTS', transformedProducts))
       );
   }
 
@@ -118,7 +139,7 @@ export class MainPageService {
       .pipe(
         map(products => products.filter(product => product.Isfeatured === '1')),
         switchMap(filteredProducts => this.transformForCarousel(filteredProducts)),
-        tap(transformedProducts => console.log('FILTERED FATURED PRODUCTS', transformedProducts))
+        // tap(transformedProducts => console.log('FILTERED FEATURED PRODUCTS', transformedProducts))
       );
   }
 
@@ -135,58 +156,73 @@ export class MainPageService {
 
 
 
-  addMainBannerImage(image: MainBannerImage, bannerType: string) {
-    const banner: MainBannerImages = {
-      ...this.mainBannerImages$.getValue(),
-      [bannerType]: [...this.mainBannerImages$.getValue()[bannerType], image]
-    };
-    console.log('PHOTO FOR MAIN BANNER', banner);
+  // addMainBannerImage(image: MainBannerImage, bannerType: string) {
+  //   const banner: MainBannerImages = {
+  //     ...this.mainBannerImages$.getValue(),
+  //     [bannerType]: [...this.mainBannerImages$.getValue()[bannerType], image]
+  //   };
+  //   console.log('PHOTO FOR MAIN BANNER', banner);
 
-    this.localStorageService.setItem('main-banners', banner);
-    this.mainBannerImages$.next(banner);
-  }
+  //   this.localStorageService.setItem('main-banners', banner);
+  //   this.mainBannerImages$.next(banner);
+  // }
 
   public getMainBannerImages() {
     return this.mainBannerImages$.asObservable();
   }
 
-  onEditImage() {
+  // onEditImage() {
 
-  }
+  // }
 
-  onDeleteImage(id: number, bannerType: string) {
-    const bannerTypeArray: MainBannerImage[] = [...this.mainBannerImages$.getValue()[bannerType]];
-    bannerTypeArray.splice(id, 1);
-    const banner: MainBannerImages = {
-      ...this.mainBannerImages$.getValue(),
-      [bannerType]: bannerTypeArray
-    };
-    console.log('PHOTO FOR MAIN BANNER', banner);
+  // onDeleteImage(id: number, bannerType: string) {
+  //   const bannerTypeArray: MainBannerImage[] = [...this.mainBannerImages$.getValue()[bannerType]];
+  //   bannerTypeArray.splice(id, 1);
+  //   const banner: MainBannerImages = {
+  //     ...this.mainBannerImages$.getValue(),
+  //     [bannerType]: bannerTypeArray
+  //   };
+  //   console.log('PHOTO FOR MAIN BANNER', banner);
 
-    this.localStorageService.setItem('main-banners', banner);
-    this.mainBannerImages$.next(banner);
+  //   this.localStorageService.setItem('main-banners', banner);
+  //   this.mainBannerImages$.next(banner);
 
-  }
+  // }
 
-  uploadLogoImage(logo: File) {
-    return this.apiService.uploadGalleryLogo(logo);
-  }
+  // uploadLogoImage(logo: File) {
+  //   return this.apiService.uploadGalleryLogo(logo);
+  // }
 
   getGalleryImages() {
-    return this.apiService.getGalleryImages();
+
+    return this.allImages$ = this.apiService.getGalleryImages(this.shopStateService.getOrgName())
+      .pipe(
+        // filter(images => images !== undefined),
+        pluck('Data', 'GetProductsWebImageGallery', 0),
+        shareReplay()
+      );
+
+
   }
 
 
 
   getLogo() {
     // tslint:disable-next-line: max-line-length
-    return this.getGalleryImages()
+    if (!this.getAllImages$()) {
+      return;
+    }
+    return this.getAllImages$()
       .pipe(
-        map(images => this.generalService.getImageLink(images[0].OrgId, 'LogoFileName1', images[0].LogoFileName1))
+        filter(images => images !== null && images !== undefined),
+        map(images => this.generalService.getImageLink(images.OrgId, 'LogoFileName1', images.LogoFileName1))
       );
   }
 
-  transformImagesToArray(allImages: ProductsWebImageGallery, imageQuantity: number, imageNameKey: ImageKey): ImageForCarousel[] {
+  transformImagesObjectToArray(allImages: ProductsWebImageGallery, imageQuantity: number, imageNameKey: ImageKey): ImageForCarousel[] {
+    if (!allImages) {
+      return;
+    }
     const imagesForCarousel = [];
     for (let x = 1; x <= imageQuantity; x++) {
       const image: ImageForCarousel = {
@@ -202,21 +238,57 @@ export class MainPageService {
       }
     }
 
-    console.log('IMAGES FOR CAROUSEL', imagesForCarousel);
     return imagesForCarousel;
 
   }
 
   getImagesForCarousel() {
-    return this.getGalleryImages()
-      .pipe(map(images => this.transformImagesToArray(images[0], 10, 'ImageName')),
+    if (!this.getAllImages$()) {
+      return;
+    }
+    return this.getAllImages$()
+      .pipe(
+        map(images => this.transformImagesObjectToArray(images, 10, 'ImageName')),
+        map(images => images.map(image => image)),
         // map(images => images.map(image => ({ ...image, link: `url(${image.link})` }))),
-        tap(images => console.log('Transformed images', images))
+        tap(images => console.log('IMAGE FOR CAROUCEL', images))
       );
   }
 
   getImagesForFastShop() {
-    return this.getGalleryImages()
-      .pipe(map(images => this.transformImagesToArray(images[0], 10, 'FooterImage')));
+    if (!this.getAllImages$()) {
+      return;
+    }
+    return this.getAllImages$()
+      .pipe(
+        map(images => this.transformImagesObjectToArray(images, 10, 'FooterImage')),
+        tap(images => console.log('IMAGE FOR FastSHop', images))
+
+      );
+  }
+
+  getImagesForTop(): Observable<TopImages> {
+    if (!this.getAllImages$()) {
+      return;
+    }
+    return this.getAllImages$()
+      .pipe(
+        map(images => ({
+          TopImage1: images.TopImage1,
+          TopImage1Link: images.TopImage1Link,
+          link1: this.generalService.getImageLink(images.OrgId, 'TopImage1', images.TopImage1),
+
+          TopImage2: images.TopImage2,
+          TopImage2Link: images.TopImage2Link,
+          link2: this.generalService.getImageLink(images.OrgId, 'TopImage2', images.TopImage2),
+
+        })),
+        tap(images => console.log('IMAGE FOR TOP', images))
+
+      );
+  }
+
+  getAllImages$() {
+    return this.allImages$.pipe(filter(images => images !== null && images !== undefined));
   }
 }

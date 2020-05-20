@@ -5,7 +5,7 @@
 html,
 body {
   height: 100%;
-  font-family: 'Assistant', "Helvetica Neue", sans-serif;
+  font-family: 'Assistant', "Helvetica Neue", sans-serif !important;
 
 }
 
@@ -285,4 +285,27 @@ button.toast-close-button {
 
 #search-input .mat-form-field-suffix {
   top: 5px !important;
+}
+
+.slowShow {
+  animation: show 2s;
+
+
+  @keyframes show {
+
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+
+  }
+}
+
+body {
+  height: 100%;
+  font-family: 'Assistant', "Helvetica Neue", sans-serif !important;
+
 }

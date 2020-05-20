@@ -29,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BannerListComponent } from './components/banner-list/banner-list.component';
 import { GetLinkPipe } from './pipes/get-link.pipe';
 import { SearchComponent } from './components/search/search.component';
+import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
 
 
 
@@ -54,6 +55,7 @@ import { SearchComponent } from './components/search/search.component';
     BannerListComponent,
     GetLinkPipe,
     SearchComponent,
+    MobileMenuComponent,
  
   ],
   imports: [

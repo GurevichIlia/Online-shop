@@ -5,7 +5,7 @@ a {
 .responsive {
   width: 100%;
   height: auto;
-  
+
 }
 
 .back-color {
@@ -52,4 +52,43 @@ a {
   font-weight: 500;
   color: white;
 
+}
+
+
+
+@media all and (max-width: 1366px) {
+  .bannerStyle {
+    height: 470px !important;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .bannerStyle {
+    height: 300px !important;
+  }
+}
+
+@media all and (max-width: 560px) {
+  .bannerStyle {
+    width: 345px !important;
+    height: 200px !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+.bannerStyle {
+  width: 900px;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 600px;
+  color: #792626;
 }

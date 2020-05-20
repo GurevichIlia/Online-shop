@@ -5,7 +5,12 @@ mat-card {
   cursor: pointer;
 
 }
-
+.product-card-header{
+  min-height: 55px;
+}
+.card-title {
+  font-size: 120%;
+}
 
 .price {
   font-size: 25px;
@@ -22,8 +27,12 @@ img {
   max-height: 200px;
   object-fit: contain;
   height: fit-content;
+  transition: transform .5s
 }
 
+img:hover{
+  transform: scale(1.1)
+}
 // img:hover {
 //   transition: all 0.5s;
 //   width: 110%;

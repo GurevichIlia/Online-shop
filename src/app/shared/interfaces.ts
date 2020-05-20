@@ -160,6 +160,21 @@ export interface ImageForCarousel {
       [key: string]: string;
 }
 
+// export class ImageForCarousel {
+//       imageName: string;
+//       imageLink: string;
+//       sortOrder: number;
+//       link:;
+//       constructor(imageIndex: number, imageName: string, imageLink: string, sortOrder: number, link: string) {
+
+//             this.imageName = imageName;
+//             this.imageLink = imageLink;
+//             this.sortOrder = sortOrder;
+//             this.link = link;
+
+//       }
+
+// }
 
 export interface ImageForFastShop {
       [key: string]: string;

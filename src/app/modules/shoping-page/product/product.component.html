@@ -51,14 +51,13 @@
 
 
 <mat-card class="example-card">
-      <mat-card-header>
-            <mat-card-title [ngStyle]="{'font-size': product.ProdName.length > 30? '17px': '20px'}">{{product.ProdName}}
+      <mat-card-header class="product-card-header">
+            <mat-card-title class="card-title">{{product.ProdName}}
             </mat-card-title>
-            <mat-card-subtitle>Subtitle</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image (click)="onMoreInfo()" [src]="product.MainWebImageName">
 
-      <mat-card-content (click)="onMoreInfo()">
+      <mat-card-content (click)="onMoreInfo()" class="text-justify">
             <p class="ellipsis">
                   {{product.ShortDescription_500}}
             </p>
@@ -91,7 +90,7 @@
                               </i></button>
                   </div>
                   <div class="col-9 col-xl-8">
-                        <div class="price w-50">{{product.Price | currency: 'ILS' }}</div>
+                        <div class="price">{{product.Price | currency: 'ILS' }}</div>
 
                   </div>
             </div>

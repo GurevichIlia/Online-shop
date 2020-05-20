@@ -3,8 +3,8 @@ import { ProductCategoryTree } from './../components/product-category-menu/produ
 import { ShopingPageService } from './shoping-page.service';
 import { NotificationsService } from './notifications.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Product, ProductCategory, ProductInCart } from '../interfaces';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Product, ProductCategory, ProductInCart, StoreSettings } from '../interfaces';
 import { shareReplay, filter, map, find, tap } from 'rxjs/operators';
 
 // const images = [
@@ -19,15 +19,19 @@ const image = { url: 'https://material.angular.io/assets/img/examples/shiba2.jpg
   providedIn: 'root'
 })
 export class ShopStateService {
+  shopSettings = new BehaviorSubject<StoreSettings>(null);
+  public orgName: string;
   products$ = new BehaviorSubject<Product[]>([]);
   productsInCart$ = new BehaviorSubject<ProductInCart[]>([]);
   categories$ = new BehaviorSubject<ProductCategory[]>([]);
+  readonly shopGUID$ = new BehaviorSubject<string>('');
 
   constructor(
     private notifications: NotificationsService,
     private shopingPageService: ShopingPageService,
     private generalService: GeneralService
   ) { }
+
 
 
 
@@ -201,5 +205,34 @@ export class ShopStateService {
       );
   }
 
+  setShopGuid(guid: string) {
+    this.shopGUID$.next(guid);
+  }
 
+  getShopGuid() {
+    return this.shopGUID$.getValue();
+  }
+
+  getShopGuid$() {
+    return this.shopGUID$.asObservable();
+  }
+
+  setOrgName(orgName: string) {
+    this.orgName = orgName;
+  }
+
+  getOrgName() {
+    return this.orgName;
+  }
+
+  getOrgName$() {
+    return of(this.getOrgName());
+  }
+  setShopSettings(shopSettings: StoreSettings) {
+    this.shopSettings.next(shopSettings);
+  }
+
+  getShopSettings$() {
+    return this.shopSettings.asObservable();
+  }
 }

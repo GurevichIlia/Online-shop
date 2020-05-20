@@ -1,16 +1,14 @@
-<div class="row" *ngIf="products; else loading">
-      <div class="col-12 col-xl-3 mb-4 product-box" *ngFor="let product of products; trackByFn">
-            <app-product *ngIf="products.length !== 0; else empty" [product]="product"
-                  (addToCart)="onAddToCart(product)" (removeFromCart)="onRemoveFromCart(product)"
-                  (moreInfo)="onMoreInfo(product)">
-            </app-product>
-            <ng-template #empty>
-                  <h4>No one product.</h4>
-            </ng-template>
+<div class="slowShow">
+  <div class="row" *ngIf="products; else loading">
+    <div class="col-12 col-xl-4 mb-4 product-box" *ngFor="let product of products; trackByFn">
+      <app-product  [product]="product" (addToCart)="onAddToCart(product)"
+        (removeFromCart)="onRemoveFromCart(product)" (moreInfo)="onMoreInfo(product)">
+      </app-product>
 
-      </div>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <mat-spinner class="mx-auto"></mat-spinner>
+  </ng-template>
 </div>
-
-<ng-template #loading>
-      <mat-spinner class="mx-auto"></mat-spinner>
-</ng-template>

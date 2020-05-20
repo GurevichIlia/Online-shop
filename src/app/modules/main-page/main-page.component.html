@@ -1,32 +1,32 @@
-<div class=" mt-5 mb-5">
+<div class=" mt-5 mb-5 container-fluid slowShow">
       <app-main-banner [imagesForCarousel]="imagesForCarousel$ | async"
-            [mainBannerImages]="this.mainPageImages$ | async"></app-main-banner>
+            [imagesForTop]="this.imagesForTop$ | async"></app-main-banner>
 </div>
 
 
-<div class="mt-5 featured-products">
+<div class="mt-5 featured-products slowShow">
       <div class="text-title mb-5">
             <h2>{{'Featured Products' | translate}}</h2>
       </div>
-      
+
             <app-products-carousel (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
                   (moreInfo)="showProductFullInfo($event)" [products]="featuredProducts$ | async"
                   [productCategories]="productCategories$ | async"
                   [selectedCategory]="currentFeaturedProductsCategory$ | async"
                   (selectCategory)="selectFeaturedProductsCategory($event)">
             </app-products-carousel>
-   
+
 
 
 </div>
 
 
-<div class="mb-5">
+<div class="mb-5 slowShow">
       <app-fast-shop [imagesForFastShop]="imagesForFastShop$ | async"></app-fast-shop>
 </div>
 
 
-<div class="mb-5 mt-5">
+<div class="mb-5 mt-5 slowShow">
       <div class="text-title mb-5">
             <h2>{{'New Arrivals' | translate}}</h2>
       </div>

@@ -1,79 +1,101 @@
 .back-color {
-      /* height: 100%; */
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .box-1 .back-color {
-      background: #6d1f1fa3;
-      height: 100%;
-    }
-    
-    .box-2 .back-color {
-      height: 100%;
-    
-    }
-    
-    .box-3 .back-color {
-      background: #ffa5004a;
-      height: 100%;
-    
-    }
-    
-    .box-1 {
-      height: 400px;
-    
-      background-image: url('https://avatars.mds.yandex.net/get-pdb/215709/8809f898-a6e7-47db-9317-d9396a74e70b/s1200');
-    
-    }
-    
-    .box-2 {
-      height: 400px;
-      background-image: url('https://avatars.mds.yandex.net/get-pdb/902733/99a0cd5d-f224-471f-93b8-06ef88bf6842/s1200');
-    
-    }
-    
-    .box-3 {
-      height: 400px;
-      background-image: url('https://avatars.mds.yandex.net/get-pdb/905548/009beacf-a861-4501-a0ef-e3ab0b2bcb20/s1200');
-    }
-    
-    .back-color h2 {
-      font-weight: 900;
-      font-size: 6rem;
-      font-style: italic;
-      line-height: 1;
-      color: white;
-    }
-    
-    .back-color h5 {
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 500;
-      line-height: 1;
-      color: white;
-    
-    }
-    
-    .back-color h3 {
-      font-weight: bolder;
-      line-height: 1;
-      color: white;
-    
-    }
-    
-    .back-color h6 {
-      font-size: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      font-weight: 500;
-      color: white;
-    
-    }
+  /* height: 100%; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-1 .back-color {
+  background: #6d1f1fa3;
+  height: 100%;
+
+}
+
+.box-2 .back-color {
+  height: 100%;
+
+}
+
+.box-3 .back-color {
+  background: #ffa5004a;
+  height: 100%;
+
+}
+
+.box-1 {
+  height: 400px;
+
+  background-image: url('https://avatars.mds.yandex.net/get-pdb/215709/8809f898-a6e7-47db-9317-d9396a74e70b/s1200');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.box-2 {
+  height: 400px;
+  background-image: url('https://avatars.mds.yandex.net/get-pdb/902733/99a0cd5d-f224-471f-93b8-06ef88bf6842/s1200');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.box-3 {
+  height: 400px;
+  background-image: url('https://avatars.mds.yandex.net/get-pdb/905548/009beacf-a861-4501-a0ef-e3ab0b2bcb20/s1200');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.back-color h2 {
+  font-weight: 900;
+  font-size: 6rem;
+  font-style: italic;
+  line-height: 1;
+  color: white;
+}
+
+.back-color h5 {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1;
+  color: white;
+
+}
+
+.back-color h3 {
+  font-weight: bolder;
+  line-height: 1;
+  color: white;
+
+}
+
+.back-color h6 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: 500;
+  color: white;
+
+}
+
+@media all and (min-width: 241px) and (max-width: 480px) {
+  .box-1 .box-2 .box-3 {
+    padding: 8px 8px 8px 50px;
+    width: 18em;
+  }
+
+
+}
+
+.image-box{
+  width: 33.3%;
+  height: auto;
+}

@@ -14,6 +14,12 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -22,7 +28,7 @@ export function createTranslateLoader(http: HttpClient) {
 // Import your library
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
 
   ],
   
@@ -44,7 +50,13 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     ToastrModule.forRoot(), // ToastrModule added
     NgxUiLoaderModule,
-    NgxUiLoaderRouterModule // import NgxUiLoaderRouterModule. By default, it will show foreground loader.
+    NgxUiLoaderRouterModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule // import NgxUiLoaderRouterModule. By default, it will show foreground loader.
     // If you need to show background spinner, do as follow:
     // NgxUiLoaderRouterModule.forRoot({ showForeground: false })
   ],

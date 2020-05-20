@@ -1,9 +1,9 @@
 import { HomeService } from './../../services/home.service';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, Observable, combineLatest, } from 'rxjs';
-import { takeUntil, switchMap, map, tap, take } from 'rxjs/operators';
+import { takeUntil, switchMap, map, tap, take, filter } from 'rxjs/operators';
 import { Product } from '../../interfaces';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { ShippingMethod, StoreSettings } from './../../interfaces';
@@ -23,6 +23,8 @@ type TotalDetails = Observable<[ProductInCart[], number, ShippingMethod]>;
 })
 export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav') sidenav: MatSidenav;
+  @ViewChild('mobileMenu') mobileMenu: MatSidenav;
+
 
   reason = '';
 
@@ -42,6 +44,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   productsFiltredBySearch$: Observable<Product[]>;
 
   storeSettings$: Observable<StoreSettings>;
+
+  numberOfPayments$: Observable<number>;
+
+  isShowMobileMenu$: Observable<boolean>;
+
+  productCategories$ = this.shopStateService.getCategoriesForTree$();
+
   constructor(
     private homeService: HomeService,
     private shopStateService: ShopStateService,
@@ -49,11 +58,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     private generalService: GeneralService,
     private router: Router,
     private shopingCartService: ShopingCartService,
-    private mainpageService: MainPageService
+    private mainpageService: MainPageService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     window.scrollTo({ top: 0 });
+    this.setOrgName();
     // this.apiService.getAllProductsAndCategoriesFromServer()
     //   .pipe(takeUntil(this.subscription$))
     //   .subscribe(productsAndCat => {
@@ -68,9 +79,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     //   }, err => {
     //     this.notifications.error(err, 'Something went wrong');
     //   });
+
+
+    this.mainpageService.getGalleryImages();
+
     this.getProductCategories();
     this.getAllProducts();
 
+
+
+    this.closeMobileSideMenuAfterRedirect();
 
     this.addedProductsToCart$ = this.shopStateService.getAddedToCartProducts$()
     // .pipe(tap(products => products.length === 0 ? this.redirectToMainPageIfCartEmpty() : null));
@@ -87,6 +105,26 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.logo$ = this.mainpageService.getLogo();
 
     this.getStoreSettings();
+
+    this.numberOfPayments$ = this.shopingCartService.getNumberOfPayments();
+
+    this.isShowMobileMenu$ = this.homeService.isShowMobileMenu$.pipe(tap(() => this.mobileMenu.open()));
+  }
+
+  getOrgNameFromRouteUrl() {
+    // const currentUrl = 'https://shop.amax.co.il/shopping-page';
+    // const currentUrl = 'https://amax.amax.co.il/main-page';
+    // const currentUrl = 'https://kevatry.amax.co.il/main-page';
+
+    const currentUrl = document.URL;
+
+    const domen = currentUrl.split('/')[2];
+    const orgName = domen.substr(0, domen.indexOf('.'));
+    return orgName;
+  }
+
+  setOrgName() {
+    this.shopStateService.setOrgName(this.getOrgNameFromRouteUrl());
   }
 
   close(reason: string) {
@@ -96,7 +134,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getProductCategories() {
     this.homeService.getProductsWebGroup()
-      .pipe(takeUntil(this.subscription$))
+      .pipe(
+        filter(data => data !== null),
+        takeUntil(this.subscription$))
       .subscribe(({ ProductsWebGroups }) => {
         console.log('GROUP GOT', ProductsWebGroups);
 
@@ -118,13 +158,28 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
+  closeMobileSideMenuAfterRedirect() {
+    this.router.events.
+      pipe(
+        takeUntil(this.subscription$))
+      .subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.mobileMenu.close();
+        }
+
+      })
+
+  }
+
   redirectToMainPageIfCartEmpty() {
     this.router.navigate(['main-page']);
   }
 
   getAllProducts() {
     this.homeService.getAllProducts()
-      .pipe(takeUntil(this.subscription$))
+      .pipe(
+        filter(data => data !== null),
+        takeUntil(this.subscription$))
       .subscribe(products => {
         if (products) {
           this.shopStateService.setAllProducts(this.generalService.addKeyToObjectArray(products));
@@ -138,6 +193,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe(() => {
         this.sidenav.open();
+
       });
   }
 
@@ -169,6 +225,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     // .subscribe(settings => console.log('SETTINGS', settings))
   }
 
+  onShowMobileMenu() {
+    this.homeService.onShowMobileMenu();
+  }
+
+  redirectToProductsList() {
+    this.router.navigate(['shoping-page'])
+  }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.

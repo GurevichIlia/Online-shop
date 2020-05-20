@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree" [style.backgroundColor]="backgroudColor">
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node [ngClass]="{'is-active': node.GroupId === (selectedProductCategory$ | async) }" mat-ripple matTreeNodePadding
             [matTreeNodePaddingIndent]="20" *matTreeNodeDef="let node" matTreeNodeToggle>

@@ -53,17 +53,17 @@
                         <button color="primary" matTooltip="{{'Add more' | translate}}" #addedButton
                               *ngIf="!addedButtonOnFocus && product.addedToCart" (click)="onAddToCart()"
                               mat-flat-button>
-                              +{{quantity}} <small>{{'pcs' | translate}}.</small>
+                               <small>{{'pcs' | translate}}</small> {{quantity}}+
 
                         </button>
                         <button (click)="onBuyNow()" class="in-cart-button" #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
                               mat-flat-button>
-                              {{'In Cart' | translate}} {{product.quantity}}<small>{{'pcs' | translate}}.</small><i
+                              {{'In cart' | translate}} {{product.quantity}}<small> {{'pcs' | translate}}</small><i
                                     class="material-icons">
                                     done
                               </i></button>
                   </div>
-   
+
             </div>
 
 

@@ -1,14 +1,19 @@
 div.products {
-//   border: solid 1px whitesmoke;
+  //   border: solid 1px whitesmoke;
   min-height: 80vh;
   overflow: 'overlay';
 }
 
 div.sidebar {
-//   border: solid 1px whitesmoke;
+  //   border: solid 1px whitesmoke;
   height: fit-content;
 }
+
 h2 {
   font-size: 35px;
   font-weight: bold;
+}
+
+h3 {
+  font-size: 30px;
 }

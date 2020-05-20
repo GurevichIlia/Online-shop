@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ProductCategory } from '../../interfaces';
@@ -22,10 +22,12 @@ export interface ProductCategoryTree extends ProductCategory {
 })
 export class ProductCategoryMenuComponent implements OnChanges, OnInit {
   @Input() categoriesTree: ProductCategoryTree[];
+  @Input() backgroudColor = 'white';
+
   treeControl = new NestedTreeControl<ProductCategoryTree>(node => node.children);
   dataSource = new MatTreeNestedDataSource<ProductCategoryTree>();
   selectedProductCategory$: Observable<number>;
-
+  @Output() redirect = new EventEmitter();
   constructor(private shopingPageService: ShopingPageService) {
   }
 
@@ -47,6 +49,11 @@ export class ProductCategoryMenuComponent implements OnChanges, OnInit {
   setCategory(categoryId: number) {
     console.log('SELECTED CATEGORY', categoryId);
     this.shopingPageService.setCategory(categoryId);
+    this.onRedirect();
+  }
+
+  onRedirect() {
+    this.redirect.emit();
   }
 
   hasChild = (_: number, node: ProductCategoryTree) => !!node.children && node.children.length > 0;

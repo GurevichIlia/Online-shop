@@ -16,6 +16,7 @@ import { SearchService } from './../../services/search.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
+  @ViewChild('Search') search: ElementRef<any>;
   products$: Observable<Product[]>;
 
   searchControl = new FormControl('');
@@ -49,17 +50,21 @@ export class SearchComponent implements OnInit {
 
   openProductInfo(productId: number) {
     this.router.navigate([`product-info/${productId}`]);
+
     this.searchControl.patchValue('');
+    this.search.nativeElement.blur();
   }
 
   onBlur() {
-    setTimeout(() => {
-      if (!this.searchControl.value) {
+    if (!this.searchControl.value) {
+      setTimeout(() => {
         this.isFocused = false;
         this.changeDetectorRef.markForCheck();
-      }
+      }, 1000);
 
-    }, 1000);
+    }
+
+
 
   }
 
@@ -72,5 +77,7 @@ export class SearchComponent implements OnInit {
 
   clearInput() {
     this.searchControl.patchValue('');
+    this.onBlur();
+
   }
 }

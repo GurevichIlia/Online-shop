@@ -9,32 +9,37 @@
   list-style-type: none;
 }
 
-ul {
-  padding: inherit;
-}
+// ul {
+//   padding: inherit;
+// }
 
 span.group-name {
   margin-inline-start: 15px;
 }
 
+.mat-tree-node{
+  min-height: 0px;
+
+}
+
 mat-tree-node:hover {
   cursor: pointer;
-  background-color: bisque;
+  background-color: #ffab40cf;
 
 }
 
 .mat-tree-node:hover {
   cursor: pointer;
-  background-color: bisque;
+  background-color: #ffab40cf;
 
 }
 
 .group-name {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 
 .is-active {
-  background-color: bisque;
+  background-color: #ffab40cf;
 
 }

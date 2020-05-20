@@ -110,6 +110,10 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
   }
 
   saveOrderInfo(customerInfo: CustomerInfo = this.form.value) {
+    if (this.form.invalid) {
+      return;
+    }
+
     const finalOrder$ = this.shopStateService.getAddedToCartProducts$();
     const shippingMethod$ = this.shopingCartService.getSelectedShipingOption();
     const numberOfPayments$ = this.shopingCartService.getNumberOfPayments();
@@ -131,7 +135,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
               city: customerInfo.city,
               zipCode: customerInfo.zipCode,
               kevaAmount: this.totalPrice,
-              TotalMonthtoCharge: 999,
+              TotalMonthtoCharge: 0,
               numberOfPayments: +numberOfPayments,
               ShippingMethod: shippingMethod.Shippingid,
               order: this.customerInfoService.removeFilesFromProductCard(finalOrder)
@@ -140,7 +144,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
             console.log('FINAL ORDER', orderInfo)
             console.log('FINAL ORDER', JSON.stringify(orderInfo));
 
-            return this.apiService.saveCustomerInfo(orderInfo);
+            return this.apiService.saveCustomerInfo(orderInfo, this.shopStateService.getShopGuid());
           }
         }),
         tap(res => this.isLoading = false),

@@ -12,6 +12,7 @@ export class OrderDetailsComponent {
   @Input() orderedProductsAmount: number;
   @Input() orderedProducts: ProductInCart[] = [];
   @Input() extraOption: ShippingMethod;
+  @Input() numberOfPayments = 0;
   @Output() delete = new EventEmitter();
   @Output() edit = new EventEmitter();
 

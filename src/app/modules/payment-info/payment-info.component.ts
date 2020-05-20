@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { Observable, fromEvent } from 'rxjs';
@@ -18,14 +18,17 @@ export class PaymentInfoComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private paymentService: PaymentService,
     private renderer: Renderer2,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {
 
   }
 
   ngOnInit(): void {
-    window.scrollTo({ top: 0 })
-    this.paymentLink$ = this.paymentService.getPaymentLink().pipe(debounceTime(1));
+
+    window.scrollTo({ top: 0 });
+    this.paymentLink$ = this.paymentService.getPaymentLink()
+      .pipe(debounceTime(1), tap(link => link ? link : this.router.navigate(['/shoping-page'])));
 
 
   }

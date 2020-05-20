@@ -1,16 +1,25 @@
 import { ApiService } from './api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { ProductInCart, ShippingMethod } from '../interfaces';
 import { ShopStateService } from './shop-state.service';
-import { tap, map, shareReplay } from 'rxjs/operators';
+import { tap, map, shareReplay, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopingCartService {
-  selectedShipingOption$ = new BehaviorSubject<ShippingMethod>(null);
+  initialShipingMethod: ShippingMethod = {
+    Shippingid: null,
+    ShippingMethood: '',
+    ShippingMethoodEng: '',
+    ShippingPrice: 0,
+    ShippingOrder: null,
+    OrgId: null
+  }
+
+  selectedShipingOption$ = new BehaviorSubject<ShippingMethod>(this.initialShipingMethod);
   numberOfPayments$ = new BehaviorSubject<number>(1);
 
   constructor(
@@ -41,11 +50,20 @@ export class ShopingCartService {
   }
 
   getShippingMethods() {
-    return this.apiService.getShippingMethods()
+    return this.shopStateService.getOrgName$()
       .pipe(
-        map(res => res.Data.StoreShipping),
-        shareReplay()
-      );
+        switchMap(guid => {
+          if (!guid) {
+            return of([]);
+          }
+          return this.apiService.getShippingMethods(guid)
+            .pipe(
+              map(res => res.Data.StoreShipping)
+
+            );
+        }));
+
+
 
   }
 

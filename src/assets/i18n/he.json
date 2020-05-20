@@ -18,7 +18,16 @@
       "Remove": "הסר",
       "Buy now": "קנה עכשיו",
       "Added": "נמצא בסל",
-      "Add to Cart": "Add to Cart",
+      "Add to Cart": "הוסף לעגלה",
       "Price": "מחיר",
-      "Search": "חיפוש"
+      "Search": "חיפוש",
+      "Number of payments": "מספר התשלומים",
+      "Each payment": "סכום לכל תשלום",
+      "Order Details": "פירוט הזמנה",
+      "Back": "חזרה",
+      "Successful payment" : "התשלום בוצע בהצלחה",
+      "In cart":"בעגלה",
+      "pcs":"יח",
+      "No one product":"לא נמצאו מוצרים"
+
 }
