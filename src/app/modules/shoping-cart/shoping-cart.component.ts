@@ -1,15 +1,14 @@
-import { NotificationsService } from './../../shared/services/notifications.service';
-import { GeneralService } from './../../shared/services/general.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { switchMap, map, tap, shareReplay, debounceTime, filter } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-
-import { ShopingCartService } from './../../shared/services/shoping-cart.service';
-import { ShopStateService } from './../../shared/services/shop-state.service';
-import { Product, ProductInCart, ShippingMethod } from 'src/app/shared/interfaces';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { debounceTime, filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { Product, ProductInCart, ShippingMethod } from 'src/app/shared/interfaces';
+import { GeneralService } from './../../shared/services/general.service';
+import { NotificationsService } from './../../shared/services/notifications.service';
+import { ShopingCartService } from './../../shared/services/shoping-cart.service';
+
+
 
 
 
@@ -31,7 +30,6 @@ export class ShopingCartComponent implements OnInit {
   numberOfPayments = new FormControl(1, [Validators.max(3), Validators.min(1)]);
   numberOfPayments$: Observable<number>;
   constructor(
-    private shopStateService: ShopStateService,
     private shopingCartService: ShopingCartService,
     private router: Router,
     private generalService: GeneralService,
@@ -41,8 +39,9 @@ export class ShopingCartComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo({ top: 100 });
 
-    this.selectedProducts$ = this.shopStateService.getAddedToCartProducts$()
-      .pipe(map(products => {
+    this.selectedProducts$ = this.shopingCartService.getAddedToCartProducts$()
+      .pipe(
+        map(products => {
 
         this.totalProductsAmount$ = of(this.generalService.calculateProductAmount(products));
         this.calculateTotalAmount();
@@ -67,12 +66,12 @@ export class ShopingCartComponent implements OnInit {
     console.log('SHOW INFO', product);
   }
 
-  onRemoveFromCart(product: Product) {
-    this.shopStateService.removeFromCart(product);
+  onRemoveFromCart(productIndex: number) {
+    this.shopingCartService.removeFromCart(productIndex);
   }
 
-  onChangeProductQuantity(quantity: number, product: ProductInCart) {
-    this.shopingCartService.setProductQuantity(product, quantity);
+  onChangeProductQuantity(quantity: number, productIndex: number) {
+    this.shopingCartService.setProductQuantity(productIndex, quantity);
   }
 
   goPayment() {

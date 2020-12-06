@@ -7,7 +7,7 @@ import { Product, ProductCategory } from 'src/app/shared/interfaces';
 
 import { ShopingPageService } from './../../shared/services/shoping-page.service';
 import { ShopStateService } from './../../shared/services/shop-state.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProductCategoryTree } from 'src/app/shared/components/product-category-menu/product-category-menu.component';
 @Component({
   selector: 'app-shoping-page',
@@ -23,11 +23,14 @@ export class ShopingPageComponent implements OnInit, OnDestroy {
     private shopingPageService: ShopingPageService,
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     // this.selectedProductCategory = this.fb.control('');
     // this.selectedProductCategory$ = this.shopingPageService.selectedCategory$;
+    this.getCategoryFromQueryParams();
+
     this.productCategories$ = this.shopStateService.getCategoriesForTree$();
 
     this.products$ = this.shopingPageService.getSelectedCategory$()
@@ -43,6 +46,13 @@ export class ShopingPageComponent implements OnInit, OnDestroy {
     //   });
   }
 
+  getCategoryFromQueryParams() {
+    const queryParams = this.route.snapshot.queryParams as { category: string };
+
+    const categoryId = queryParams.category;
+
+    this.shopingPageService.setCategory(+categoryId);
+  }
 
   addToShopingCart(product: Product) {
     this.shopStateService.addToCart(product);
@@ -50,11 +60,11 @@ export class ShopingPageComponent implements OnInit, OnDestroy {
 
   }
 
-  removeFromCart(product: Product) {
-    this.shopStateService.removeFromCart(product);
-    console.log('REMOVE CART', product);
+  // removeFromCart(product: Product) {
+  //   this.shopStateService.removeFromCart(product);
+  //   console.log('REMOVE CART', product);
 
-  }
+  // }
 
   showProductFullInfo(product: Product) {
     const id = product.ProductId;

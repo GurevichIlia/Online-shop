@@ -8,30 +8,45 @@ export interface CustomerInfo {
   receiptName?: string;
   cellphone: string;
   email: string;
-  buildingNumber: string;
+  buildingNumber: number;
   street: string;
-  flat: string;
-  floor: string;
+  flat: number;
+  floor: number;
   city: string;
-  zipCode: string;
+  zipCode: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerInfoService {
+  // initialFormValue: CustomerInfo = {
+  //   firstName: 'test',
+  //   lastName: 'test',
+  //   receiptName: 'test',
+  //   cellphone: 'test',
+  //   email: 'test@test.com',
+  //   buildingNumber: 1,
+  //   street: 'test',
+  //   floor: 1,
+  //   flat: 1,
+  //   city: 'test',
+  //   zipCode: 1
+
+
+  // };
   initialFormValue: CustomerInfo = {
     firstName: '',
     lastName: '',
     receiptName: '',
     cellphone: '',
     email: '',
-    buildingNumber: '',
+    buildingNumber: null,
     street: '',
-    floor: '',
-    flat: '',
+    floor: null,
+    flat: null,
     city: '',
-    zipCode: ''
+    zipCode: null
 
 
   };

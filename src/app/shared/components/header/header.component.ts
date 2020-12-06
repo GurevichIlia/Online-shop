@@ -1,5 +1,5 @@
 import { ProductCategoryTree } from './../product-category-menu/product-category-menu.component';
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChildren, ElementRef } from '@angular/core';
 import { fromEvent, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
+  @ViewChildren('catalogMenu') catalogMenu: ElementRef;
   @Input() addedProductsQuantity = 0;
   @Input() isShowMenu;
   @Input() logo: string;
@@ -19,11 +20,13 @@ export class HeaderComponent implements OnInit {
   @Output() selectTheme = new EventEmitter();
   @Output() showMobileMenu = new EventEmitter();
   @Output() redirect = new EventEmitter();
-
-dropDownMenuBackcolor
+  dropDownMenuBackcolor
   isMobileSearch = false;
+  isShowCatalog = false;
   themes = [{ name: 'orange-theme' }, { name: 'blue-theme' }, { name: 'default-theme' }];
-  isStickyNumbar$ = fromEvent(document, 'scroll').pipe(map(() => window.pageYOffset > 266));
+  isStickyNuvbar$ = fromEvent(document, 'scroll').pipe(map(() => window.pageYOffset > 266));
+
+
   constructor() { }
 
   ngOnInit(): void {
@@ -44,5 +47,13 @@ dropDownMenuBackcolor
 
   onShowMobileMenu() {
     this.showMobileMenu.emit();
+  }
+
+  hideCatalog() {
+    this.isShowCatalog = false;
+    // debugger
+    // console.log(this.catalogMenu.first.nativeElement, this.catalogMenu.last.nativeElement)
+    // this.catalogMenu.first.nativeElement.style.display = 'none',
+    //   this.catalogMenu.last.nativeElement.style.display = 'none'
   }
 }

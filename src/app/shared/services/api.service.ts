@@ -1,9 +1,11 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, tap, catchError, shareReplay } from 'rxjs/operators';
-import { ProductCategory, Product, BasicResponse,
-   GetProductsWebImageGallery, OrderInfo, ShippingMethod, StoreSettings } from '../interfaces';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import {
+  BasicResponse, GetProductsWebImageGallery, OrderInfo,
+  Product, ProductCategory, ShippingMethod, StoreSettings, ProductsOption
+} from '../interfaces';
+import { shareReplay } from 'rxjs/operators';
 
 
 
@@ -46,6 +48,7 @@ export class ApiService {
   }
 
 
+
   // UPLOAD IMAGES, NOT NEED NOW HERE, BECAUSE UPLOADING FROM CRM
 
   // uploadGalleryLogo(logo: File) {
@@ -80,12 +83,14 @@ export class ApiService {
 
   getGalleryImages(orgName: string) {
     return this.http.get<BasicResponse<GetProductsWebImageGallery>>
-      (`${this.baseUrl}ShoppingSite/GetProductsWebImageGallery?shopname=${orgName}`)
+      (`${this.baseUrl}ShoppingSite/GetProductsWebImageGallery?shopname=${orgName}`);
   }
 
   public getProductsFiles(productId: number, orgId: string): Observable<BasicResponse<{ GetProductFileList: [] }>> {
     // tslint:disable-next-line: max-line-length
-    return this.http.get<BasicResponse<{ GetProductFileList: [] }>>(`${this.baseUrl}ShoppingSite/GetProductFileList?orgid=${orgId}&ProductId=${productId}`);
+    return this.http.get<BasicResponse<{ GetProductFileList: [] }>>(`${this.baseUrl}ShoppingSite/GetProductFileList?orgid=${orgId}&ProductId=${productId}`)
+      .pipe(shareReplay())
+      ;
   }
 
   getShippingMethods(org: string) {
@@ -96,6 +101,19 @@ export class ApiService {
   public getStoreSettings(orgName: string): Observable<BasicResponse<{ GetStoreSetting: StoreSettings[] }>> {
     // tslint:disable-next-line: max-line-length
     return this.http.get<BasicResponse<{ GetStoreSetting: StoreSettings[] }>>(`${this.baseUrl}ShoppingSite/GetStoreSetting?shopname=${orgName}`);
+  }
+
+  getProductsOptions(orgName: string, productId: number) {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<BasicResponse<{ ProductsStoreOptions: ProductsOption[] }>>(`${this.baseUrl}ShoppingSite/GetProductsStoreOptions?shopname=${orgName}&ProductId=${productId}`)
+      .pipe(shareReplay());
+  }
+
+  getProductsOptionItems(orgName: string, optionId: number) {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<BasicResponse<{ ProductsStoreOptionItems: [] }>>(`${this.baseUrl}ShoppingSite/GetProductsStoreOptionItems?shopname=${orgName}&ProductStoreOptionId=${optionId}`)
+      .pipe(shareReplay());
+
   }
 
 }

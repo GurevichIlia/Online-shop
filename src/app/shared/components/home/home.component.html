@@ -4,7 +4,7 @@
             <div *ngIf="totalDetails$ | async as totalDetails">
                   <app-order-details [numberOfPayments]="numberOfPayments$ | async" [orderedProducts]="totalDetails[0]"
                         [orderedProductsAmount]="totalDetails[1]" [extraOption]="totalDetails[2]"
-                        (delete)="removeFromCart($event)" (edit)="onEditShopingCart()">
+                       (edit)="onEditShopingCart()">
                   </app-order-details>
             </div>
       </mat-sidenav>
@@ -17,7 +17,7 @@
 
             <app-header [logo]="logo$ | async" [isShowMenu]="isHandset$ | async" [categories]="productCategories$ | async"
                   [addedProductsQuantity]="(addedProductsToCart$ |async)?.length" (openShopingCart)="openShopingCart()"
-                  (selectTheme)="onSelectTheme($event)" (redirect)="redirectToProductsList()" (showMobileMenu)="onShowMobileMenu()">
+                  (selectTheme)="onSelectTheme($event)"  (showMobileMenu)="onShowMobileMenu()">
             </app-header>
 
 

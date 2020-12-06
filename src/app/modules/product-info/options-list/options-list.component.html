@@ -1,0 +1,23 @@
+<span *ngIf="productOptionsWithNestedItems?.length" class="additional-options">{{'Additional options' | translate}}</span>
+
+<mat-list>
+  <mat-list-item *ngFor="let option of productOptionsWithNestedItems; let i = index">
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>{{option.productStoreOptionName}}</mat-label>
+        <mat-select [formControlName]="i">
+          <mat-option>{{'None' | translate}}</mat-option>
+          <mat-option class="option" *ngFor="let item of option.children$ | async" [value]="item">
+            <span class="d-flex justify-content-between">
+              <span class="item-name">{{item.productStoreOptionItemName}} </span>
+              <span class="item-price">{{item.productStoreOptionItemPrice | currency: 'ILS'}}</span>
+            </span>
+          </mat-option>
+        </mat-select>
+        <mat-error >{{'This field should not be empty' | translate}}</mat-error>
+
+      </mat-form-field>
+    </form>
+
+  </mat-list-item>
+</mat-list>

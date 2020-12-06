@@ -12,7 +12,7 @@ import { PaymentService } from './../../shared/services/payment.service';
 })
 export class PaymentInfoComponent implements OnInit, AfterViewInit {
   @ViewChild('iframe') iframe: ElementRef;
-  paymentLink$: Observable<SafeUrl>;
+  paymentLink$: Observable<string>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +28,12 @@ export class PaymentInfoComponent implements OnInit, AfterViewInit {
 
     window.scrollTo({ top: 0 });
     this.paymentLink$ = this.paymentService.getPaymentLink()
-      .pipe(debounceTime(1), tap(link => link ? link : this.router.navigate(['/shoping-page'])));
+      .pipe(
+        debounceTime(1), tap(link => {
+          return link ? link : this.router.navigate(['/shoping-page']);
+        }));
+
+
 
 
   }
@@ -36,7 +41,10 @@ export class PaymentInfoComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
+    console.log('IFRAME', this.iframe);
+    const iframeEvent$ = fromEvent(this.iframe.nativeElement, 'popstate');
 
+    iframeEvent$.subscribe(event => console.log('IFRAME EVENT', event));
 
   }
 

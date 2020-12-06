@@ -28,6 +28,14 @@
       "Successful payment" : "התשלום בוצע בהצלחה",
       "In cart":"בעגלה",
       "pcs":"יח",
-      "No one product":"לא נמצאו מוצרים"
+      "No one product":"לא נמצאו מוצרים",
+      "This field should not be empty": "שדה זה אינו יכול להיות ריק",
+      "Email is not valid": "כתובת דואר אלקטרוני לא תקינה",
+      "Contact": "צור קשר",
+      "Additional options": "אפשרויות נוספות",
+      "Menu":"תפריט",
+      "Added to Cart": "נוסף לעגלת הקניות"
+
+
 
 }

@@ -8,13 +8,13 @@ import { ParamsAfterPayment } from '../interfaces';
 })
 export class PaymentService {
   private paramsAfterPayment: ParamsAfterPayment;
-  paymentLink$ = new BehaviorSubject<SafeUrl>('');
+  paymentLink$ = new BehaviorSubject<string>('');
   constructor(private sanitizer: DomSanitizer) { }
 
 
   setPaymentLink(link: string) {
-    const url: SafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-    this.paymentLink$.next(url);
+    // const url: SafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+    this.paymentLink$.next(link);
   }
 
   getPaymentLink() {

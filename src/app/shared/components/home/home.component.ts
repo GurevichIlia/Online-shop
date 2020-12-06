@@ -64,7 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.scrollTo({ top: 0 });
-    this.setOrgName();
     // this.apiService.getAllProductsAndCategoriesFromServer()
     //   .pipe(takeUntil(this.subscription$))
     //   .subscribe(productsAndCat => {
@@ -86,7 +85,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getProductCategories();
     this.getAllProducts();
 
-
+    // this.homeService.getProductsAddedToCartFromLocalStorage()
 
     this.closeMobileSideMenuAfterRedirect();
 
@@ -111,21 +110,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isShowMobileMenu$ = this.homeService.isShowMobileMenu$.pipe(tap(() => this.mobileMenu.open()));
   }
 
-  getOrgNameFromRouteUrl() {
-    // const currentUrl = 'https://shop.amax.co.il/shopping-page';
-    // const currentUrl = 'https://amax.amax.co.il/main-page';
-    // const currentUrl = 'https://kevatry.amax.co.il/main-page';
 
-    const currentUrl = document.URL;
 
-    const domen = currentUrl.split('/')[2];
-    const orgName = domen.substr(0, domen.indexOf('.'));
-    return orgName;
-  }
 
-  setOrgName() {
-    this.shopStateService.setOrgName(this.getOrgNameFromRouteUrl());
-  }
 
   close(reason: string) {
     this.reason = reason;
@@ -197,11 +184,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  removeFromCart(product: Product) {
-    this.shopStateService.removeFromCart(product);
-    console.log('REMOVE CART', product);
+  // removeFromCart(product: Product) {
+  //   this.shopStateService.removeFromCart(product);
+  //   console.log('REMOVE CART', product);
 
-  }
+  // }
 
   onEditShopingCart() {
     this.sidenav.close();
@@ -229,9 +216,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.homeService.onShowMobileMenu();
   }
 
-  redirectToProductsList() {
-    this.router.navigate(['shoping-page'])
-  }
+  // redirectToProductsList() {
+  //   this.router.navigate(['shoping-page'])
+  // }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.

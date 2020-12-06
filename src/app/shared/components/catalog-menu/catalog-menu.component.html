@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="catalog-menu">
+        <ul class="row">
+          <ng-container *ngFor="let category of categories$ | async">
+            <li *ngIf="category.GroupName !== 'קטגוריה'"
+              class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-inline text-justify mt-2">
+              <span (click)="setCategory(category.GroupId)" class="category-title ">{{category.GroupName}}</span>
+              <mat-list class="sub-category-list">
+                <mat-list-item *ngFor="let subCategory of category.children">
+                  <span (click)="setCategory(subCategory.GroupId)"
+                    class="sub-category-title">{{subCategory.GroupName}}</span>
+                </mat-list-item>
+              </mat-list>
+            </li>
+          </ng-container>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

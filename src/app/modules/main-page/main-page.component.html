@@ -1,4 +1,5 @@
-<div class=" mt-5 mb-5 container-fluid slowShow">
+
+<div class="mt-5 mb-5 container-fluid slowShow">
       <app-main-banner [imagesForCarousel]="imagesForCarousel$ | async"
             [imagesForTop]="this.imagesForTop$ | async"></app-main-banner>
 </div>
@@ -9,9 +10,9 @@
             <h2>{{'Featured Products' | translate}}</h2>
       </div>
 
-            <app-products-carousel (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
+            <app-products-carousel (addToCart)="addToShopingCart($event)"
                   (moreInfo)="showProductFullInfo($event)" [products]="featuredProducts$ | async"
-                  [productCategories]="productCategories$ | async"
+                  [productCategories]="featuredProductsCategories$ | async"
                   [selectedCategory]="currentFeaturedProductsCategory$ | async"
                   (selectCategory)="selectFeaturedProductsCategory($event)">
             </app-products-carousel>
@@ -30,9 +31,9 @@
       <div class="text-title mb-5">
             <h2>{{'New Arrivals' | translate}}</h2>
       </div>
-      <app-products-carousel (addToCart)="addToShopingCart($event)" (removeFromCart)="removeFromCart($event)"
+      <app-products-carousel (addToCart)="addToShopingCart($event)"
             (moreInfo)="showProductFullInfo($event)" [products]="newArrivalsProducts$ | async"
-            [productCategories]="productCategories$ | async" [selectedCategory]="currentNewArrivalsCategory$ | async"
+            [productCategories]="newProductsCategories$ | async" [selectedCategory]="currentNewArrivalsCategory$ | async"
             (selectCategory)="selectNewArrivalsCategory($event)">
       </app-products-carousel>
 

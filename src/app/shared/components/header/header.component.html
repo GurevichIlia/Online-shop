@@ -1,12 +1,12 @@
 <div class="container-fluid p-0">
-  <mat-toolbar dir="rtl" color="primary" class="header">
+  <mat-toolbar dir="rtl" class="header">
     <div class="content m-auto">
       <div class="row align-items-center justify-content-around">
 
 
         <div class="col-9 col-xl-3 text-right">
           <div class="logo-box">
-            <a routerLink="/main-page"><img width="100%" height="auto" [src]="logo" alt=""></a>
+            <a routerLink="/main-page"><img height="100px" [src]="logo" alt=""></a>
           </div>
         </div>
         <!-- <div class="col-2 col-xl-2">
@@ -56,7 +56,8 @@
             <button mat-menu-item>
               <mat-icon>category
               </mat-icon>
-              <a routerLink="/categories" routerLinkActive="underline">{{'Categories' | translate}}</a>
+              <a [routerLink]="'/shoping-page'" routerLinkActive="underline"
+                >{{'Categories' | translate}}</a>
             </button>
 
 
@@ -69,24 +70,29 @@
           <!-- DESKTOP MENU -->
           <ul *ngIf="!isShowMenu" class="list-unstyled ">
             <li class="navItem">
-              <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+              <a class="menu-link" routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
 
             </li>
             <li class="navItem">
-              <a routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
+              <a class="menu-link" routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
 
             </li>
             <li class="navItem categories">
 
-              <a routerLinkActive="underline">{{'Categories' | translate}}</a>
-              <div class="category-menu" [hidden]="isStickyNumbar$ | async">
-                <app-product-category-menu  (redirect)="redirectToProductsList()" [categoriesTree]="categories">
-                </app-product-category-menu>
+              <a class="menu-link" routerLinkActive="underline" (click)="isShowCatalog = !isShowCatalog">{{'Categories' | translate}}</a>
+              <div #catalogMenu class="category-menu" *ngIf="isShowCatalog && !(isStickyNuvbar$ | async)">
+                <!-- <app-product-category-menu  (redirect)="redirectToProductsList()" [categoriesTree]="categories">
+                </app-product-category-menu> -->
+
+                <app-catalog-menu (hideCatalogMenu)="hideCatalog()"></app-catalog-menu>
               </div>
+
+
+
             </li>
             <li class="navItem">
 
-              <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+              <a class="menu-link" routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
 
 
             </li>
@@ -105,7 +111,7 @@
 </mat-toolbar>
 
 <!--MENU SHOWS AFTER SCROLL DOWN-->
-<mat-toolbar [ngClass]="{'header-visiable': isStickyNumbar$ | async}" class="fixed-header  p-0">
+<mat-toolbar [ngClass]="{'header-visiable': isStickyNuvbar$ | async}" class="fixed-header  p-0">
   <mat-toolbar class="nav-bar align-items-center">
 
     <div class="container text-center">
@@ -130,7 +136,7 @@
             <button mat-menu-item>
               <mat-icon>category
               </mat-icon>
-              <a routerLink="/categories" routerLinkActive="underline">{{'Categories' | translate}}</a>
+              <a routerLink="/shoping-page" routerLinkActive="underline">{{'Categories' | translate}}</a>
             </button>
             <button mat-menu-item>
               <mat-icon>info</mat-icon>
@@ -141,24 +147,27 @@
           <!-- DESKTOP MENU -->
           <ul *ngIf="!isShowMenu" class="list-unstyled ">
             <li class="navItem">
-              <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+              <a class="menu-link" routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
 
             </li>
             <li class="navItem">
-              <a routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
+              <a class="menu-link" routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
 
             </li>
             <li class="navItem categories">
 
-              <a routerLinkActive="underline">{{'Categories' | translate}}</a>
-              <div class="category-menu">
-                <app-product-category-menu
-                  (redirect)="redirectToProductsList()" [categoriesTree]="categories"></app-product-category-menu>
+              <a class="menu-link" routerLinkActive="underline" (click)="isShowCatalog = !isShowCatalog">{{'Categories' | translate}}</a>
+              <div #catalogMenu class="category-menu"  *ngIf="isShowCatalog && (isStickyNuvbar$ | async)">
+                <!-- <app-product-category-menu
+                  (redirect)="redirectToProductsList()" [categoriesTree]="categories"></app-product-category-menu> -->
+
+                <app-catalog-menu (hideCatalogMenu)="hideCatalog()"></app-catalog-menu>
+
               </div>
             </li>
             <li class="navItem">
 
-              <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+              <a class="menu-link" routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
 
 
             </li>

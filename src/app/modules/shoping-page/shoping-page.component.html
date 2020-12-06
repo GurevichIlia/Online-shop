@@ -14,7 +14,7 @@
               <h2>{{'Products' | translate}}</h2>
 
               <app-product-list [products]="products" (addToCart)="addToShopingCart($event)"
-                (removeFromCart)="removeFromCart($event)" (moreInfo)="showProductFullInfo($event)">
+                (moreInfo)="showProductFullInfo($event)">
               </app-product-list>
             </ng-container>
 

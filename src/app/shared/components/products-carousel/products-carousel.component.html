@@ -17,7 +17,7 @@
                   <mdb-carousel-item *ngFor="let product of products; trackBy:trackByFn">
                         <div class="container-fluid">
                               <div class="row mb-5">
-                                    <div class="col-12 col-lg-4 col-xl-3" *ngFor="let card of product; trackBy:trackByFn">
+                                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let card of product; trackBy:trackByFn">
                                           <app-product (addToCart)="onAddToCart(card)"
                                                 (removeFromCart)="onRemoveFromCart(card)" (moreInfo)="onMoreInfo(card)"
                                                 [product]="card">

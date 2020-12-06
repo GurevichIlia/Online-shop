@@ -1,13 +1,16 @@
-<!-- <ul class="list-unstyled ">
-      <li *ngFor="let option of extraOptions">
-            <mat-checkbox (change)="onSelectOption(option)">{{option.price | currency: 'ILS'}} {{option.name}}
-            </mat-checkbox>
-      </li>
-</ul> -->
 
-<mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [value]="selectedOpt?.Shippingid">
+
+<mat-form-field class="shipping-method">
+  <mat-select [value]="selectedOpt?.Shippingid">
+    <mat-option (click)="onSelectOption($event, option)" *ngFor="let option of shippingMethods" [value]="option.Shippingid">
+      {{option.ShippingPrice  | currency: 'ILS'}} {{option.ShippingMethood}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<!-- <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [value]="selectedOpt?.Shippingid">
       <mat-radio-button (click)="onSelectOption($event, option)" class="example-radio-button"
-            *ngFor="let option of shippingMethods" [value]="option.Shippingid">
+            >
             {{option.ShippingPrice  | currency: 'ILS'}} {{option.ShippingMethood}}
       </mat-radio-button>
-</mat-radio-group>
+</mat-radio-group> -->

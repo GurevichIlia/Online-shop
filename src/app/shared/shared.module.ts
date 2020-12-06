@@ -30,6 +30,9 @@ import { BannerListComponent } from './components/banner-list/banner-list.compon
 import { GetLinkPipe } from './pipes/get-link.pipe';
 import { SearchComponent } from './components/search/search.component';
 import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
+import { SecuryLinkPipe } from './guards/secury-link.pipe';
+import { PaymentProcessingComponent } from './components/payment-processing/payment-processing.component';
+import { CatalogMenuComponent } from './components/catalog-menu/catalog-menu.component';
 
 
 
@@ -56,7 +59,10 @@ import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.compon
     GetLinkPipe,
     SearchComponent,
     MobileMenuComponent,
- 
+    SecuryLinkPipe,
+    PaymentProcessingComponent,
+    CatalogMenuComponent,
+
   ],
   imports: [
     CommonModule,
@@ -88,11 +94,13 @@ import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.compon
     DetailProductComponent,
     ProductsCarouselComponent,
     BannerListComponent,
+    CatalogMenuComponent,
 
     ChangeThemeDirective,
     DetectChangeDirective,
 
-    GetLinkPipe
+    GetLinkPipe,
+    SecuryLinkPipe,
 
   ]
 })

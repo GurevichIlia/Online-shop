@@ -2,16 +2,25 @@
 
 // @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-html,
-body {
-  height: 100%;
-  font-family: 'Assistant', "Helvetica Neue", sans-serif !important;
+// NOTE: From `2.0.0-beta.10`, you can now pass the typography via the mat-core() mixin:
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config(
+  $font-family:  'Assistant'
+);
 
-}
+@include mat-core($custom-typography);
 
-body {
-  margin: 0;
-}
+// html,
+// body {
+//   height: 100%;
+//   font-family: 'Assistant', "Helvetica Neue", sans-serif !important;
+//   margin: 0;
+
+// }
+
+// body {
+//   margin: 0;
+// }
 
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
 
@@ -266,15 +275,14 @@ button.toast-close-button {
 
 
 
+// @media all and (min-width: 241px) and (max-width: 480px) {
 
-@media all and (min-width: 241px) and (max-width: 480px) {
+//   #cdk-overlay-0.cdk-overlay-pane .mat-autocomplete-panel.mat-autocomplete  {
+//     right: 0 !important;
+//     width: 100% !important
+//   }
 
-  #cdk-overlay-0 {
-    right: 0 !important;
-    width: 100% !important
-  }
-
-}
+// }
 
 
 #mat-autocomplete-0 {
@@ -304,8 +312,8 @@ button.toast-close-button {
   }
 }
 
-body {
-  height: 100%;
-  font-family: 'Assistant', "Helvetica Neue", sans-serif !important;
+// body {
+//   height: 100%;
+//   font-family: 'Assistant', "Helvetica Neue", sans-serif !important;
 
-}
+// }

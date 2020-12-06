@@ -1,3 +1,5 @@
+import { LocalStorageService } from './local-storage.service';
+import { Product, ProductsOptionsItem } from './../interfaces';
 import { ApiService } from './api.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -24,14 +26,23 @@ export class ShopingCartService {
 
   constructor(
     private shopStateService: ShopStateService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private localStorageService: LocalStorageService
 
-  ) { }
+  ) {
 
-  setProductQuantity(product: ProductInCart, quantity: number) {
+  }
+
+  setProductQuantity(productIndex: number, quantity: number) {
     const newState = this.shopStateService.productsInCart$.getValue()
-      .map(existProduct => existProduct.ProductId === product.ProductId
-        ? ({ ...existProduct, quantity, totalPrice: +existProduct.Price * quantity })
+      .map((existProduct, index) => index === productIndex
+        ? ({
+          ...existProduct, quantity,
+          totalPrice:
+            (+existProduct.Price +
+              this.shopStateService.calculateAdditionaOptionsPrice(existProduct.additionalOption as Partial<ProductsOptionsItem[]>))
+            * quantity
+        })
         : existProduct);
 
     this.shopStateService.setProductsToCart(newState);
@@ -74,4 +85,19 @@ export class ShopingCartService {
   public getNumberOfPayments() {
     return this.numberOfPayments$.asObservable();
   }
+
+  getAddedToCartProducts$() {
+    return this.shopStateService.getAddedToCartProducts$()
+      .pipe(
+        tap(products => this.localStorageService.saveAddedToCartProducts(products)));
+  }
+
+  // removeFromCart(product: Product) {
+  //   this.shopStateService.removeFromCart(product);
+  // }
+
+  removeFromCart(productIndex: number) {
+    this.shopStateService.removeFromCart(productIndex);
+  }
+
 }

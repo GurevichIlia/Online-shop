@@ -1,56 +1,58 @@
 <div class="container-fluid main-container slowShow">
-      <div class="row productBox justify-content-center mt-5 mb-5" *ngIf="product$ | async as product; else loader">
-            <div class="col-xl-11 col-12 text-right mb-2">
-                  <button mat-stroked-button color="accent"><a
-                              routerLink="/shoping-page">{{'Back to Shop' | translate}}</a></button>
-            </div>
-            <div class="col-xl-11 col-12 p-0">
-                  <mat-card>
-                        <div class="row justify-content-center">
-                              <!-- <div class="col-8 col-xl-8 text-right productName">
+  <div class="row productBox justify-content-center mt-5 mb-5" *ngIf="product$ | async as product; else loader">
+    <div class="col-xl-11 col-12 text-right mb-2">
+      <button mat-stroked-button color="accent"><a
+          routerLink="/shoping-page">{{'Back to Shop' | translate}}</a></button>
+    </div>
+    <div class="col-xl-11 col-12">
+      <mat-card>
+        <div class="row justify-content-center">
+          <!-- <div class="col-8 col-xl-8 text-right productName">
 
                               </div> -->
-                              <div class="col-12 col-xl-5 sidebar  order-xl-second order-last">
-                                    <h1>{{product.ProdName}}</h1>
-                                    <app-product-sidebar [product]="product" [totalAmount]="totalProductAmount$ | async" [quantity]="productQuantity$ | async"
-                                     (addToCart)="addToShopingCart(product)"
-                                          (increase)="onIncrease($event)" (decrease)="onDecrease($event)"
-                                          (removeFromCart)="removeFromCart(product)" (buyNow)="onBuyNow(product)">
-                                    </app-product-sidebar>
-                              </div>
-                              <div class="col-12 col-xl-7 image-slider order-xl-last  order-second">
-                                    <div class="row">
-                                          <div class="col-12 col-xl-12">
-                                                <app-product-image
-                                                      *ngIf="product.files[currentPhotoIndex].FullName; else loader"
-                                                      [imageUrl]="product.files[currentPhotoIndex].FullName"
-                                                      (prevImage)="onPreviousImage(product.files.length)"
-                                                      (nextImage)="onNextImage(product.files.length)">
-                                                </app-product-image>
-                                                <hr>
-                                          </div>
-                                          <ng-template #loader>
-                                                <mat-spinner class="m-auto"></mat-spinner>
+          <div class="col-12 col-xl-5 sidebar  order-xl-second order-last">
+            <h1>{{product.ProdName}}</h1>
+            <app-product-sidebar [product]="product" [productPrice]="productPrice$ | async"
+              [totalAmount]="totalProductAmount$ | async" [quantity]="productQuantity$ | async"
+              (addToCart)="addToShopingCart(product)" (increase)="onIncrease($event)" (decrease)="onDecrease($event)"
+              >
 
-                                          </ng-template>
-                                          <div class="d-none d-lg-block d-xl-block  col-lg-12 col-xl-12">
-                                                <app-banner-list (select)="onSelectImage($event)"
-                                                      [banners]="product.files">
-                                                </app-banner-list>
-                                          </div>
+              <app-options-list [form]="optionsForm"
+                [productOptionsWithNestedItems]="productOptionsWithNestedItems$ | async">
+              </app-options-list>
 
-                                    </div>
+            </app-product-sidebar>
+          </div>
+          <div class="col-12 col-xl-7 image-slider order-xl-last  order-second">
+            <div class="row">
+              <div class="col-12 col-xl-12">
+                <app-product-image *ngIf="product?.files[currentPhotoIndex]?.FullName; else loader"
+                  [imageUrl]="product.files[currentPhotoIndex].FullName"
+                  (prevImage)="onPreviousImage(product.files.length)" (nextImage)="onNextImage(product.files.length)">
+                </app-product-image>
+                <hr>
+              </div>
+              <ng-template #loader>
+                <mat-spinner class="m-auto"></mat-spinner>
 
-                              </div>
-                        </div>
-                  </mat-card>
+              </ng-template>
+              <div class="d-none d-lg-block d-xl-block  col-lg-12 col-xl-12">
+                <app-banner-list (select)="onSelectImage($event)" [banners]="product.files">
+                </app-banner-list>
+              </div>
 
             </div>
 
+          </div>
+        </div>
+      </mat-card>
 
-      </div>
+    </div>
+
+
+  </div>
 </div>
 
 <ng-template #loader>
-      <mat-spinner class="m-auto"></mat-spinner>
+  <mat-spinner class="m-auto"></mat-spinner>
 </ng-template>

@@ -1,8 +1,9 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
-import { Product, ProductInCart } from '../interfaces';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Product, ProductInCart } from '../interfaces';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,12 @@ export class GeneralService {
           return result.matches;
         };
       }));
-  constructor(private breakpointObserver: BreakpointObserver
-  ) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private localStorageService: LocalStorageService,
+  ) {
+
+  }
 
   addKeyToObjectArray(products: Product[]) {
     if (products) {
@@ -75,5 +80,7 @@ export class GeneralService {
     }
 
   }
+
+
 
 }

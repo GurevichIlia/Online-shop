@@ -1,12 +1,14 @@
-import { ShopStateService } from './shop-state.service';
-import { GeneralService } from './general.service';
-import { Product } from './../interfaces';
 import { Injectable } from '@angular/core';
+import { of, Subject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
-import { tap, pluck, shareReplay, startWith, switchMap } from 'rxjs/operators';
-
+import { pluck, switchMap, tap } from 'rxjs/operators';
+import { Product } from './../interfaces';
 import { ApiService } from './api.service';
-import { Subject, Observable, of, EMPTY } from 'rxjs';
+import { GeneralService } from './general.service';
+import { LocalStorageService } from './local-storage.service';
+import { ShopStateService } from './shop-state.service';
+import { Title } from '@angular/platform-browser';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class HomeService {
   constructor(
     private apiService: ApiService,
     private generalService: GeneralService,
-    private shopState: ShopStateService
+    private shopState: ShopStateService,
+    private titleService: Title
   ) { }
 
   getProductsWebGroup() {
@@ -95,6 +98,7 @@ export class HomeService {
         tap(settings => {
           this.shopState.setShopSettings(settings);
           this.shopState.setShopGuid(settings.LandingPagesGUID);
+          this.setPageTitle(settings.StoreName);
         })
       );
   }
@@ -103,5 +107,17 @@ export class HomeService {
     this.isShowMobileMenu$.next(true);
   }
 
+  setPageTitle(title: string) {
+    this.titleService.setTitle(title);
+  }
+
+
+  // getProductsAddedToCartFromLocalStorage() {
+  //   const products: ProductInCart[] = this.localStorage.getProductsAddedToCart();
+
+  //   if (products && products.length > 0) {
+  //     products.map(product => this.shopState.addToCart(product, product.quantity, false));
+  //   }
+  // }
 
 }

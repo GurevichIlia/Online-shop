@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductInfoComponent } from './product-info.component';
 import { SharedModule } from './../../shared/shared.module';
+import { OptionsListComponent } from './options-list/options-list.component';
 
 const productInfoRoutes: Routes = [
   { path: '', component: ProductInfoComponent }
@@ -14,7 +15,8 @@ const productInfoRoutes: Routes = [
   declarations: [
     ProductInfoComponent,
     ProductSidebarComponent,
-    ProductImageComponent
+    ProductImageComponent,
+    OptionsListComponent
   ],
   imports: [
     SharedModule,

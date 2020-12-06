@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { ProductCategory, Product, ProductsWebImageGallery } from './../../shared/interfaces';
 import { ShopStateService } from './../../shared/services/shop-state.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap, switchMap, map, filter } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { tap, switchMap, map, filter, debounceTime, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-page',
@@ -13,7 +13,10 @@ import { tap, switchMap, map, filter } from 'rxjs/operators';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
-  productCategories$: Observable<ProductCategory[]>;
+  // productCategories$: Observable<ProductCategory[]>;
+  featuredProductsCategories$: Observable<ProductCategory[]>;
+  newProductsCategories$: Observable<ProductCategory[]>;
+
   currentFeaturedProductsCategory$: Observable<ProductCategory>;
   currentNewArrivalsCategory$: Observable<ProductCategory>;
 
@@ -27,23 +30,37 @@ export class MainPageComponent implements OnInit {
 
   imagesForCarousel$: Observable<{}>;
   imagesForFastShop$: Observable<{}>;
+
   constructor(
     private shopStateService: ShopStateService,
     private router: Router,
     private generalService: GeneralService,
     private mainPageService: MainPageService
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
-    this.productCategories$ = this.shopStateService.getCategories$();
+
+    this.newProductsCategories$ = this.mainPageService.detectIsNewProductsCategories()
+      .pipe(
+        tap(categories => this.selectNewArrivalsCategory(categories[0]))
+      );
+
+    this.featuredProductsCategories$ = this.mainPageService.detectFeaturedProductsCategories()
+      .pipe(
+        tap(categories => this.selectFeaturedProductsCategory(categories[0]))
+      );
+
+    this.currentFeaturedProductsCategory$ = this.mainPageService.getCurrentFeaturedProductsCategory$();
+    this.currentNewArrivalsCategory$ = this.mainPageService.getCurrentNewArrivalsCategory$();
 
     this.isMobileView$ = this.generalService.isMobileView$();
 
     this.mainBannerImages$ = this.mainPageService.getMainBannerImages();
     this.getGalleryImages();
 
-    this.currentFeaturedProductsCategory$ = this.mainPageService.getCurrentFeaturedProductsCategory$();
-    this.currentNewArrivalsCategory$ = this.mainPageService.getCurrentNewArrivalsCategory$();
+
 
     this.getNewArrivalsProducts();
     this.getFeaturedProducts();
@@ -51,11 +68,11 @@ export class MainPageComponent implements OnInit {
   }
 
   getNewArrivalsProducts() {
-    this.newArrivalsProducts$ = this.mainPageService.getNewProducts(this.currentNewArrivalsCategory$);
+    this.newArrivalsProducts$ = this.mainPageService.getNewProducts(this.currentNewArrivalsCategory$).pipe(debounceTime(1));;
   }
 
   getFeaturedProducts() {
-    this.featuredProducts$ = this.mainPageService.getFeaturedProducts(this.currentFeaturedProductsCategory$);
+    this.featuredProducts$ = this.mainPageService.getFeaturedProducts(this.currentFeaturedProductsCategory$).pipe(debounceTime(1));
 
   }
 
@@ -71,9 +88,9 @@ export class MainPageComponent implements OnInit {
     this.shopStateService.addToCart(product);
   }
 
-  removeFromCart(product: Product) {
-    this.shopStateService.removeFromCart(product);
-  }
+  // removeFromCart(product: Product) {
+  //   this.shopStateService.removeFromCart(product);
+  // }
 
   showProductFullInfo(product: Product) {
     const id = product.ProductId;

@@ -1,14 +1,16 @@
 <div class="row align-items-center">
-      <div class="col-11 col-xl-2 text-center ">
+
+      <div class="col-11 col-xl-1 text-center ">
             <img [src]="product.MainWebImageName" (click)="onShowProductInfo()">
       </div>
+
       <div class="col-12 col-xl-3 text-center p-4">
             <h4 [ngStyle]="{'font-size': product.ProdName.length > 30? '17px': '20px'}">{{product.ProdName}}</h4>
             <!-- <p>{{product.ShortDescription_500}}</p> -->
 
-
       </div>
-      <div class="col-6 col-xl-2 ">
+
+      <div class="col-6 col-xl-2">
             <div class="row align-items-center">
                   <div class="col-8">
                         <mat-form-field class="big-size quantity">
@@ -31,16 +33,26 @@
 
       </div>
 
-      <div class="col-6 col-xl-2 ">
+      <div class="col-6 col-xl-1">
             <mat-label>מחיר </mat-label>
 
             <h4 class="big-size">{{product.Price | currency: 'ILS'}}</h4>
       </div>
+
+    <div class="col-2 text-justify">
+        <ul>
+          <li class="additional-options" *ngFor="let option of product.additionalOption">
+            {{option.productStoreOptionItemName}} {{option.productStoreOptionItemPrice | currency : 'ILS'}}
+          </li>
+        </ul>
+    </div>
+
       <div class="col-12 col-xl-2 ">
             <mat-label>סה"כ</mat-label>
 
             <h4 class="big-size">{{product.totalPrice | currency: 'ILS'}}</h4>
       </div>
+
       <div class="col-1 col-xl-1 text-center order-first order-xl-last order-md-last order-lg-last">
             <i class="material-icons" (click)="onRemoveFromCart()">
                   close

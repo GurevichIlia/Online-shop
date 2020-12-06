@@ -1,17 +1,17 @@
 <mdb-carousel [animation]="slides?.length === 1 ? '': 'slide'">
-      <mdb-carousel-item *ngFor="let slide of slides"><a routerLink="/shoping-page">
+      <mdb-carousel-item *ngFor="let slide of slides"><a routerLink="/shoping-page" >
                   <!-- <div class="image-box box-1" style="background-image: 'url({{slide.image}})'"> -->
-                  <div class="image-box box-1">
-                        <img class="bannerStyle" [src]="slide.link" alt="First slide">
-                        <div class="back-color">
-                              <div class="m-auto">
-                                    <!-- 
+                  <div class="image-box box-1" [ngStyle]="{'background-image': slide?.link}">
+                        <!-- <img class="bannerStyle"    alt="First slide"> -->
+                        <!-- <div class="back-color">
+                              <div class="m-auto"> -->
+                                    <!--
                                     <h2 [style.color]="slide.textColor">{{slide.title}}</h2>
                                     <h5 [style.color]="slide.textColor">{{slide.content}}</h5>
                                     <h3 [style.color]="slide.textColor">{{slide.subtitle}}</h3> -->
 
-                              </div>
-                        </div>
+                              <!-- </div>
+                        </div> -->
                   </div>
 
                   <!-- </div> -->

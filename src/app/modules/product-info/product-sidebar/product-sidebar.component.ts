@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 export class ProductSidebarComponent implements OnInit {
   @Input() product: ProductInCart;
   @Input() totalAmount: number;
+  @Input() productPrice: number;
 
   @Input()
   set quantity(productQuantity: number) {

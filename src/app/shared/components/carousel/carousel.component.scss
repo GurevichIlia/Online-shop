@@ -73,12 +73,39 @@ a {
     width: 345px !important;
     height: 200px !important;
   }
+
+  .image-box {
+    width: 400px;
+    height: 300px;
+  }
 }
 
 
+.image-box {
+  width: 900px;
+  height: 600px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@media all and (min-width: 241px) and (max-width: 480px) {
 
 
+  .image-box {
+    width: 400px;
+    height: 300px;
+  }
+}
 
+@media all and (min-width: 481px) and (max-width: 768px) {
+
+
+  // .image-box {
+  //   width: 400px;
+  //   height: 300px;
+  // }
+}
 
 
 

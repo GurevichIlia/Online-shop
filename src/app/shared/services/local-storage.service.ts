@@ -1,4 +1,6 @@
+import { ProductInCart } from './../interfaces';
 import { Injectable } from '@angular/core';
+import { Product } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +15,29 @@ export class LocalStorageService {
   }
 
   getItem(key: string) {
-    return JSON.parse(localStorage.getItem(key));
+    const item = JSON.parse(localStorage.getItem(key));
+
+    return item;
   }
 
   removeItem(key: string) {
     localStorage.removeItem(key);
+  }
+
+  saveAddedToCartProducts(productsInCart: ProductInCart[]) {
+
+    const products = productsInCart;
+
+    this.setItem('productsInCart', products);
+  }
+
+  getProductsAddedToCart() {
+    const products = this.getItem('productsInCart');
+
+    return products;
+  }
+
+  removeProductsAddedToCartFromLocalStorage() {
+    this.removeItem('productsInCart');
   }
 }

@@ -43,6 +43,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    window.scrollTo({ top: 100 });
     this.createForm();
     this.getFormState();
 
@@ -76,7 +77,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       buildingNumber: ['', Validators.required],
       street: ['', Validators.required],
-      floor: [''],
+      floor: ['', Validators.required],
       flat: ['', Validators.required],
       city: ['', Validators.required],
       zipCode: ['', Validators.required]
@@ -153,8 +154,13 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
         console.log('AFTER SAVE', response);
         if (response && response['IsError'] !== true) {
           const paymentUrl = response['Data'];
-          this.paymentService.setPaymentLink(paymentUrl);
-          this.router.navigate(['payment']);
+          if (paymentUrl && paymentUrl !== 'err') {
+            this.paymentService.setPaymentLink(paymentUrl);
+            this.router.navigate(['payment']);
+          } else {
+            this.notifications.error('Could save data. Please try again')
+          }
+
         }
       }, err => this.notifications.error('Something went wrong', err.message));
   }

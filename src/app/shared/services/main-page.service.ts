@@ -6,6 +6,11 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { switchMap, map, tap, filter, shareReplay, pluck } from 'rxjs/operators';
 import { GeneralService } from './general.service';
 import { ShopStateService } from './shop-state.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
+const LAPTOP_L = 1440;
+const LAPTOP = 1024;
+const MOBILE = 425;
+const TABLET = 768;
 
 export interface MainBannerImage {
   image: string;
@@ -67,7 +72,9 @@ export class MainPageService {
     private shopStateService: ShopStateService,
     private generalService: GeneralService,
     private localStorageService: LocalStorageService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private breakpointObserver: BreakpointObserver,
+
   ) {
 
     const imagesForMainBanner = this.localStorageService.getItem('main-banners')
@@ -86,7 +93,7 @@ export class MainPageService {
 
   }
 
-  transformProductsForDesktopSlider(products: Product[]) {
+  transformProductsList(products: Product[], productQuantityInLine: number = 4) {
     if (!products) {
       return;
     }
@@ -95,7 +102,7 @@ export class MainPageService {
     let productsPack: Product[] = [];
     mockProducts.map(existProduct => {
       productsPack.push(existProduct);
-      if (productsPack.length === 4) {
+      if (productsPack.length === productQuantityInLine) {
         newProducts.push(productsPack);
         productsPack = [];
       } else if (mockProducts.indexOf(existProduct) === mockProducts.length - 1) {
@@ -106,7 +113,6 @@ export class MainPageService {
     });
 
     return newProducts;
-
   }
 
   getCurrentProductsFilteredByCategory(currentCategory$: Observable<ProductCategory>): Observable<Product[]> {
@@ -122,6 +128,7 @@ export class MainPageService {
 
 
       );
+
   }
 
   getNewProducts(currentCategory$: Observable<ProductCategory>) {
@@ -146,15 +153,53 @@ export class MainPageService {
   transformForCarousel(products: Product[]) {
     return this.generalService.isMobileView$()
       .pipe(
-        map(isMobileView =>
-          isMobileView
-            ? products.map(product => [product])
-            : this.transformProductsForDesktopSlider(products)
+        map(isMobileView => {
+          const displayWidth = window.innerWidth;
+
+          if (displayWidth <= 500) {
+            return this.forMobile(products);
+          }
+
+          if (displayWidth <= 768) {
+            return this.forLandscapeMobile(products);
+          }
+
+          if (displayWidth <= 1024) {
+            return this.forDesktop(products);
+          }
+
+          if (displayWidth < 1200) {
+            return this.forDesktop(products);
+          }
+
+          if (displayWidth >= 1200) {
+            return this.forDesktopLarge(products);
+          }
+
+
+        }
+
+
         ));
 
   }
 
+  forMobile(products: Product[]) {
+    return products.map(product => [product]);
+  }
 
+  forLandscapeMobile(products: Product[]) {
+    return this.transformProductsList(products, 2);
+
+  }
+
+  forDesktop(products: Product[]) {
+    return this.transformProductsList(products, 3);
+  }
+
+  forDesktopLarge(products: Product[]) {
+    return this.transformProductsList(products, 4);
+  }
 
   // addMainBannerImage(image: MainBannerImage, bannerType: string) {
   //   const banner: MainBannerImages = {
@@ -246,11 +291,12 @@ export class MainPageService {
     if (!this.getAllImages$()) {
       return;
     }
+
     return this.getAllImages$()
       .pipe(
         map(images => this.transformImagesObjectToArray(images, 10, 'ImageName')),
-        map(images => images.map(image => image)),
-        // map(images => images.map(image => ({ ...image, link: `url(${image.link})` }))),
+        // map(images => images.map(image => image)),
+        map(images => images.map(image => ({ ...image, link: `url(${image.link})` }))),
         tap(images => console.log('IMAGE FOR CAROUCEL', images))
       );
   }
@@ -291,4 +337,43 @@ export class MainPageService {
   getAllImages$() {
     return this.allImages$.pipe(filter(images => images !== null && images !== undefined));
   }
+
+  detectIsNewProductsCategories() {
+    return this.shopStateService.getProductsWithoutFilter$()
+      .pipe(
+        filter(products => !!products.length),
+        map(products => {
+          return this.findCategoryIdWithNewProductsOrFeaturedProducts(products, 'IsNewItem');
+        })
+      );
+  }
+
+  detectFeaturedProductsCategories() {
+    return this.shopStateService.getProductsWithoutFilter$()
+      .pipe(
+        filter(products => !!products.length),
+        map(products => {
+          return this.findCategoryIdWithNewProductsOrFeaturedProducts(products, 'Isfeatured');
+        })
+      );
+  }
+
+  findCategoryIdWithNewProductsOrFeaturedProducts(products: Product[], keyType: 'IsNewItem' | 'Isfeatured') {
+    let categories: string[] = [];
+    products.map(product => {
+
+      if (product[keyType] === '1') {
+        categories = [...categories, ...product.ProductsWebGroups_GroupId];
+      }
+
+    });
+
+    const categoriesIdWithNewProducts = Array.from(new Set(categories));
+
+    const allCategories = this.shopStateService.categories$.getValue();
+    const categoriesWithNewProducts = categoriesIdWithNewProducts.map(id => allCategories.find(category => category.GroupId === +id));
+
+    return categoriesWithNewProducts;
+  }
+
 }
