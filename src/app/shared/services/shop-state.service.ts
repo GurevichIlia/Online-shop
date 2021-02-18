@@ -52,7 +52,8 @@ export class ShopStateService {
     let currentUrl = document.URL;
 
     if (currentUrl.includes('localhost')) {
-      currentUrl = 'https://amax.amax.co.il/main-page';
+      //currentUrl = 'https://amax.amax.co.il/main-page';
+      currentUrl = 'https://israelparkinson.amax.co.il/main-page';
     }
 
     const domen = currentUrl.split('/')[2];

@@ -3,12 +3,15 @@
 // @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 // NOTE: From `2.0.0-beta.10`, you can now pass the typography via the mat-core() mixin:
+@import './styles/Fonts.scss';
+@import './styles/CustomTags.scss';
 @import '~@angular/material/theming';
 $custom-typography: mat-typography-config(
   $font-family:  'Assistant'
 );
 
 @include mat-core($custom-typography);
+
 
 // html,
 // body {

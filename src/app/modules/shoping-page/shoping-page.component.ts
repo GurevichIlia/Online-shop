@@ -1,5 +1,5 @@
 import { FormBuilder } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { ProductCategoryTree } from 'src/app/shared/components/product-category-
   styleUrls: ['./shoping-page.component.scss']
 })
 export class ShopingPageComponent implements OnInit, OnDestroy {
+  //@ViewChild('mydiv') hfghfghf:ElementRef<HTMLDivElement> לקבלת גישה לאובייקט עם האיוונטים שלו
   products$: Observable<Product[]>;
   productCategories$: Observable<ProductCategoryTree[]>;
   subscription$ = new Subject();

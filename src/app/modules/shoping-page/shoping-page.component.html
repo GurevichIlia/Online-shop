@@ -11,7 +11,7 @@
           <ng-container *ngIf="products$ | async as products">
 
             <ng-container *ngIf="products.length !== 0; else empty">
-              <h2>{{'Products' | translate}}</h2>
+              <h3 class="text-justify fontSize24"  >{{'Products' | translate}}</h3>
 
               <app-product-list [products]="products" (addToCart)="addToShopingCart($event)"
                 (moreInfo)="showProductFullInfo($event)">
