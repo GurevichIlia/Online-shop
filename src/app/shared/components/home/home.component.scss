@@ -40,13 +40,13 @@ mat-sidenav-content {
 }
 @media (min-width: 1200px) {
   .content {
-    width: 1140px !important;
+   max-width: 1140px !important;
   }
 }
 
 @media (min-width: 1520px) {
   .content {
-    width: 1550px !important;
+    max-width: 1600px !important;
   }
 }
 #container {
