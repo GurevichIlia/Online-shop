@@ -2,13 +2,21 @@
 
 @include mat-core();
 
-$my-theme-primary: mat-palette($mat-orange, A200, A100, );
+
+// LIGHT CUSTOM THEME
+$my-theme-primary: mat-palette($mat-orange, A200, A100);
 $my-theme-accent: mat-palette($mat-brown);
 $my-theme-warn: mat-palette($mat-red);
 
-$my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
+$my-theme: mat-light-theme(
+  $my-theme-primary,
+  $my-theme-accent,
+  $my-theme-warn
+);
 
-@include angular-material-theme($my-theme);
+.orange-theme {
+  @include angular-material-theme($my-theme);
+}
 
 
 $blue-theme-primary: mat-palette($mat-indigo, 500);
@@ -31,3 +39,5 @@ $default-theme: mat-light-theme($default-theme-primary, $default-theme-accent, $
 .default-theme {
   @include angular-material-theme($default-theme);
 }
+
+// DARK CUSTOM THEME

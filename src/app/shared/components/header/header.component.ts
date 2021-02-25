@@ -1,7 +1,8 @@
-import { ProductCategoryTree } from './../product-category-menu/product-category-menu.component';
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChildren, ElementRef } from '@angular/core';
-import { fromEvent, of } from 'rxjs';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChildren } from '@angular/core';
+import { fromEvent, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { StyleConfig, StyleConfigService } from 'src/app/core/style-config/style-config';
+import { ProductCategoryTree } from './../product-category-menu/product-category-menu.component';
 
 @Component({
   selector: 'app-header',
@@ -25,14 +26,19 @@ export class HeaderComponent implements OnInit {
   isShowCatalog = false;
   themes = [{ name: 'orange-theme' }, { name: 'blue-theme' }, { name: 'default-theme' }];
   isStickyNuvbar$ = fromEvent(document, 'scroll').pipe(map(() => window.pageYOffset > 266));
+  styles$: Observable<StyleConfig> = this.styleService.getStyles()
 
-
-  constructor() { }
+  constructor(
+    private styleService: StyleConfigService
+  ) { }
 
   ngOnInit(): void {
 
     // pageYOffset$.subscribe(res => console.log('EVENT SCROLL', window.pageYOffset))
   }
+
+
+
   redirectToProductsList() {
     this.redirect.emit();
   }

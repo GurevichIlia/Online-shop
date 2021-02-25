@@ -37,32 +37,18 @@
       </div>
       <div class="justify-content-around m-auto buttons col-12">
             <div class="row">
-                  <!-- <div class=" col-12 col-xl-4 order-xl-first order-lg-first">
-                        <button class="w-100" color="default" mat-stroked-button
-                              (click)="onBuyNow()">{{'Buy now' | translate}}
-                              <i class="material-icons">
-                                    shopping_basket
-                              </i></button>
-                  </div> -->
+
                   <div class="col-12 col-xl-8 order-first ">
-                        <button class="w-100" type="submit" color="primary"
+                        <button
+                         class="w-100"
+                         type="submit"
+                         color="primary"
+                         [style.backgroundColor]="(styles$ | async)?.productCard_SubmitBtnBgColor"
+                         [style.color]="(styles$ | async)?.productCard_SubmitBtnTextColor"
                               mat-flat-button (click)="onAddToCart()"> {{'Add to Cart' | translate}}<i
                                     class="material-icons">
                                     add_shopping_cart
                               </i></button>
-
-                        <!-- <button color="primary" matTooltip="{{'Add more' | translate}}" #addedButton
-                              *ngIf="!addedButtonOnFocus && product.addedToCart" (click)="onAddToCart()"
-                              mat-flat-button>
-                               <small>{{'pcs' | translate}}</small> {{quantity}}+
-
-                        </button> -->
-                        <!-- <button (click)="onBuyNow()" class="in-cart-button" #addedButton *ngIf="!addedButtonOnFocus && product.addedToCart"
-                              mat-flat-button>
-                              {{'In cart' | translate}} {{product.quantity}}<small> {{'pcs' | translate}}</small><i
-                                    class="material-icons">
-                                    done
-                              </i></button> -->
                   </div>
 
             </div>

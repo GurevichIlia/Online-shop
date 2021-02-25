@@ -1,15 +1,15 @@
-<div class="container-fluid p-0">
-  <mat-toolbar dir="rtl" class="header">
-    <div class="content m-auto">
-      <div class="row align-items-center justify-content-around">
+  <div class="container-fluid p-0">
+    <mat-toolbar dir="rtl" class="header">
+      <div class="content m-auto">
+        <div class="row align-items-center justify-content-around">
 
 
-        <div class="col-9 col-xl-3 text-right">
-          <div class="logo-box">
-            <a routerLink="/main-page"><img height="100px" [src]="logo" alt=""></a>
+          <div class="col-9 col-xl-3 text-right">
+            <div class="logo-box">
+              <a routerLink="/main-page"><img height="100px" [src]="logo" alt=""></a>
+            </div>
           </div>
-        </div>
-        <!-- <div class="col-2 col-xl-2">
+          <!-- <div class="col-2 col-xl-2">
                   <mat-form-field>
                         <mat-select [value]="themes[0].name">
                               <mat-option (click)="onSelectTheme(theme.name)" *ngFor="let theme of themes"
@@ -19,177 +19,187 @@
                         </mat-select>
                   </mat-form-field>
             </div> -->
-        <div class="col-3 col-xl-2">
-          <button mat-fab color="accent" (click)="onShopingCart()">
+          <div class="col-3 col-xl-2">
+            <button
+              mat-fab
+              [style.backgroundColor]="(styles$ | async)?.header_cartBtnBgColor"
+              (click)="onShopingCart()">
 
-            <i [matBadge]="addedProductsQuantity" matBadgeColor="warn" class="material-icons">
-              shopping_cart
-            </i></button>
+              <i [matBadge]="addedProductsQuantity" matBadgeColor="warn" class="material-icons">
+                shopping_cart
+              </i></button>
+          </div>
         </div>
       </div>
-    </div>
-  </mat-toolbar>
+    </mat-toolbar>
 
-</div>
-<mat-toolbar class="header-nav-bar p-0">
-  <mat-toolbar class="nav-bar align-items-center">
+  </div>
+  <mat-toolbar class="header-nav-bar p-0" >
+    <mat-toolbar class="nav-bar align-items-center" [style.backgroundColor]="(styles$ | async)?.header_NavBarBgColor">
 
-    <div class="container text-center">
-      <div class="row align-items-center" [ngClass]="{'text-right': isShowMenu}">
-        <div class="col-2 col-lg-6 col-xl-6">
+      <div class="container text-center">
+        <div class="row align-items-center" [ngClass]="{'text-right': isShowMenu}">
+          <div class="col-2 col-lg-6 col-xl-6">
 
-          <!-- MOBILE TOGGLE MENU -->
+            <!-- MOBILE TOGGLE MENU -->
 
-          <button *ngIf="isShowMenu" mat-icon-button (click)="onShowMobileMenu()"
-            aria-label="Example icon-button with a menu">
-            <mat-icon class="menu-toggle">menu</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>home</mat-icon>
-              <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+            <button *ngIf="isShowMenu" mat-icon-button (click)="onShowMobileMenu()"
+              aria-label="Example icon-button with a menu">
+              <mat-icon class="menu-toggle">menu</mat-icon>
             </button>
-            <button mat-menu-item>
-              <mat-icon>shopping_basket </mat-icon>
-              <a routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>category
-              </mat-icon>
-              <a [routerLink]="'/shoping-page'" routerLinkActive="underline"
-                >{{'Categories' | translate}}</a>
-            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>home</mat-icon>
+                <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>shopping_basket </mat-icon>
+                <a routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>category
+                </mat-icon>
+                <a [routerLink]="'/shoping-page'" routerLinkActive="underline">{{'Categories' | translate}}</a>
+              </button>
 
 
-            <button mat-menu-item>
-              <mat-icon>info</mat-icon>
-              <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
-            </button>
-          </mat-menu>
+              <button mat-menu-item>
+                <mat-icon>info</mat-icon>
+                <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+              </button>
+            </mat-menu>
 
-          <!-- DESKTOP MENU -->
-          <ul *ngIf="!isShowMenu" class="list-unstyled ">
-            <li class="navItem">
-              <a class="menu-link" routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+            <!-- DESKTOP MENU -->
+            <ul *ngIf="!isShowMenu" class="list-unstyled ">
+              <li class="navItem">
+                <a class="menu-link" routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
 
-            </li>
-            <li class="navItem">
-              <a class="menu-link" routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
+              </li>
+              <li class="navItem">
+                <a class="menu-link" routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
 
-            </li>
-            <li class="navItem categories">
+              </li>
+              <li class="navItem categories">
 
-              <a class="menu-link" routerLinkActive="underline" (click)="isShowCatalog = !isShowCatalog">{{'Categories' | translate}}</a>
-              <div #catalogMenu class="category-menu" *ngIf="isShowCatalog && !(isStickyNuvbar$ | async)">
-                <!-- <app-product-category-menu  (redirect)="redirectToProductsList()" [categoriesTree]="categories">
+                <a class="menu-link" routerLinkActive="underline"
+                  (click)="isShowCatalog = !isShowCatalog">{{'Categories'
+                  | translate}}</a>
+                <div #catalogMenu class="category-menu" *ngIf="isShowCatalog && !(isStickyNuvbar$ | async)">
+                  <!-- <app-product-category-menu  (redirect)="redirectToProductsList()" [categoriesTree]="categories">
                 </app-product-category-menu> -->
 
-                <app-catalog-menu (hideCatalogMenu)="hideCatalog()"></app-catalog-menu>
-              </div>
+                  <app-catalog-menu (hideCatalogMenu)="hideCatalog()"></app-catalog-menu>
+                </div>
 
 
 
-            </li>
-            <li class="navItem">
+              </li>
+              <li class="navItem">
 
-              <a class="menu-link" routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+                <a class="menu-link" routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
 
 
-            </li>
-          </ul>
-        </div>
-        <div *ngIf="isMobileSearch" class="col-2">
-          cancel
-        </div>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="isMobileSearch" class="col-2">
+            cancel
+          </div>
 
-        <div class="col-10 col-lg-6 col-xl-6 text-justify">
-          <app-search></app-search>
+          <div class="col-10 col-lg-6 col-xl-6 text-justify">
+            <app-search></app-search>
+          </div>
         </div>
       </div>
-    </div>
+    </mat-toolbar>
   </mat-toolbar>
-</mat-toolbar>
 
-<!--MENU SHOWS AFTER SCROLL DOWN-->
-<mat-toolbar [ngClass]="{'header-visiable': isStickyNuvbar$ | async}" class="fixed-header  p-0">
-  <mat-toolbar class="nav-bar align-items-center">
+  <!--MENU SHOWS AFTER SCROLL DOWN-->
+  <mat-toolbar [ngClass]="{'header-visiable': isStickyNuvbar$ | async}" class="fixed-header  p-0">
+    <mat-toolbar class="nav-bar align-items-center" [style.backgroundColor]="(styles$ | async)?.header_NavBarBgColor">
 
-    <div class="container text-center">
-      <div class="row align-items-center" [ngClass]="{'text-right': isShowMenu}">
-        <div class="col-2 col-lg-6 col-xl-6">
+      <div class="container text-center">
+        <div class="row align-items-center" [ngClass]="{'text-right': isShowMenu}">
+          <div class="col-2 col-lg-6 col-xl-6">
 
-          <!-- MOBILE TOGGLE MENU -->
+            <!-- MOBILE TOGGLE MENU -->
 
-          <button *ngIf="isShowMenu" mat-icon-button (click)="onShowMobileMenu()"
-            aria-label="Example icon-button with a menu">
-            <mat-icon class="menu-toggle">menu</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>home</mat-icon>
-              <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+            <button *ngIf="isShowMenu" mat-icon-button (click)="onShowMobileMenu()"
+              aria-label="Example icon-button with a menu">
+              <mat-icon class="menu-toggle">menu</mat-icon>
             </button>
-            <button mat-menu-item>
-              <mat-icon>shopping_basket </mat-icon>
-              <a routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>category
-              </mat-icon>
-              <a routerLink="/shoping-page" routerLinkActive="underline">{{'Categories' | translate}}</a>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>info</mat-icon>
-              <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
-            </button>
-          </mat-menu>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>home</mat-icon>
+                <a routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>shopping_basket </mat-icon>
+                <a routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>category
+                </mat-icon>
+                <a routerLink="/shoping-page" routerLinkActive="underline">{{'Categories' | translate}}</a>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>info</mat-icon>
+                <a routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+              </button>
+            </mat-menu>
 
-          <!-- DESKTOP MENU -->
-          <ul *ngIf="!isShowMenu" class="list-unstyled ">
-            <li class="navItem">
-              <a class="menu-link" routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
+            <!-- DESKTOP MENU -->
+            <ul *ngIf="!isShowMenu" class="list-unstyled ">
+              <li class="navItem">
+                <a class="menu-link" routerLink="/main-page" routerLinkActive="underline">{{'Home' | translate}}</a>
 
-            </li>
-            <li class="navItem">
-              <a class="menu-link" routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
+              </li>
+              <li class="navItem">
+                <a class="menu-link" routerLink="/shoping-page" routerLinkActive="underline">{{'Shop' | translate}}</a>
 
-            </li>
-            <li class="navItem categories">
+              </li>
+              <li class="navItem categories">
 
-              <a class="menu-link" routerLinkActive="underline" (click)="isShowCatalog = !isShowCatalog">{{'Categories' | translate}}</a>
-              <div #catalogMenu class="category-menu"  *ngIf="isShowCatalog && (isStickyNuvbar$ | async)">
-                <!-- <app-product-category-menu
+                <a class="menu-link" routerLinkActive="underline"
+                  (click)="isShowCatalog = !isShowCatalog">{{'Categories'
+                  | translate}}</a>
+                <div #catalogMenu class="category-menu" *ngIf="isShowCatalog && (isStickyNuvbar$ | async)">
+                  <!-- <app-product-category-menu
                   (redirect)="redirectToProductsList()" [categoriesTree]="categories"></app-product-category-menu> -->
 
-                <app-catalog-menu (hideCatalogMenu)="hideCatalog()"></app-catalog-menu>
+                  <app-catalog-menu (hideCatalogMenu)="hideCatalog()"></app-catalog-menu>
 
-              </div>
-            </li>
-            <li class="navItem">
+                </div>
+              </li>
+              <li class="navItem">
 
-              <a class="menu-link" routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
+                <a class="menu-link" routerLink="/about" routerLinkActive="underline">{{'About' | translate}}</a>
 
 
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="isMobileSearch" class="col-2">
+            cancel
+          </div>
+
+          <div class="col-10 col-lg-6 col-xl-5 text-justify">
+            <app-search></app-search>
+          </div>
+
+          <div class="col-1 mr-auto mr-xl-0" [ngClass]="{'mobile-cart': isShowMenu, 'desktop-cart': !isShowMenu }">
+            <button
+            mat-fab
+            (click)="onShopingCart()"
+            [style.backgroundColor]="(styles$ | async)?.header_cartBtnBgColor"
+            >
+              <i [matBadge]="addedProductsQuantity" matBadgeColor="warn" class="material-icons">
+                shopping_cart
+              </i></button>
+          </div>
+
         </div>
-        <div *ngIf="isMobileSearch" class="col-2">
-          cancel
-        </div>
-
-        <div class="col-10 col-lg-6 col-xl-5 text-justify">
-          <app-search></app-search>
-        </div>
-
-        <div class="col-1 mr-auto mr-xl-0" [ngClass]="{'mobile-cart': isShowMenu, 'desktop-cart': !isShowMenu }">
-          <button mat-fab color="accent" (click)="onShopingCart()">
-            <i [matBadge]="addedProductsQuantity" matBadgeColor="warn" class="material-icons">
-              shopping_cart
-            </i></button>
-        </div>
-
       </div>
-    </div>
 
+    </mat-toolbar>
   </mat-toolbar>
-</mat-toolbar>

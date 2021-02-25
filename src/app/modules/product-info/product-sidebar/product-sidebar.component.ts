@@ -1,6 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
-import { Product, ProductInCart } from 'src/app/shared/interfaces';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/internal/Observable';
+import { ProductInCart } from 'src/app/shared/interfaces';
+import { StyleConfig, StyleConfigService } from './../../../core/style-config/style-config';
 
 @Component({
   selector: 'app-product-sidebar',
@@ -31,7 +33,10 @@ export class ProductSidebarComponent implements OnInit {
 
   addedButtonOnFocus = false;
   _quantity = new FormControl(1);
-  constructor() { }
+  styles$: Observable<StyleConfig> = this.styleConfigService.getStyles()
+  constructor(
+    private styleConfigService: StyleConfigService
+  ) { }
 
   ngOnInit(): void {
   }

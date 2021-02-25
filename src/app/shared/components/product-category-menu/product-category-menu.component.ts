@@ -1,9 +1,10 @@
-import { Router } from '@angular/router';
-import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { ProductCategory } from '../../interfaces';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { StyleConfig, StyleConfigService } from 'src/app/core/style-config/style-config';
+import { ProductCategory } from '../../interfaces';
 import { ShopingPageService } from './../../services/shoping-page.service';
 
 /**
@@ -29,9 +30,14 @@ export class ProductCategoryMenuComponent implements OnChanges, OnInit {
   dataSource = new MatTreeNestedDataSource<ProductCategoryTree>();
   selectedProductCategory$: Observable<number>;
   @Output() redirect = new EventEmitter();
+
+  styles$: Observable<StyleConfig> = this.styleConfigService.getStyles()
+
   constructor(
     private shopingPageService: ShopingPageService,
-    private router: Router
+    private router: Router,
+    private styleConfigService: StyleConfigService
+
   ) {
   }
 

@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.prod';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -22,7 +23,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl = 'https://jaffawebapisandbox.amax.co.il/API/';
+  baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 

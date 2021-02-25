@@ -1,22 +1,23 @@
-import { NotificationsService } from './../../shared/services/notifications.service';
-import { ShopingCartService } from './../../shared/services/shoping-cart.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { Subject, Observable, of, combineLatest, merge } from 'rxjs';
-import { takeUntil, debounceTime, map, switchMap, tap, combineAll, mergeAll } from 'rxjs/operators';
-
-import { ShopStateService } from './../../shared/services/shop-state.service';
-import { GeneralService } from './../../shared/services/general.service';
-import { PaymentService } from './../../shared/services/payment.service';
-import { ApiService } from './../../shared/services/api.service';
-import { CustomerInfoService, CustomerInfo } from './../../shared/services/customer-info.service';
-
-import { ProductInCart, OrderInfo } from 'src/app/shared/interfaces';
-
-
-
 import { Router } from '@angular/router';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { debounceTime, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { StyleConfig, StyleConfigService } from 'src/app/core/style-config/style-config';
+import { OrderInfo, ProductInCart } from 'src/app/shared/interfaces';
+import { ApiService } from './../../shared/services/api.service';
+import { CustomerInfo, CustomerInfoService } from './../../shared/services/customer-info.service';
+import { GeneralService } from './../../shared/services/general.service';
+import { NotificationsService } from './../../shared/services/notifications.service';
+import { PaymentService } from './../../shared/services/payment.service';
+import { ShopStateService } from './../../shared/services/shop-state.service';
+import { ShopingCartService } from './../../shared/services/shoping-cart.service';
+
+
+
+
+
+
 
 
 @Component({
@@ -30,6 +31,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
   form: FormGroup;
   subscription$ = new Subject();
   isLoading = false;
+  styles$: Observable<StyleConfig> = this.styleConfigService.getStyles()
   constructor(
     private fb: FormBuilder,
     private customerInfoService: CustomerInfoService,
@@ -39,7 +41,8 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
     private generalService: GeneralService,
     private shopStateService: ShopStateService,
     private shopingCartService: ShopingCartService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private styleConfigService: StyleConfigService
   ) { }
 
   ngOnInit(): void {
@@ -171,7 +174,7 @@ export class CustomerInfoComponent implements OnInit, OnDestroy {
   }
 
   openOrderDetails() {
-    this.generalService.openOrderSetails();
+    this.generalService.openOrderDetails();
   }
 
   ngOnDestroy() {

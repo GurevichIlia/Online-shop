@@ -3,7 +3,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { debounceTime, filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { Product, ProductInCart, ShippingMethod } from 'src/app/shared/interfaces';
+import { Product, ShippingMethod } from 'src/app/shared/interfaces';
+import { StyleConfig, StyleConfigService } from './../../core/style-config/style-config';
 import { GeneralService } from './../../shared/services/general.service';
 import { NotificationsService } from './../../shared/services/notifications.service';
 import { ShopingCartService } from './../../shared/services/shoping-cart.service';
@@ -29,11 +30,15 @@ export class ShopingCartComponent implements OnInit {
   isCartEmpty = true;
   numberOfPayments = new FormControl(1, [Validators.max(3), Validators.min(1)]);
   numberOfPayments$: Observable<number>;
+  styles$: Observable<StyleConfig> = this.styleConfigService.getStyles()
+
   constructor(
     private shopingCartService: ShopingCartService,
     private router: Router,
     private generalService: GeneralService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private styleConfigService: StyleConfigService
+
   ) { }
 
   ngOnInit(): void {
@@ -43,11 +48,11 @@ export class ShopingCartComponent implements OnInit {
       .pipe(
         map(products => {
 
-        this.totalProductsAmount$ = of(this.generalService.calculateProductAmount(products));
-        this.calculateTotalAmount();
-        this.isCartEmpty = products.length === 0;
-        return products;
-      }));
+          this.totalProductsAmount$ = of(this.generalService.calculateProductAmount(products));
+          this.calculateTotalAmount();
+          this.isCartEmpty = products.length === 0;
+          return products;
+        }));
 
     this.getSelectedShipingOption();
 

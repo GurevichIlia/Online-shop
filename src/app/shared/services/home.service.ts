@@ -1,3 +1,4 @@
+import { StyleConfigService } from 'src/app/core/style-config/style-config';
 import { Injectable } from '@angular/core';
 import { of, Subject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
@@ -19,7 +20,8 @@ export class HomeService {
     private apiService: ApiService,
     private generalService: GeneralService,
     private shopState: ShopStateService,
-    private titleService: Title
+    private titleService: Title,
+    private styleConfigService: StyleConfigService
   ) { }
 
   getProductsWebGroup() {
@@ -53,10 +55,10 @@ export class HomeService {
               map(products => this.combineToOneProductById(products)),
               map(products =>
                 products.map(product =>
-                  ({
-                    ...product,
-                    MainWebImageName: this.generalService.getImageLink(+product.instituteId, product.ProductId, product.MainWebImageName)
-                  }))),
+                ({
+                  ...product,
+                  MainWebImageName: this.generalService.getImageLink(+product.instituteId, product.ProductId, product.MainWebImageName)
+                }))),
               tap(products => console.log('ALL PRODUCTS', products)
               ));
 
@@ -99,6 +101,7 @@ export class HomeService {
           this.shopState.setShopSettings(settings);
           this.shopState.setShopGuid(settings.LandingPagesGUID);
           this.setPageTitle(settings.StoreName);
+          this.styleConfigService.setStyleConfigFromSettings(settings)
         })
       );
   }

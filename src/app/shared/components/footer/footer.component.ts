@@ -1,5 +1,7 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { StyleConfig, StyleConfigService } from './../../../core/style-config/style-config';
 import { StoreSettings } from './../../interfaces';
-import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -8,7 +10,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   @Input() storeSettings: StoreSettings;
-  constructor() { }
+  styles$: Observable<StyleConfig> = this.styleService.getStyles()
+
+  constructor(
+    private styleService: StyleConfigService
+  ) { }
 
   ngOnInit(): void {
   }

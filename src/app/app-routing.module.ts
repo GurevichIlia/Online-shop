@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EmptyCartGuard } from './shared/guards/empty-cart.guard';
 import { PaymentProcessingComponent } from './shared/components/payment-processing/payment-processing.component';
+import { AppSettingsResolver } from './core/resolvers/app-settings.resolver';
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
       {
         path: 'payment', loadChildren: () => import('./modules/payment-info/payment-info.module').then(m => m.PaymentInfoModule),
       },
-    ]
+    ],
+    resolve: { appSettings: AppSettingsResolver }
   },
   { path: 'payment-processing', component: PaymentProcessingComponent },
 

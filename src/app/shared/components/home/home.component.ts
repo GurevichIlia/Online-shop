@@ -13,6 +13,7 @@ import { ProductInCart } from 'src/app/shared/interfaces';
 import { GeneralService } from './../../services/general.service';
 import { NotificationsService } from './../../services/notifications.service';
 import { ShopStateService } from './../../services/shop-state.service';
+import { APP_THEME } from 'src/app/enums/theme.enum';
 
 type TotalDetails = Observable<[ProductInCart[], number, ShippingMethod]>;
 
@@ -199,17 +200,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['shoping-cart']);
   }
 
-  onSelectTheme(theme: string) {
+  onSelectTheme(theme: APP_THEME) {
     this.generalService.setTheme(theme);
   }
 
   getStoreSettings() {
-    this.storeSettings$ = this.homeService.getStoreSetting()
-      .pipe(
-        take(1),
-        tap(settings => console.log('SETTINGS', settings))
-      );
+    this.storeSettings$ = this.route.data.pipe(map((data: { appSettings: StoreSettings }) => data.appSettings))
+
+    // this.homeService.getStoreSetting()
+    //   .pipe(
+    //     take(1),
+    //     tap(settings => console.log('SETTINGS', settings))
+    //   );
     // .subscribe(settings => console.log('SETTINGS', settings))
+    // this.storeSettings$.subscribe(settings => console.log('SETTINGS', settings))
   }
 
   onShowMobileMenu() {

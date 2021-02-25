@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
@@ -36,7 +37,7 @@ export class ShopStateService {
     private notifications: NotificationsService,
     private shopingPageService: ShopingPageService,
     private generalService: GeneralService,
-    private localStorage: LocalStorageService,
+    @Inject(DOCUMENT) private document: Document,
     private translate: TranslateService
   ) {
     this.setOrgName(this.getOrgNameFromRouteUrl())
@@ -49,11 +50,11 @@ export class ShopStateService {
     // const currentUrl = 'https://amax.amax.co.il/main-page';
     // const currentUrl = 'https://kevatry.amax.co.il/main-page';
 
-    let currentUrl = document.URL;
+    let currentUrl = this.document.URL;
 
     if (currentUrl.includes('localhost')) {
-      //currentUrl = 'https://amax.amax.co.il/main-page';
-      currentUrl = 'https://israelparkinson.amax.co.il/main-page';
+      currentUrl = 'https://amax.amax.co.il/main-page';
+      // currentUrl = 'https://israelparkinson.amax.co.il/main-page';
     }
 
     const domen = currentUrl.split('/')[2];
@@ -107,102 +108,9 @@ export class ShopStateService {
       );
   }
 
-  // getAddedToCartProducts$() {
-  //   return this.getProducts$().pipe(
-  //     map(products => products.filter(product => product.addedToCart === true)));
-  // }
-
   getAddedToCartProducts$() {
     return this.productsInCart$.asObservable();
   }
-
-  // addToCart(product: Product, productQuantity = 1) {
-  //   const oldState = this.products$.getValue();
-
-  //   const newState = oldState.map((existProduct: Product) => {
-  //     if (existProduct.ProductId === product.ProductId) {
-  //       return {
-  //         ...existProduct, addedToCart: true
-  //       };
-  //     } else {
-  //       return existProduct;
-  //     }
-
-  //   });
-  //   this.notifications.success('', 'Added to Cart');
-
-  //   this.setAllProducts(newState);
-
-  //   this.setProductsToCart(this.copyArrayWithAddedToCartProducts(newState, productQuantity));
-  // }
-
-  // addToCart(product: Product, productQuantity = 1, isHowNotification = true) {
-  //   let addedProducts = [...this.productsInCart$.getValue()];
-
-  //   const oldState = this.products$.getValue();
-
-  //   const newState = oldState.map((existProduct: Product) => {
-  //     if (existProduct.ProductId === product.ProductId) {
-  //       return {
-  //         ...existProduct, addedToCart: true
-  //       };
-  //     } else {
-  //       return existProduct;
-  //     }
-
-  //   });
-
-  //   this.setAllProducts(newState);
-
-
-  //   const productIsExist = addedProducts.find(existProduct => existProduct.ProductId === product.ProductId);
-  //   if (productIsExist) {
-
-  //     addedProducts = this.productsInCart$.getValue()
-  //       .map(productInCart => {
-  //         if (productInCart.ProductId === product.ProductId) {
-  //           const quantity = productQuantity === 1 ? productInCart.quantity + 1 : productInCart.quantity + productQuantity;
-  //           const updatedProduct = {
-  //             ...productInCart,
-  //             quantity,
-  //             totalPrice: +productInCart.Price * quantity,
-  //             ProductsWebGroups_GroupId: this.shopingPageService.selectedCategory.getValue().toString()
-  //           };
-  //           return updatedProduct;
-  //         } else {
-  //           return productInCart;
-  //         }
-  //       })
-  //   } else {
-  //     addedProducts.push(
-  //       {
-  //         ...product,
-  //         quantity: productQuantity,
-  //         totalPrice: +product.Price * productQuantity,
-  //         ProductsWebGroups_GroupId: this.shopingPageService.selectedCategory.getValue().toString()
-  //       }
-  //     )
-  //   }
-
-  //   this.setProductsToCart(addedProducts);
-  //   if (isHowNotification) {
-  //     this.notifications.success('', 'Added to Cart');
-
-  //   }
-
-  // }
-
-  // copyArrayWithAddedToCartProducts(allProdacts: Product[], productQuantity = 1) {
-  //   return [...allProdacts.filter(productInCart => productInCart.addedToCart === true)
-  //     .map(productInCart =>
-  //       ({
-  //         ...productInCart,
-  //         quantity: productQuantity,
-  //         totalPrice: +productInCart.Price * productQuantity,
-  //         ProductsWebGroups_GroupId: this.shopingPageService.selectedCategory.getValue().toString()
-  //       }))];
-  // }
-
 
   addToCart(product: Product, productQuantity = 1, isNotification = true, additionalOptions?: ProductsOptionsItem[]) {
     const aditionalOptionsPrice = this.calculateAdditionaOptionsPrice(additionalOptions);
@@ -285,23 +193,6 @@ export class ShopStateService {
     console.log('PRODUCT IN CART', this.productsInCart$.getValue());
 
   }
-
-  // removeFromCart(product: Product) {
-  //   const oldState = this.products$.getValue();
-
-  //   const newState = oldState.map((existProduct: Product) => {
-  //     if (existProduct.ProductId === product.ProductId) {
-  //       return { ...existProduct, addedToCart: false };
-  //     } else {
-  //       return existProduct;
-  //     }
-
-  //   });
-  //   this.notifications.success('', 'Removed from Cart');
-  //   this.setAllProducts(newState);
-
-  //   this.setProductsToCart(this.productsInCart$.getValue().filter(productInCart => productInCart.ProductId !== product.ProductId));
-  // }
 
   removeFromCart(productIndex: number) {
 

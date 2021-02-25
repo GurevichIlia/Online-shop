@@ -83,7 +83,13 @@
 
 
           <div class="col-12 col-lg-3 col-xl-3 mt-3" *ngIf="(selectedShipingOption$ | async)">
-            <button class="checkoutButton" mat-flat-button color="accent" (click)="goPayment()">המשך לקופה
+            <button
+            [style.backgroundColor]="(styles$ | async)?.cart_SubmitBtnBgColor"
+            [style.color]="(styles$ | async)?.cart_SubmitBtnTextColor"
+            class="checkoutButton"
+            mat-flat-button color="accent"
+            (click)="goPayment()">
+            המשך לקופה
               <span class="material-icons">
                 check
               </span></button>

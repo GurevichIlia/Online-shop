@@ -1,4 +1,8 @@
-<footer class="footer-distributed text-justify" *ngIf="storeSettings">
+<footer
+ [style.backgroundColor]="(styles$ | async)?.footer_BgColor"
+ [style.color]="(styles$ | async)?.footer_TextColor"
+ class="footer-distributed text-justify"
+  *ngIf="storeSettings">
 
       <div class="footer-left">
 

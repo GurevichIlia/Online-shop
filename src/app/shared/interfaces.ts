@@ -1,5 +1,6 @@
 import { CustomerInfo } from './services/customer-info.service';
 import { Observable } from 'rxjs';
+import { StyleConfig } from '../core/style-config/style-config';
 
 export interface ProductCategory {
   // ProdCatId: number;
@@ -201,7 +202,7 @@ export interface ShippingMethod {
 
 }
 
-export interface StoreSettings {
+export interface StoreSettings extends StyleConfig {
   SettingId: string;
   StoreName: string;
   StoreNameEng: string;

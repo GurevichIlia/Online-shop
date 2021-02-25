@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { APP_THEME } from 'src/app/enums/theme.enum';
 import { Product, ProductInCart } from '../interfaces';
 import { LocalStorageService } from './local-storage.service';
 
@@ -9,7 +10,7 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root'
 })
 export class GeneralService {
-  currentTheme$ = new BehaviorSubject<string>('orange-theme');
+  currentTheme$ = new BehaviorSubject<APP_THEME>(APP_THEME.Default);
   openOrderDetails$ = new Subject();
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -33,7 +34,7 @@ export class GeneralService {
     }
   }
 
-  openOrderSetails() {
+  openOrderDetails() {
     this.openOrderDetails$.next();
   }
 
@@ -47,7 +48,7 @@ export class GeneralService {
 
   }
 
-  setTheme(themeName: string) {
+  setTheme(themeName: APP_THEME) {
     this.currentTheme$.next(themeName);
   }
 

@@ -1,8 +1,13 @@
+
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree" [style.backgroundColor]="backgroudColor">
       <!-- This is the tree node template for leaf nodes -->
-      <mat-tree-node [ngClass]="{'is-active': node.GroupId === (selectedProductCategory$ | async) }" mat-ripple matTreeNodePadding
-            [matTreeNodePaddingIndent]="20" *matTreeNodeDef="let node" matTreeNodeToggle>
-            <li (click)="setCategory(node.GroupId)" class="mat-tree-node">
+      <mat-tree-node
+        [ngStyle]="{'background-color': node.GroupId === (selectedProductCategory$ | async) ? (styles$ |async)?.categoryList_hoverColor : ''}"
+        mat-ripple matTreeNodePadding
+        [matTreeNodePaddingIndent]="20"
+        *matTreeNodeDef="let node" matTreeNodeToggle
+          >
+            <li [hoverElement]="(styles$ |async)?.categoryList_hoverColor" (click)="setCategory(node.GroupId)" class="mat-tree-node">
                   <!-- use a disabled button to provide padding for tree leaf -->
                   <button mat-icon-button disabled></button>
                   <span class="group-name">
@@ -13,10 +18,16 @@
             </li>
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
-      <mat-nested-tree-node [ngClass]="{'is-active': node.GroupId === (selectedProductCategory$ | async)}" matTreeNodePadding [matTreeNodePaddingIndent]="20" matTreeNodeToggle
-            *matTreeNodeDef="let node; when: hasChild">
-            <li (click)="setCategory(node.GroupId)">
-                  <div class="mat-tree-node" [ngClass]="{'is-active': node.GroupId === (selectedProductCategory$ | async)}">
+      <mat-nested-tree-node
+        [ngStyle]="{'background-color': node.GroupId === (selectedProductCategory$ | async) ? (styles$ |async)?.categoryList_hoverColor : ''}"
+        matTreeNodePadding
+        [matTreeNodePaddingIndent]="20"
+        matTreeNodeToggle
+        *matTreeNodeDef="let node; when: hasChild">
+            <li
+            [hoverElement]="(styles$ |async)?.categoryList_hoverColor"
+            (click)="setCategory(node.GroupId)">
+                  <div class="mat-tree-node">
                         <button mat-icon-button [attr.aria-label]="'toggle ' + node.GroupName">
                               <mat-icon class="mat-icon-rtl-mirror">
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

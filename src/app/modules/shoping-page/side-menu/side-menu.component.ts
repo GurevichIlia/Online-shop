@@ -1,6 +1,6 @@
-import { ProductCategoryTree } from './../../../shared/components/product-category-menu/product-category-menu.component';
-import { Component, OnInit, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ProductCategoryTree } from './../../../shared/components/product-category-menu/product-category-menu.component';
 
 @Component({
   selector: 'app-side-menu',
@@ -12,7 +12,7 @@ export class SideMenuComponent implements OnInit {
   @Input() categories: ProductCategoryTree[];
   @Input() selectedCategory: FormControl;
   // @Output()
-  constructor() { }
+
 
   ngOnInit(): void {
   }
